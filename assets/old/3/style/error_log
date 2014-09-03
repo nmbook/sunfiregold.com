@@ -1,0 +1,344 @@
+[21-Aug-2009 09:20:30] PHP Parse error:  syntax error, unexpected ':' in /home/sunfire1/public_html/style/thumb.php on line 4
+[21-Aug-2009 09:20:47] PHP Parse error:  syntax error, unexpected ':' in /home/sunfire1/public_html/style/thumb.php on line 4
+[21-Aug-2009 09:23:07] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/sunfire1/public_html/style/thumb.php on line 46
+[21-Aug-2009 09:24:23] PHP Warning:  getimagesize() [<a href='function.getimagesize'>function.getimagesize</a>]: Filename cannot be empty in /home/sunfire1/public_html/style/thumb.php on line 12
+[21-Aug-2009 09:24:23] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 16
+[21-Aug-2009 09:24:23] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 24
+[21-Aug-2009 09:24:23] PHP Warning:  imagecreatefromjpeg() [<a href='function.imagecreatefromjpeg'>function.imagecreatefromjpeg</a>]: Filename cannot be empty in /home/sunfire1/public_html/style/thumb.php on line 36
+[21-Aug-2009 09:24:23] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 41
+[21-Aug-2009 09:24:23] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 44
+[21-Aug-2009 09:25:30] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 20
+[21-Aug-2009 09:25:30] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 20
+[21-Aug-2009 09:25:30] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 24
+[21-Aug-2009 09:25:30] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 41
+[21-Aug-2009 09:25:30] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 44
+[21-Aug-2009 09:25:44] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 20
+[21-Aug-2009 09:25:44] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 20
+[21-Aug-2009 09:25:44] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 24
+[21-Aug-2009 09:25:44] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 41
+[21-Aug-2009 09:25:44] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 44
+[21-Aug-2009 10:06:14] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[21-Aug-2009 10:06:32] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[21-Aug-2009 10:06:40] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[21-Aug-2009 10:07:47] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[21-Aug-2009 10:08:48] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[21-Aug-2009 10:08:54] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[21-Aug-2009 10:09:20] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:51] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:25:58] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:26:00] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:26:01] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[24-Aug-2009 10:26:05] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:05] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:05] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:05] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:05] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:05] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:05] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:06] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:07] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:07] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:07] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[10-Sep-2009 21:11:07] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:47] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:47] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:47] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:47] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:47] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:48] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:48] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:48] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:48] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:48] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:48] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:49] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:49] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:49] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:49] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:49] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:49] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:49] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:49] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:49] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[12-Sep-2009 20:02:50] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:20] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:20] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:21] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:21] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:21] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:21] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:21] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:21] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:22] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:22] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:22] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:22] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:22] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:22] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:22] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:22] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:22] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[13-Sep-2009 17:05:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[15-Sep-2009 16:59:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:12] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:12] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:12] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:12] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:12] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:12] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:12] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:13] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:14] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[19-Sep-2009 20:54:15] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:54] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:54] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:54] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:54] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:54] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:54] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:55] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:56] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Sep-2009 15:07:56] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[02-Oct-2009 01:36:35] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[02-Oct-2009 01:36:35] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[02-Oct-2009 01:36:35] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[02-Oct-2009 01:36:35] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[05-Oct-2009 13:04:41] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:41] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:41] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:41] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:41] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:41] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:41] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:41] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:42] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:42] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:42] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:42] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:43] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:44] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:44] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:44] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:04:44] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:23] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:24] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:25] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:25] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:25] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:25] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:25] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:25] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:25] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:25] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:26] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:26] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 13:26:26] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:33] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:33] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:33] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:33] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:33] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:33] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:34] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:35] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:35] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:35] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:35] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:35] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:35] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:35] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[05-Oct-2009 15:42:35] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 13056 bytes) in /home/sunfire1/public_html/style/thumb.php on line 38
+[11-Oct-2009 15:01:07] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[11-Oct-2009 15:01:07] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[11-Oct-2009 15:01:07] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[11-Oct-2009 15:01:07] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[26-Oct-2009 08:26:22] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[26-Oct-2009 08:26:22] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[26-Oct-2009 08:26:22] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[26-Oct-2009 08:26:22] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[10-Nov-2009 20:49:48] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[10-Nov-2009 20:49:48] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[10-Nov-2009 20:49:48] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[10-Nov-2009 20:49:48] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[29-Jan-2010 14:11:41] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[29-Jan-2010 14:11:41] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[29-Jan-2010 14:11:41] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[29-Jan-2010 14:11:41] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[27-Feb-2010 22:32:22] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[27-Feb-2010 22:32:22] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[27-Feb-2010 22:32:22] PHP Warning:  imagecreatefromjpeg() [<a href='function.imagecreatefromjpeg'>function.imagecreatefromjpeg</a>]: gd-jpeg, libjpeg: recoverable error: Premature end of JPEG file
+ in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Feb-2010 22:32:23] PHP Warning:  imagecreatefromjpeg() [<a href='function.imagecreatefromjpeg'>function.imagecreatefromjpeg</a>]: gd-jpeg: JPEG library reports unrecoverable error:  in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Feb-2010 22:32:23] PHP Warning:  imagecreatefromjpeg() [<a href='function.imagecreatefromjpeg'>function.imagecreatefromjpeg</a>]: '../album/darwinxalley-10/0227101431a.jpg' is not a valid JPEG file in /home/sunfire1/public_html/style/thumb.php on line 38
+[27-Feb-2010 22:32:23] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[27-Feb-2010 22:32:23] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[07-Apr-2010 09:05:43] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[07-Apr-2010 09:05:43] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[07-Apr-2010 09:05:43] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[07-Apr-2010 09:05:43] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[08-Apr-2010 10:48:04] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[08-Apr-2010 10:48:04] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[08-Apr-2010 10:48:04] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[08-Apr-2010 10:48:04] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[10-Apr-2010 17:39:58] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[10-Apr-2010 17:39:59] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[10-Apr-2010 17:39:59] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[10-Apr-2010 17:39:59] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[13-Apr-2010 04:22:09] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[13-Apr-2010 04:22:09] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[13-Apr-2010 04:22:09] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[13-Apr-2010 04:22:09] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[15-Apr-2010 05:55:42] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[15-Apr-2010 05:55:42] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[15-Apr-2010 05:55:42] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[15-Apr-2010 05:55:42] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46
+[04-May-2010 04:02:38] PHP Warning:  Division by zero in /home/sunfire1/public_html/style/thumb.php on line 18
+[04-May-2010 04:02:38] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home/sunfire1/public_html/style/thumb.php on line 26
+[04-May-2010 04:02:38] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 43
+[04-May-2010 04:02:38] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home/sunfire1/public_html/style/thumb.php on line 46

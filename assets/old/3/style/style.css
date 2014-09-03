@@ -1,0 +1,885 @@
+/*
+ * SUNFIREGOLD CSS
+ * Last Edited on: 06/08/2011
+ * Nate Book
+ */
+ 
+/* Body */
+body
+{
+  background: #fc2 url('back.gif') repeat-y;
+  color: black;
+  line-height: 120%;
+  margin: 0px;
+  padding: 0px;
+  font-family: verdana,tahoma,arial,sans-serif;
+  font-size: 12pt;
+  font-weight: normal;
+  text-align: left;
+}
+
+/* Noscript */
+span.noscript {
+  text-align: center;
+}
+
+span.noscriptred {
+  color: #ff0000;
+}
+
+/* Global Anchor Style */
+a {
+  font-weight: bold;
+}
+
+a:link {
+  color: #4444ff;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #8844ff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #7777ff;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #8888ff;
+  text-decoration: underline;
+}
+
+/* Global Header Style */
+h1 {
+  padding: 0px;
+  margin: 0px;
+  color: #080;
+  font-weight: 700;
+  font-size: 20pt;
+  line-height: 150%;
+  text-align: center;
+  /*text-shadow: #040 5px 5px 3px;*/
+}
+
+h2 {
+  padding: 0px;
+  margin: 0px;
+  color: #088;
+  font-weight: 600;
+  font-size: 18pt;
+  line-height: 140%;
+  text-align: center;
+  /*text-shadow: #044 5px 5px 3px;*/
+}
+
+h3 {
+  padding: 0px;
+  margin: 0px;
+  color: #008;
+  font-weight: 600;
+  font-size: 16pt;
+  line-height: 130%;
+  text-align: center;
+  /*text-shadow: #004 4px 4px 3px;*/
+}
+
+h4 {
+  padding: 0px;
+  margin: 0px;
+  color: #800;
+  font-weight: 600;
+  font-size: 15pt;
+  line-height: 120%;
+  text-align: center;
+  /*text-shadow: #400 3px 3px 2px;*/
+}
+
+
+h5 {
+  padding: 0px;
+  margin: 0px;
+  color: #666;
+  font-weight: 600;
+  font-size: 14pt;
+  line-height: 120%;
+  text-align: center;
+  /*text-shadow: #444 2px 2px 1px;*/
+}
+
+h6 {
+  padding: 0px;
+  margin: 0px;
+  color: #000;
+  font-weight: 500;
+  font-size: 13pt;
+  line-height: 120%;
+  text-align: center;
+  /*text-shadow: #444 2px 2px 1px;*/
+}
+
+span.new {
+  font-size: xx-small;
+  vertical-align: top;
+  color: red;
+  text-decoration: underline;
+}
+
+/* Abbreviation (Title) Styles */
+abbr {
+  cursor: help;
+  border-bottom: 1px dotted #008;
+}
+
+/* Global Definition List/Definition Description Styles */
+dl {
+  text-align: left;
+}
+
+dd {
+  margin-left: 40px;
+  font-style: italic;
+}
+
+/* Global Quote Styles */
+q.m { /* male */
+  color: #000088;
+}
+
+q.f { /* female */
+  color: #880000;
+}
+
+q {
+  padding: 0px 5px;
+  quotes: '“' '”' '‘' '’';
+}
+
+/* Global Horizontal Rule Style */
+hr {
+  border: 3px outset blue;
+  height: 6px;
+  max-height: 0px; /* Opera: Hides the "hole" */
+  width: 70%;
+  display: block;
+  margin: 10px auto;
+}
+
+/* Global Image Style */
+img {
+  border: none;
+  display: block;
+  margin: 0px auto;
+  padding: 0px;
+}
+
+/* Global Bold Style */
+b {
+  font-weight: bold;
+}
+
+/* Global Paragraph Style */
+p {
+  text-align: left;
+  text-indent: 15px;
+  margin: 15px 10px;
+}
+
+/* Global List Style */
+li {
+  list-style: circle outside;
+  text-align: left;
+  text-indent: 15px;
+  margin: 10px 30px;
+}
+
+/* Global Message Style */
+div.message {
+  display: block;
+  border: 1px dotted #000088;
+  background-color: #ffee88;
+  color: black;
+  margin: 5px;
+  padding: 10px;
+}
+
+/* Honorable Age Dog */
+span.honor_age {
+  color: #008;
+  font-weight: bold;
+  cursor: help;
+}
+span.honor_age_14 {
+  color: #000;
+  font-weight: normal;
+  cursor: help;
+}
+
+span.honor_age_no_titletext {
+  cursor: default;
+}
+
+/* Editing Form Style */
+form {
+  margin: 10px auto;
+  width: 414px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  float: left;
+  text-align: right;
+  width: 200px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+input, select, textarea {
+  font-family: verdana,tahoma,arial,sans-serif;
+  display: block;
+  width: 150px;
+  margin-left: 0px;
+  margin-right: auto;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+textarea {
+  width: 410px;
+}
+
+input.short, select.short {
+  width: 100px;
+}
+
+input.long, select.long {
+  width: 200px;
+}
+
+input.submit {
+  display: inline;
+  margin-left: 5px;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+input.cancel {
+  display: inline;
+  margin-left: auto;
+  margin-right: 5px;
+  margin-top: 20px;
+}
+
+select.input_date_field {
+  display: inline;
+  width: auto;
+}
+
+select.input_date_mo {
+  margin-left: 0px;
+  margin-right: 5px;
+}
+
+select.input_date_dy {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+select.input_date_yr {
+  margin-left: 5px;
+  margin-right: 0px;
+}
+
+input.input_ped_field {
+  display: inline;
+  width: 100px;
+}
+
+input.input_k9data_field {
+  display: inline;
+  width: 75px;
+}
+
+div.input_date_wrapper,
+div.input_ped_wrapper,
+div.input_k9data_wrapper {
+  display: block;
+  width: 210px;
+  margin-left: 0px;
+  margin-right: auto;
+  text-align: left;
+  padding: 0px;
+}
+
+div.multi_input_wrapper {
+  display: block;
+  width: 210px;
+  margin-left: auto;
+  margin-right: 0px;
+  text-align: left;
+  padding: 0px;
+  position: relative;
+}
+
+div.input_dog_box, div.input_ped_box {
+  background-color: white;
+  cursor: default;
+  display: none;
+  border: 1px solid #008;
+  margin-top: 3px;
+  /*margin-left: 6px;*/
+  margin-left: 210px;
+}
+
+div.input_dog_box ul, div.input_ped_box ul {
+  margin: 0px;
+  padding: 5px;
+  list-style: none outside;
+}
+
+div.input_dog_box ul li, div.input_ped_box ul li {
+  cursor: pointer;
+  margin: 0px;
+  text-indent: 0px;
+  list-style: none outside;
+  padding: 5px;
+}
+
+div.input_dog_box span, div.input_ped_box span {
+  font-style: italic;
+  display: block;
+  margin: 10px;
+}
+
+div.input_dog_box ul li span, div.input_ped_box ul li span {
+  font-weight: bold;
+  margin: 0px;
+  font-style: normal;
+  display: inline;
+}
+
+div.input_preview {
+  margin: 5px;
+  padding: 10px;
+  background-color: #ffee88;
+  border: 1px dotted #000088;
+}
+
+div.input_preview span.x {
+  float: right;
+  display: block;
+  border: none;
+  cursor: default;
+  padding: 3px;
+}
+
+div.input_preview span.x:hover {
+  float: right;
+  display: block;
+  background: #ffcc22;
+  cursor: pointer;
+}
+
+div.input_dog_box ul li:hover, div.input_ped_box ul li:hover {
+  background-color: #ffcc22;
+}
+
+div.input_button_wrapper {
+  display: block;
+  width: 412px;
+  text-align: center;
+}
+
+div#sect_born, div#sect_ob, div#sect_died {
+  display: none;
+}
+
+input.input_file {
+  width: 200px;
+}
+
+/* Box Model: Main */
+div.main {
+  position: static;
+  margin: 0px 0px 0px 172px;
+  padding: 5px 5px 10px 0px;
+  text-align: center;
+}
+
+/* Box Model: Navigation */
+div.nav {
+  text-align: left;
+  float: left;
+  vertical-align: top;
+  position: relative;
+  top: 10px;
+  left: 0px;
+  bottom: 100px;
+  right: auto;
+  width: 172px;
+  overflow: auto;
+}
+
+div.nav a {
+  background-image: url('sidebutton.gif');
+  background-repeat: no-repeat;
+  display: block;
+  height: 40px;     /* IE: height including padding */
+  max-height: 28px; /* Non-IE: height excluding padding (IE doesn't recognize max-height!) */
+  overflow: hidden; /* IE: hide overflow caused by button text */
+  margin: 5px 0px;
+  padding: 6px 12px 6px 0px;
+  font-weight: bold;
+  font-size: 15pt;
+  line-height: 100%;
+  text-align: center;
+  /*text-shadow: #840 3px 3px 2px;*/
+}
+
+div.nav a:link {
+  background-position: 0px 0px;
+  color: #ff8800;
+}
+
+div.nav a:visited {
+  background-position: 0px 0px;
+  color: #dd6600;
+}
+
+div.nav a:hover {
+  background-position: 0px -40px;
+  color: #ffcc22;
+}
+
+div.nav a:active {
+  background-position: 0px -80px;
+  color: #ffee44;
+}
+
+/* Box Model: Bottom */
+div.bottom {
+  float: left;
+  clear: both;
+  margin: 10px 0px;
+  text-align: left;
+  vertical-align: bottom;
+  width: 160px;
+  position: relative;
+  top: auto;
+  bottom: 0px;
+  left: 0px;
+  right: auto;
+}
+
+div.bottom a {
+  /*display: block;*/
+}
+
+div.bottom p {
+  font-size: 12px;
+  color: #666666;
+  line-height: 100%;
+}
+
+/* Button Style */
+button {
+  background-image: url('button.gif');
+  background-repeat: no-repeat;
+  display: inline;
+  width: 100px;
+  height: 32px;     /* IE: height including padding */
+  max-height: 32px; /* Non-IE: height excluding padding (IE doesn't recognize max-height!) */
+  overflow: hidden; /* IE: hide overflow caused by button text */
+  margin: 5px;
+  padding: 4px 0px;
+  border: none;
+  background-color: transparent;
+  background-position: 0px -32px;
+  color: #ff8800;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-position: 0px -64px;
+  color: #ffcc22;
+  text-decoration: underline;
+}
+
+button:active {
+  background-position: 0px -96px;
+  color: #ffee44;
+  text-decoration: underline;
+}
+
+button.disabled, button.disabled:hover, button.disabled:active {
+  background-position: 0px 0px;
+  color: #aaaaaa;
+  text-decoration: none;
+  cursor: default;
+}
+
+a.dog_link {
+  
+}
+
+a.edit {
+  font-size: 0.8em;
+}
+
+a.edit:before {
+  font-size: 0.8em;
+  content: "[ ";
+}
+
+a.edit:after {
+  font-size: 0.8em;
+  content: " ]";
+}
+
+dl.edit_mlf dt {
+  margin-left: 121px;
+}
+
+dl.edit_mlf dd {
+  margin-left: 161px;
+}
+
+dl.edit_mlf div {
+  height: 116px;
+}
+
+img.edit_fllf {
+  float: left;
+}
+
+img.edit_thumb {
+  border: 1px solid #000088;
+  padding: 5px;
+  margin: 2px;
+}
+
+div.list_element {
+  margin: 1px;
+}
+
+/* Nav Buttons */
+div.album_nav a, div.story_nav a {
+  background-image: url('button.gif');
+  background-repeat: no-repeat;
+  display: inline-block;
+  width: 100px;
+  height: 32px;     /* IE: height including padding */
+  max-height: 12px; /* Non-IE: height excluding padding (IE doesn't recognize max-height!) */
+  overflow: hidden; /* IE: hide overflow caused by button text */
+  margin: 4px;
+  padding: 10px 2px;
+  font-weight: bold;
+  line-height: 100%;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  /*text-shadow: #840 3px 3px 2px;*/
+}
+
+div.album_nav a:link, div.story_nav a:link {
+  background-position: 0px -32px;
+  color: #ff8800;
+  text-decoration: none;
+}
+
+div.album_nav a:visited, div.story_nav a:visited {
+  background-position: 0px -32px;
+  color: #dd6600;
+  text-decoration: none;
+}
+
+div.album_nav a:hover, div.story_nav a:hover {
+  background-position: 0px -64px;
+  color: #ffcc22;
+  text-decoration: underline;
+}
+
+div.album_nav a:active, div.story_nav a:active {
+  background-position: 0px -96px;
+  color: #ffee44;
+  text-decoration: underline;
+}
+
+div.album_nav a.disabled, div.story_nav a.disabled {
+  background-position: 0px 0px;
+  color: #aaaaaa;
+  text-decoration: none;
+  cursor: default;
+}
+
+/* Album Styles */
+/* Album Index */
+/* now uses <dl> tag
+table.album_index {
+  border: none;
+  padding: 0px;
+  border-spacing: 2px;
+  border-collapse: collapse;
+  display: block;
+  margin: 5px 8%;
+}
+
+table.album_index caption {
+  padding: 0px;
+  color: #000;
+  font-weight: 500;
+  font-size: 13pt;
+  line-height: 120%;
+  text-align: center;
+  /*text-shadow: #444 2px 2px 1px;* /
+}
+
+table.album_index thead td {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+table.album_index td {
+  text-align: center;
+  font-weight: normal;
+}
+
+table.album_index td.album_index_col_a {
+  width: 40%;
+  text-align: left;
+  padding-left: 30px;
+}
+
+table.album_index td.album_index_col_b {
+  width: 22%;
+  text-align: center;
+}
+
+table.album_index td.album_index_col_c {
+  width: 22%;
+  text-align: right;
+  padding-right: 30px;
+} */
+
+/* Album Thumbnails */
+div.album_thumbs_div {
+  overflow: auto;
+  text-align: center;
+  margin: 0px auto;
+  padding: 0px;
+  height: 135px;
+  width: 100%;
+}
+
+table.album_thumbs {
+  border: none;
+  border-collapse: collapse;
+  overflow: hidden;
+  margin: 5px auto;
+}
+
+table.album_thumbs td {
+  background-color: #000088;
+  border: 3px ridge #aaaaaa;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+}
+
+table.album_thumbs td img {
+  width: 100px;
+}
+
+/* Album Image */
+div.album_img {
+  margin-top: 10px;
+  display: none;
+}
+
+img.album_img_img {
+  width: 600px;
+  /*height: 70%;*/
+}
+
+span.album_img_sdesc {
+  font-weight: bold;
+  display: block;
+}
+
+span.album_img_ldesc {
+  font-weight: normal;
+  display: block;
+}
+
+span.album_img_tdesc {
+  font-weight: normal;
+  font-style: italic;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Story Styles */
+/* Story Index */
+div.story_index a {
+  display: block;
+}
+
+/* Litters Styles */
+img.pdficon {
+  display: inline;
+  width: 16px;
+  height: 16px;
+}
+
+p.litter {
+  text-align: left;
+}
+
+span.litter_head, span.litter_pups, span.litter_co, span.litter_sire, span.litter_dam, span.litter_note {
+  padding: 0px;
+  display: block;
+}
+
+span.litter_head b, span.litter_pups b, span.litter_co b, span.litter_sire b, span.litter_dam b, span.litter_note b {
+  padding: 0px 5px 0px 0px;
+  text-indent: -5px;
+}
+
+span.litter_pups b {
+  color: #080;
+}
+
+span.litter_co b {
+  color: #880;
+}
+
+span.litter_sire b {
+  color: #008;
+}
+
+span.litter_dam b {
+  color: #800;
+}
+
+span.litter_note b {
+  color: #840;
+}
+
+/* Print Styles */
+@media print, embossed {
+  /* Hide Nav */
+  div.nav {
+    display: none;
+  }
+  
+  /* Hide Bottom */
+  div.bottom {
+    display: none;
+  }
+  
+  /* Fill Horizontal Space */
+  div.main {
+    margin-left: 0px;
+  }
+
+  /* Hide Header Image */
+  a.header {
+    display: none;
+  }
+  
+  /* Hide Abbreviation Highlight */
+  abbr {
+    cursor: default;
+    border: none;
+  }
+
+  /* Hide Link */
+  a.dog_link {
+    display: none;
+  }
+  
+  /* Hide Edit */
+  a.edit {
+    display: none;
+  }
+  
+  a.edit:before {
+    content: "";
+  }
+  
+  a.edit:after {
+    content: "";
+  }
+  
+  /* Force No Page Break */
+  div.list_element {
+    page-break-inside: avoid;
+  }
+}
+
+/* Limited Size Styles */
+@media handheld, tv {
+  body {
+    background: #fc2;
+  }
+
+  /* Move/Compress Nav */
+  div.nav {
+    text-align: left;
+    float: none;
+    vertical-align: top;
+    position: static;
+    overflow: auto;
+    width: auto;
+  }
+  
+  div.nav h5 {
+    display: inline;
+    text-align: left;
+  }
+  
+  div.nav h5:after {
+    content: ": ";
+  }
+  
+  div.nav a {
+    background: none;
+    display: inline;
+    height: auto;     /* IE: height including padding */
+    max-height: auto; /* Non-IE: height excluding padding (IE doesn't recognize max-height!) */
+    overflow: auto; /* IE: hide overflow caused by button text */
+    margin: 5px 10px;
+    padding: 6px 6px;
+    font-weight: normal;
+    font-size: 16pt;
+    line-height: 100%;
+    text-align: center;
+    /*text-shadow: #840 3px 3px 2px;*/
+  }
+  
+  /* Hide Bottom */
+  div.bottom {
+    display: none;
+  }
+  
+  /* Fill Horizontal Space */
+  div.main {
+    margin-left: 0px;
+  }
+
+  /* Hide Header Image */
+  a.header {
+    display: none;
+  }
+  
+  /* Hide Abbreviation Highlight */
+  abbr {
+    cursor: default;
+    border: none;
+  }
+}

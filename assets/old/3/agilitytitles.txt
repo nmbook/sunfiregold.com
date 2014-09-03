@@ -1,0 +1,26 @@
+MACH	Master Agility Champion
+MACH#	Master Agility Champion #
+NA	Novice Agility
+NAJ	Novice Agility Jumpers
+NAP	Novice Agility Preferred
+NJP	Novice Agility Jumpers Preferred
+NF  Novice Agility FAST
+NFP Novice Agility FAST Preferred
+OA	Open Agility
+OAJ	Open Agility Jumpers
+OAP Open Agility Preferred
+OJP Open Agility Jumpers Preferred
+OF  Open Agility FAST
+OFP Open Agility FAST Preferred
+AX	Agility Excellent
+AXJ	Agility Excellent Jumpers
+AXP Agility Excellent Preferred
+AJP Agility Excellent Jumpers Preferred
+XF  Agility Excellent FAST
+XFP Agility Excellent FAST Preferred
+MX	Master Agility Excellent
+MXJ	Master Agility Excellent Jumpers
+MXP Master Agility Excellent Preferred
+MJP Master Agility Excellent Jumpers Preferred
+MXF Master Agility Excellent FAST
+MFP Master Agility Excellent FAST Preferred

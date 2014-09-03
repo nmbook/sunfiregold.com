@@ -1,0 +1,28 @@
+[16-Aug-2012 11:57:54] PHP Warning:  Division by zero in /home2/sunfire1/public_html/util/thumb.php on line 20
+[16-Aug-2012 11:57:54] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home2/sunfire1/public_html/util/thumb.php on line 50
+[16-Aug-2012 11:57:54] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 67
+[16-Aug-2012 11:57:54] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 70
+[16-Aug-2012 11:58:00] PHP Warning:  Division by zero in /home2/sunfire1/public_html/util/thumb.php on line 20
+[16-Aug-2012 11:58:00] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home2/sunfire1/public_html/util/thumb.php on line 50
+[16-Aug-2012 11:58:00] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 67
+[16-Aug-2012 11:58:00] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 70
+[16-Aug-2012 11:58:07] PHP Warning:  Division by zero in /home2/sunfire1/public_html/util/thumb.php on line 20
+[16-Aug-2012 11:58:07] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home2/sunfire1/public_html/util/thumb.php on line 50
+[16-Aug-2012 11:58:07] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 67
+[16-Aug-2012 11:58:07] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 70
+[16-Aug-2012 11:58:12] PHP Warning:  Division by zero in /home2/sunfire1/public_html/util/thumb.php on line 20
+[16-Aug-2012 11:58:12] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home2/sunfire1/public_html/util/thumb.php on line 50
+[16-Aug-2012 11:58:12] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 67
+[16-Aug-2012 11:58:12] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 70
+[16-Aug-2012 11:58:18] PHP Warning:  Division by zero in /home2/sunfire1/public_html/util/thumb.php on line 20
+[16-Aug-2012 11:58:18] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home2/sunfire1/public_html/util/thumb.php on line 50
+[16-Aug-2012 11:58:18] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 67
+[16-Aug-2012 11:58:18] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 70
+[21-Oct-2012 11:50:37] PHP Warning:  Division by zero in /home2/sunfire1/public_html/util/thumb.php on line 20
+[21-Oct-2012 11:50:37] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home2/sunfire1/public_html/util/thumb.php on line 50
+[21-Oct-2012 11:50:37] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 67
+[21-Oct-2012 11:50:37] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 70
+[09-Nov-2012 18:49:16] PHP Warning:  Division by zero in /home2/sunfire1/public_html/util/thumb.php on line 20
+[09-Nov-2012 18:49:16] PHP Warning:  imagecreatetruecolor() [<a href='function.imagecreatetruecolor'>function.imagecreatetruecolor</a>]: Invalid image dimensions in /home2/sunfire1/public_html/util/thumb.php on line 50
+[09-Nov-2012 18:49:16] PHP Warning:  imagecopyresized(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 67
+[09-Nov-2012 18:49:16] PHP Warning:  imagejpeg(): supplied argument is not a valid Image resource in /home2/sunfire1/public_html/util/thumb.php on line 70

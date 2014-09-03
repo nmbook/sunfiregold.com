@@ -1,0 +1,24 @@
+<?php
+
+$templ_page_valid = TRUE;
+
+include_once('util/incl.php');
+
+db_connect();
+
+check_session();
+
+// start and <head> tags
+get_page_sect_head();
+
+// top of page
+get_page_sect_top();
+
+?>
+      <p>There was an error.</p>
+<?php
+
+// bottom of page
+get_page_sect_bottom();
+
+?>

@@ -1,0 +1,25 @@
+
+      <!--<p class="litter">
+        <span class="litter_head"><b>Litter born June 17, 2009:</b></span>
+        <span class="litter_pups"><b>Litter:</b> Seven males and one female; light to dark gold</span>
+        <span class="litter_sire"><b>Sire:</b> CT MACH2 Hytree Strike It Rich CD RAE XF ADHF <q class="m">Brinks</q> <a href="http://www.k9data.com/pedigree.asp?ID=170521" target="_blank" title="K9Data Entry">K9Data</a></span>
+        <span class="litter_dam"><b>Dam:</b> MACH Sunfire's Chasing Dreams UD RE MX MXJ OF CGC TDI <q class="f">Nikki</q> <a href="http://www.k9data.com/pedigree.asp?ID=157937" target="_blank" title="K9Data Entry">K9Data</a></span>
+        <span class="litter_note"><b>Notes:</b> Great Obedience and Agility dogs.<br/>
+        This is a Sunfire litter owned by Nancy Banask.</span>
+      </p>--> 
+      
+      <!--p class="litter">
+        <span class="litter_head"><b>Litter born November 3, 2009:</b></span>
+        <span class="litter_note"><b>Owned by:</b> James and Cathy Fellows, call 860-645-7961</span>
+        <span class="litter_pups"><b>Litter:</b> Five males and two females; all dark gold</span>
+        <span class="litter_sire"><b>Sire:</b> Sunfire's Causing a Ripple <q class="m">Ripple</q> <a href="http://www.k9data.com/pedigree.asp?ID=251912" target="_blank" title="K9Data Entry">K9Data</a></span>
+        <span class="litter_dam"><b>Dam:</b> Sunfire Clover Star Charm <q class="f">Clover</q> <a href="http://www.k9data.com/pedigree.asp?ID=355263" target="_blank" title="K9Data Entry">K9Data</a></span>
+        <span class="litter_note"><b>Notes:</b> One male and one female available.</span>
+      </p>00==--> 
+ 
+      
+      <p class="litter">
+        <span class="litter_head"><b>Litter due January 26, 2010:</b></span>
+        <span class="litter_sire"><b>Sire:</b> Can OTCH Sunfire Tydavent's Mr Woods Am. UD, NA, RE, Can. UD TD <q class="m">Woodie</q> <a href="http://www.k9data.com/pedigree.asp?ID=90123" target="_blank" title="K9Data Entry">K9Data</a></span>
+        <span class="litter_dam"><b>Dam:</b> Sunfire's Loaded Kimber <q class="f">Kimber</q> <a href="http://www.k9data.com/pedigree.asp?ID=246006" target="_blank" title="K9Data Entry">K9Data</a> <a href="pedigrees/shimmerxscuba-07.pdf" target="_blank" title="Poppins' Pedigree"><img src="pdficon.png" class="pdficon" title="This document requires Adobe Acrobat Reader" Alt="[PDF]" /> Pedigree</a></span>
+      </p--> 

@@ -1,0 +1,24 @@
+# -FrontPage-
+
+Redirect 301 /index.html /index.php
+Redirect 301 /albums.html /albums.php
+Redirect 301 /stories.html /stories.php
+Redirect 301 /litters.html /litters.php
+Redirect 301 /ourdogs.html /ourdogs.php
+Redirect 301 /links.html /links.php
+Redirect 301 /pedigrees.html /pedigrees.php
+
+IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */default/*
+
+<Limit GET POST>
+order deny,allow
+deny from all
+allow from all
+</Limit>
+<Limit PUT DELETE>
+order deny,allow
+deny from all
+</Limit>
+AuthName sunfiregold.com
+AuthUserFile /home/sunfire1/public_html/_vti_pvt/service.pwd
+AuthGroupFile /home/sunfire1/public_html/_vti_pvt/service.grp

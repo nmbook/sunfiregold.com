@@ -1,0 +1,53 @@
+[TEXT]
+Font="Comic Sans MS Not-Rotated"
+Size=75
+SizeUnit="px"
+Hinting=True
+ForceAutoHinter=False
+AntiAliasing=True
+Color=RGB(197,151,0,255)
+TextPoint=PNT(0,0)
+TextFormat="   %LOCATION"
+[IMAGE]
+NameFormat="SBBtn%TYPE.%LOCATION.png"
+Types=Dn,Ft,Up,Lt
+DNBase=FILE("SBBtnDn.png")
+FTBase=FILE("SBBtnFt.png")
+UPBase=FILE("SBBtnUp.png")
+LTBase=FILE("SBBtnLt.png")
+Locations=Index,Albums,Stories,Litters,Ourdogs,Links,Contactus
+IndexTxt=File("SBBtnTxt.index.png")
+AlbumsTxt=File("SBBtnTxt.albums.png")
+StoriesTxt=File("SBBtnTxt.stories.png")
+LittersTxt=File("SBBtnTxt.litters.png")
+OurdogsTxt=File("SBBtnTxt.ourdogs.png")
+LinksTxt=File("SBBtnTxt.links.png")
+ContactusTxt=File("SBBtnTxt.contactus.png")
+IndexName="Home and News"
+AlbumsName="Albums"
+StoriesName="Stories"
+LittersName="Litters"
+OurdogsName="Our Dogs"
+LinksName="Links"
+ContactusName="Contact Us"
+[TOCOMBINE]
+Method=
+ Method{
+  file_open(%LOCATIONTxt)
+  edit_selectall(%CURRENT)
+  edit_copy()
+  file_close(%CURRENT)
+  file_open(%TYPEBase)
+  edit_paste(%CURRENT)
+  scriptfu("Shadow > Drop-Shadow",options[
+   OffsetX=1,
+   OffsetY=1,
+   BlurRadius=2,
+   Color=RGB(0,0,0,0),
+   Opacity=80,
+   AllowResizing=False])
+  layer_anchor(%TOPLAYER)
+  layer_mergedown(%TOPLAYER)
+  edit_selectnone()
+  file_saveas("SBBtn%TYPE.%LOCATION.png)
+ }

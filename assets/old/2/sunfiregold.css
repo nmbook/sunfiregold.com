@@ -1,0 +1,320 @@
+/*//SFG CSS//*/
+/*Last Edited on: 6/22/2006*/
+body
+{
+	background: #fc2 url('sidebar/BG.gif') repeat-y;
+	color: black;
+	line-height: 120%;
+	margin: 0px;
+	padding: 0px;
+	font-family: tahoma,arial,sans-serif;
+	font-size: 12pt;
+	font-weight: normal;
+	text-align: left;
+}
+
+/*Noscript*/
+span.noscript {
+    text-align: center;
+}
+
+span.noscriptred {
+    color: #f00;
+}
+
+/*Links*/
+a {
+	font-weight: bold;
+}
+
+a:link, a:visited {
+	color: #44f;
+    text-decoration: none;
+}
+
+a:hover, a:active {
+	color: #88f;
+	text-decoration: underline;
+}
+
+a.nav:link, a.nav:visited, a.logo:link, a.logo:visited, div.album_thumbs td a:link, div.album_thumbs td a:visited {
+    opacity: 0.7;
+}
+
+a.nav:hover, a.nav:active, a.logo:hover, a.logo:active, div.album_thumbs td a:hover, div.album_thumbs td a:active {
+    opacity: 1.0;
+}
+
+img.nav, img.logo, div.album_thumbs img {
+    filter: alpha(opacity=70);
+    line-height: 0px;
+}
+
+img {
+	border: none;
+    line-height: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+img.divleft, img.divright, img.divmid {
+    height: 4px;
+}
+
+img.divleft, img.divright {
+    width: 4px;
+}
+
+img.divmid {
+    width: 90%;
+}
+
+/*Tables*/
+table.page {
+	border: none;
+    width: 100%;
+	padding: 0px;
+    border-spacing: 0px;
+}
+
+td.nav {
+    width: 150px;
+    vertical-align: top;
+}
+
+td.main {
+    text-align: center;
+    vertical-align: top;
+}
+
+div.nav {
+    width: 150px;
+    position: fixed;
+    top: 10px;
+    left: 0px;
+    right: auto;
+    bottom: auto;
+    text-align: left;
+}
+
+div.top {
+    position: fixed;
+    top: auto;
+    left: 10px;
+    right: auto;
+    bottom: 10px;
+    width: 150px;
+    text-align: left;
+}
+
+table, tr, td {
+	vertical-align: top;
+}
+
+table.album_index {
+	border: none;
+	padding: 0px;
+    border-spacing: 2px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table.album_index thead td {
+    width: 30%;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+table.album_index td {
+    width: 30%;
+    text-align: center;
+    font-weight: bold;
+}
+
+div.album_nav {
+    font-weight: bold;
+}
+
+div.album_thumbs {
+    height: 130px;
+    overflow: auto;
+    text-align: center;
+}
+
+div.album_thumbs table {
+    border-spacing: 2px;
+    padding: 0px;
+    border: 2px;
+    background-color: #008;
+    border-collapse: collapse;
+}
+
+div.album_thumbs table td {
+    border: medium inset #aaa;
+}
+
+div.stories {
+    text-align: center;
+    font-weight: 600;
+}
+
+div.story {
+    text-align: left;
+    font-weight: 500;
+    text-indent: 10px;
+}
+
+div.story p:first-letter, div.story li:first-letter {
+    font-weight: 600;
+}
+
+div.album_thumbs td {
+    padding: 0px;
+    width: 100px;
+    height: 100px;
+    vertical-align: middle;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+}
+
+img.album_img {
+    width: 0px;
+    height: 0px;
+}
+
+div.album_img {
+    font-weight: 600;
+}
+
+span.album_ldesc {
+    font-weight: 500;
+}
+
+span.album_datetime {
+    font-weight: 400;
+}
+
+b {
+    font-weight: 600;
+}
+
+h1 {
+    padding: 0px;
+    margin: 0px;
+    color: #080;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 150%;
+    text-align: center;
+}
+
+h2 {
+    padding: 0px;
+    margin: 0px;
+    color: #088;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 140%;
+    text-align: center;
+}
+
+h3 {
+    padding: 0px;
+    margin: 0px;
+    color: #008;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 130%;
+    text-align: center;
+}
+
+h4 {
+    padding: 0px;
+    margin: 0px;
+    color: #800;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 120%;
+    text-align: center;
+}
+
+
+h5 {
+    padding: 0px;
+    margin: 0px;
+    color: #666;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 120%;
+    text-align: center;
+}
+
+h6 {
+    padding: 0px;
+    margin: 0px;
+    color: #000;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 120%;
+    text-align: center;
+}
+
+span.lastmod {
+    font-size: 12px;
+    color: #666;
+    line-height: 0px;
+}
+
+dl {
+    text-align: left;
+}
+
+dd {
+    font-style: italic;
+}
+
+q.m {
+    color: #000088;
+}
+
+q.f {
+    color: #880000;
+}
+
+q:lang(en) {
+    quotes: '“' '”';
+}
+
+q:lang(es), q:lang(fr) {
+    quotes: '«' '»';
+}
+
+p.litter {
+    text-align: left;
+}
+
+span.litter_pups b {
+    color: #080;
+}
+
+span.litter_co b {
+    color: #880;
+}
+
+span.litter_sire b {
+    color: #008;
+}
+
+span.litter_dam b {
+    color: #800;
+}
+
+span.litter_note b {
+    color: #840;
+}
+
+p.leftbold {
+    font-weight: 600;
+    text-align: left;
+}
