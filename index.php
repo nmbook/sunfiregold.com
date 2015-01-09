@@ -25,10 +25,11 @@ get_page_sect_top();
       </p>
 
       <h3>SUNFIRE is 2014 AKC Breeder of the Year for Obedience!</h3>
-      
-      <a href="albums.php?id=63#img_1"><img width="320" src="albums/botyob2014/letter.jpg" alt="AKC Letter acknowledging Breeder of the Year in Obedience for 2014" /></a>
-      <a href="albums.php?id=63#img_2"><img width="320" src="albums/botyob2014/family.jpg" alt="Babara, Michael, and Ripley x Indigo puppy, with rosette" /></a>
-      <a href="albums.php?id=63#img_3"><img width="320" src="albums/botyob2014/rosette.jpg" alt="Rosette in shadow box" /></a>
+
+      <style> img.cen-il-fr { display: inline; vertical-align: middle; border: 3px outset #008; } </style>
+      <a href="albums.php?id=63#img_1"><img class="cen-il-fr" width="320" src="albums/botyob2014/letter.jpg" alt="AKC Letter acknowledging Breeder of the Year in Obedience for 2014" /></a>
+      <a href="albums.php?id=63#img_2"><img class="cen-il-fr" width="320" src="albums/botyob2014/family.jpg" alt="Babara, Michael, and Ripley x Indigo puppy, with rosette" /></a>
+      <a href="albums.php?id=63#img_3"><img class="cen-il-fr" width="320" src="albums/botyob2014/rosette.jpg" alt="Rosette in shadow box" /></a>
 
       <p>This is also a reflection of the dedication and talent of the many people who have trusted our breeding program and accomplished amazing things with our puppies. &nbsp;We must also acknowledge the contribution of the stud dogs and their owners that made such an impact on our breeding program.</p>
       
