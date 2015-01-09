@@ -17,12 +17,11 @@ get_page_sect_top();
 ?>
       <h1>Welcome!</h1>
 
-      <hr />
-
       <p class="leftbold">
-        Golden Retrievers bred for soundness, trainability, retrieving instinct, and the desire to please.<br />
-        Since 1971.
+        Golden Retrievers bred for soundness, trainability, retrieving instinct, and the desire to please. &nbsp;Since 1971.
       </p>
+      
+      <hr />
 
       <h3>SUNFIRE is 2014 AKC Breeder of the Year for Obedience!</h3>
 
