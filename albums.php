@@ -1462,7 +1462,7 @@ function loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, changeFragment) {
 <?php
       if (strlen($ldesc) > 0) {
 ?>
-          <dd>Subtext: <?php echo stml_parse($ldesc); ?></dd>
+          <dd>Subtitle: <?php echo stml_parse($ldesc); ?></dd>
 <?php
       }
       
@@ -1514,7 +1514,7 @@ function loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, changeFragment) {
         <input type="hidden" name="img_count" id="img_count" value="1">
         <label for="desc_short_1">Title:</label>
         <input name="desc_short_1" type="text" maxlength="100" value="">
-        <label for="desc_long_1">Subtext:</label>
+        <label for="desc_long_1">Subtitle:</label>
         <input name="desc_long_1" class="long" type="text" maxlength="200" value="">
         <label for="desc_time_1">Taken on:</label>
         <input name="desc_time_1" type="text" maxlength="50" value="">
@@ -1560,7 +1560,7 @@ function loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, changeFragment) {
       <form method="post" action="albums.php?act=<?php echo $act_n; ?>&id=<?php echo $row['id']; ?>&img=<?php echo $image_row['id']; ?>&submit=1">
         <label for="desc_short">Title:</label>
         <input name="desc_short" type="text" maxlength="100" value="<?php echo htmlentities($sdesc); ?>">
-        <label for="desc_long">Subtext:</label>
+        <label for="desc_long">Subtitle:</label>
         <input name="desc_long" class="long" type="text" maxlength="200" value="<?php echo htmlentities($ldesc); ?>">
         <label for="desc_time">Taken on:</label>
         <input name="desc_time" type="text" maxlength="50" value="<?php echo htmlentities($tdesc); ?>">

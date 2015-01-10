@@ -230,7 +230,7 @@ switch ($act) {
     $o_c = $row['own_cat'];
     $o_s = $row['own_state'];
     $o_b_isshown = ($o_s == 'LW' || $o_s == 'SW' || $o_s == 'OW' || $o_s == 'OB' || $o_s == 'A' || $o_s == 'X');
-    $o_b_text = array('LW' => 'Live'.($o_c == 'PAST' ? 'd' : 's').' with', 'SW' => 'Shared with', 'OW' => 'Owned with', 'OB' => 'Owned by', 'A' => 'Available for', 'X' => 'Custom Subtext:');
+    $o_b_text = array('LW' => 'Live'.($o_c == 'PAST' ? 'd' : 's').' with', 'SW' => 'Shared with', 'OW' => 'Owned with', 'OB' => 'Owned by', 'A' => 'Available for', 'X' => 'Custom Subtitle:');
     $h_c = $row['honor_cat'];
     $gender = $row['gender'];
     $dog_past = ($row['date_death_mask'] > 0);
@@ -287,8 +287,8 @@ switch ($act) {
           <option value="AS"<?php if ($o_s == 'AS') echo ' selected="selected"'; ?>>Available for sale</option>
           <option value="AA"<?php if ($o_s == 'AA') echo ' selected="selected"'; ?>>Available for adoptive home</option>
           <option value="A"<?php if ($o_s == 'A') echo ' selected="selected"'; ?>>Available for...</option>
-          <option value="X"<?php if ($o_s == 'X') echo ' selected="selected"'; ?>>... (Custom Subtext)</option>
-          <option value="NONE"<?php if ($o_s == 'NONE') echo ' selected="selected"'; ?>>Us (No Subtext)</option>
+          <option value="X"<?php if ($o_s == 'X') echo ' selected="selected"'; ?>>... (Custom Subtitle)</option>
+          <option value="NONE"<?php if ($o_s == 'NONE') echo ' selected="selected"'; ?>>Us (No Subtitle)</option>
         </select>
         <div id="sect_ob"<?php if ($o_b_isshown) echo ' style="display: block;"'; ?>>
           <label for="own_by"><?php echo $o_b_text[$o_s]; ?>:</label>
