@@ -978,6 +978,13 @@ switch ($act) {
         $sdesc = $row_image['desc_short'];
         $ldesc = $row_image['desc_long'];
         $tdesc = $row_image['desc_time'];
+        if (file_exists("./albums/$location")) {
+          $imginfo = getimagesize("./albums/$location");
+          $fsize = "$imginfo[0] x $imginfo[1]";
+        } else {
+          $fsize = 'Unknown size';
+        }
+
         if ($row_image['index'] == 0) {
           $append = '  (this picture is hidden)';
         } else {
@@ -989,9 +996,10 @@ switch ($act) {
                      src="<?php echo stml_parse($thumb); ?>"
                      alt="<?php echo stml_parse($sdesc); ?>"
                      title="<?php echo stml_parse($sdesc.$append); ?>"
-                     ldesc="<?php echo stml_parse($ldesc); ?>"
-                     tdesc="<?php echo stml_parse($tdesc); ?>"
-                     loc="<?php echo htmlentities($location); ?>" />
+                     data-ldesc="<?php echo stml_parse($ldesc); ?>"
+                     data-tdesc="<?php echo stml_parse($tdesc); ?>"
+                     data-loc="<?php echo htmlentities($location); ?>"
+                     data-fsize="<?php echo $fsize; ?>" />
               </td>
 <?php
         $count++;
@@ -1022,7 +1030,7 @@ switch ($act) {
         <h6>Navigate through pictures:</h6>
         <button class="album_img_nav" id="album_img_nav_first">&lt;&lt;-- First</button>
         <button class="album_img_nav" id="album_img_nav_prev">&lt;-- Previous</button>
-        <button class="album_img_nav" id="album_img_nav_hide">Hide</button>
+        <button class="album_img_nav" id="album_img_nav_full">View Full</button>
         <button class="album_img_nav" id="album_img_nav_next">Next --&gt;</button>
         <button class="album_img_nav" id="album_img_nav_last">Last --&gt;&gt;</button>
       </div>
@@ -1083,8 +1091,8 @@ $(document).ready(function() {
     viewImage(currImageNum - 1);
   });
   
-  $('button#album_img_nav_hide').click(function() {
-    viewImage(0);
+  $('button#album_img_nav_full').click(function() {
+    // TODO view full
   });
   
   $('button#album_img_nav_next').click(function() {
@@ -1114,7 +1122,7 @@ $(document).ready(function() {
   
   currImageNum = 0;
   loadText('Click a thumbnail above to see the picture larger with its description.',
-  '', '', 0, null, false);
+  '', '', '', 0, null, false);
   $('#album_img').show();
   
   if (!checkFragment()) {
@@ -1182,30 +1190,33 @@ function viewImage(imgNum) {
   }
   if (imgNum == 0) {
     loadText('Click a thumbnail above to see the picture larger with its description.',
-    '', '', 0, null, true);
+    '', '', '', 0, null, true);
     
     var img = $('#album_img_img');
     img.slideUp();
   } else {
-    var img, thumb, path;
+    var img, thumb, path, pathFull;
+    var sdesc, ldesc, tdesc, fsize;
     img = $('#album_img_img');
     thumb = $('#img_' + imgNum);
-    path = 'util/thumb.php?src=../albums/' + thumb.attr('loc') + '&conv=view1024';
+    pathFull = 'albums/' + thumb.attr('data-loc');
+    path = 'util/thumb.php?src=../' + pathFull + '&conv=view1024';
     sdesc = thumb.attr('title');
-    ldesc = thumb.attr('ldesc');
-    tdesc = thumb.attr('tdesc');
+    ldesc = thumb.attr('data-ldesc');
+    tdesc = thumb.attr('data-tdesc');
+    fsize = thumb.attr('data-fsize');
     
     if (currImageNum >= 1) {
       if (img.attr('src') == path) {
         img.css({'opacity': 1});
-        loadText(sdesc, ldesc, tdesc, imgNum, thumb, true);
+        loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, true);
       } else {
         loadText('Loading...', '', '', -1, null, true);
         img.css({'opacity': 0});
         img.bind('load', function() {
           $(this).animate({'opacity': 1});
           $(this).unbind();
-          loadText(sdesc, ldesc, tdesc, imgNum, thumb, true);
+          loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, true);
         });
         img.attr({
           'src': '',
@@ -1215,10 +1226,10 @@ function viewImage(imgNum) {
         });
       }
     } else {
-      loadText('Loading...', '', '', -1, null, true);
+      loadText('Loading...', '', '', '', -1, null, true);
       img.bind('load', function() {
         $(this).slideDown('swing', function() {
-          loadText(sdesc, ldesc, tdesc, imgNum, thumb, true);
+          loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, true);
         });
         $(this).unbind();
       });
@@ -1239,7 +1250,7 @@ function viewImage(imgNum) {
   }
 }
 
-function loadText(sdesc, ldesc, tdesc, imgNum, thumb, changeFragment) {
+function loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, changeFragment) {
   var span;
   span = $('#album_img_sdesc');
   if (sdesc == '')
@@ -1285,11 +1296,11 @@ function loadText(sdesc, ldesc, tdesc, imgNum, thumb, changeFragment) {
     enableBtn(btn, $($(thumb.parent().siblings()[length - 2]).children('img')).attr('sdesc'));
   }
  
-  btn = $('#album_img_nav_hide');
+  btn = $('#album_img_nav_full');
   if (imgNum <= 0) {
     disableBtn(btn);
   } else {
-    enableBtn(btn, "Hide large image");
+    enableBtn(btn, "View full size (" + fsize + ")");
   }
   
   if (changeFragment) {
