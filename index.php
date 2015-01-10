@@ -19,7 +19,7 @@ get_page_sect_top();
 
       <h1>Welcome!</h1>
 
-      <p class="leftbold">
+      <p style="text-align: center;">
         Golden Retrievers bred for soundness, trainability, retrieving instinct, and the desire to please. &nbsp;Since 1971.
       </p>
       
@@ -73,7 +73,7 @@ get_page_sect_top();
 
       <h3>Breeze and Nate</h3>
       
-      <img class="cen-il-fr" src="util/thumb.php?src=../albums/breeze/frontpage.jpg&conv=view" alt="Nate and Breeze with reserve trophy and ribbon at Big E" />
+      <img class="cen-il-fr" src="util/thumb.php?src=../albums/breeze/frontpage.jpg&conv=view1024" alt="Nate and Breeze with reserve trophy and ribbon at Big E" />
       
       <p class="leftbold">
         This is Breeze and Nate at the Big E in September, 2007 after winning Reserve Highest Scoring Off-Leash Obedience in the 4-H dog show.<br />
