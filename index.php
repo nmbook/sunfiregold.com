@@ -27,7 +27,7 @@ get_page_sect_top();
 
       <style> img.cen-il-fr { display: inline; vertical-align: middle; border: 3px outset #008; } </style>
       <a href="albums.php?id=63#img_1"><img class="cen-il-fr" width="320" src="albums/botyob2014/letter.jpg" alt="AKC Letter acknowledging Breeder of the Year in Obedience for 2014" /></a>
-      <a href="albums.php?id=63#img_2"><img class="cen-il-fr" width="320" src="albums/botyob2014/family.jpg" alt="Babara, Michael, and Ripley x Indigo puppy, with rosette" /></a>
+      <a href="albums.php?id=63#img_2"><img class="cen-il-fr" width="320" src="albums/botyob2014/family.JPG" alt="Babara, Michael, and Ripley x Indigo puppy, with rosette" /></a>
       <a href="albums.php?id=63#img_3"><img class="cen-il-fr" width="320" src="albums/botyob2014/rosette.jpg" alt="Rosette in shadow box" /></a>
 
       <p>This is also a reflection of the dedication and talent of the many people who have trusted our breeding program and accomplished amazing things with our puppies. &nbsp;We must also acknowledge the contribution of the stud dogs and their owners that made such an impact on our breeding program.</p>
@@ -60,7 +60,7 @@ get_page_sect_top();
       
       <h3>Sunfire's Honor Roll</h3>
       
-      <p>Check out the new <a href="honordogs.php">Sunfire's Honor Roll</a> page! This page lists dogs who have achieved in show, field, agility, or obedience.</p>
+      <p>Check out the <a href="honordogs.php">Sunfire’s Honor Roll</a> page! &nbsp;This page lists dogs that have achieved high levels in show, field, obedience, and agility as well as outstanding producers.</p>
       
       <hr />
       
