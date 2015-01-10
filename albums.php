@@ -1030,7 +1030,7 @@ switch ($act) {
         <h6>Navigate through pictures:</h6>
         <button class="album_img_nav" id="album_img_nav_first">&lt;&lt;-- First</button>
         <button class="album_img_nav" id="album_img_nav_prev">&lt;-- Previous</button>
-        <button class="album_img_nav" id="album_img_nav_full">View Full</button>
+        <button class="album_img_nav" id="album_img_nav_full">View Fullsize</button>
         <button class="album_img_nav" id="album_img_nav_next">Next --&gt;</button>
         <button class="album_img_nav" id="album_img_nav_last">Last --&gt;&gt;</button>
       </div>
@@ -1040,6 +1040,7 @@ var currImageNum;
 var length;
 var fragChecker;
 var currLoc;
+var currFilePath = null;
 $(document).ready(function() {
   length = $('table.album_thumbs tbody tr td').length;
   
@@ -1092,7 +1093,9 @@ $(document).ready(function() {
   });
   
   $('button#album_img_nav_full').click(function() {
-    // TODO view full
+    if (currFilePath !== null) {
+      window.open(currFilePath, '_blank');
+    }
   });
   
   $('button#album_img_nav_next').click(function() {
@@ -1147,8 +1150,9 @@ function checkFragment() {
     if (!isFinite(imgNum) || imgNum < 0 || imgNum > length) {
       imgNum = 0;
     }
-    return viewImage(imgNum);
+    var changed = viewImage(imgNum);
     currLoc = loc;
+    return changed;
   }
   fragChecker = setTimeout('checkFragment();', 100);
   return false;
@@ -1191,6 +1195,7 @@ function viewImage(imgNum) {
   if (imgNum == 0) {
     loadText('Click a thumbnail above to see the picture larger with its description.',
     '', '', '', 0, null, true);
+    currFilePath = null;
     
     var img = $('#album_img_img');
     img.slideUp();
@@ -1210,6 +1215,7 @@ function viewImage(imgNum) {
       if (img.attr('src') == path) {
         img.css({'opacity': 1});
         loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, true);
+        currFilePath = pathFull;
       } else {
         loadText('Loading...', '', '', -1, null, true);
         img.css({'opacity': 0});
@@ -1217,6 +1223,7 @@ function viewImage(imgNum) {
           $(this).animate({'opacity': 1});
           $(this).unbind();
           loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, true);
+          currFilePath = pathFull;
         });
         img.attr({
           'src': '',
@@ -1224,12 +1231,14 @@ function viewImage(imgNum) {
           'alt': sdesc,
           'title': sdesc
         });
+        currFilePath = null;
       }
     } else {
       loadText('Loading...', '', '', '', -1, null, true);
       img.bind('load', function() {
         $(this).slideDown('swing', function() {
           loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, true);
+          currFilePath = pathFull;
         });
         $(this).unbind();
       });
@@ -1239,6 +1248,7 @@ function viewImage(imgNum) {
         'alt': sdesc,
         'title': sdesc
       });
+      currFilePath = null;
     }
   }
   
