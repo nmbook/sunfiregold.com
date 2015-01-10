@@ -31,6 +31,30 @@ if (file_exists($src)) {
         $height -= $diff;
       }
       break;
+    case 'thumbsq320':
+      $newwidth = $newheight = 320;
+      if ($width > $height) {
+        $diff = $width - $height;
+        $left = round($diff / 2);
+        $width -= $diff;
+      } elseif ($height > $width) {
+        $diff = $height - $width;
+        $top = round($diff / 2);
+        $height -= $diff;
+      }
+      break;
+    case 'thumbsq640':
+      $newwidth = $newheight = 640;
+      if ($width > $height) {
+        $diff = $width - $height;
+        $left = round($diff / 2);
+        $width -= $diff;
+      } elseif ($height > $width) {
+        $diff = $height - $width;
+        $top = round($diff / 2);
+        $height -= $diff;
+      }
+      break;
     case 'view':
       $newwidth = 320;
       if ($newwidth > $width) $newwidth = $width;
