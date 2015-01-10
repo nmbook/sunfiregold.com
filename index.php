@@ -15,6 +15,8 @@ get_page_sect_head();
 get_page_sect_top();
 
 ?>
+      <style> .cen-il-fr { display: inline; vertical-align: middle; border: 3px outset #008; } </style>
+
       <h1>Welcome!</h1>
 
       <p class="leftbold">
@@ -25,10 +27,9 @@ get_page_sect_top();
 
       <h3>SUNFIRE is 2014 AKC Breeder of the Year for Obedience!</h3>
 
-      <style> img.cen-il-fr { display: inline; vertical-align: middle; border: 3px outset #008; } </style>
-      <a href="albums.php?id=63#img_1"><img class="cen-il-fr" width="320" src="albums/botyob2014/letter.jpg" alt="AKC Letter acknowledging Breeder of the Year in Obedience for 2014" /></a>
-      <a href="albums.php?id=63#img_2"><img class="cen-il-fr" width="320" src="albums/botyob2014/family.JPG" alt="Babara, Michael, and Ripley x Indigo puppy, with rosette" /></a>
-      <a href="albums.php?id=63#img_3"><img class="cen-il-fr" width="320" src="albums/botyob2014/rosette.jpg" alt="Rosette in shadow box" /></a>
+      <a href="albums.php?id=63#img_1"><img class="cen-il-fr" width="320" src="util/thumb.php?src=../albums/botyob2014/letter.jpg&conv=thumbsq320" alt="AKC Letter acknowledging Breeder of the Year in Obedience for 2014" /></a>
+      <a href="albums.php?id=63#img_2"><img class="cen-il-fr" width="320" src="util/thumb.php?src=../albums/botyob2014/family.JPG&conv=thumbsq320" alt="Babara, Michael, and Ripley x Indigo puppy, with rosette" /></a>
+      <a href="albums.php?id=63#img_3"><img class="cen-il-fr" width="320" src="util/thumb.php?src=../albums/botyob2014/rosette.jpg&conv=thumbsq320" alt="Rosette in shadow box" /></a>
 
       <p>This is also a reflection of the dedication and talent of the many people who have trusted our breeding program and accomplished amazing things with our puppies. &nbsp;We must also acknowledge the contribution of the stud dogs and their owners that made such an impact on our breeding program.</p>
       
@@ -38,13 +39,13 @@ get_page_sect_top();
       
       <p>Jodie Broussard shared this video compilation of some puppy pictures!</p>
       
-      <iframe title="YouTube video player" width="480" height="360" src="http://www.youtube.com/embed/30AvudaCiGs?rel=0" frameborder="0" allowfullscreen></iframe>
+      <iframe class="cen-il-fr" title="YouTube video player" width="480" height="360" src="http://www.youtube.com/embed/30AvudaCiGs?rel=0" frameborder="0" allowfullscreen></iframe>
       
       <hr />
       
       <h3>Breeze Puppy and Annabeth</h3>
       
-      <img width="640" src="albums/brinksxbreeze-12/IMG_9866.jpg" alt="Brinks and Breeze Puppy Looking at Annabeth" />
+      <img width="640" class="cen-il-fr" src="util/thumb.php?src=../albums/brinksxbreeze-12/IMG_9866.jpg&conv=thumbsq640" alt="Brinks and Breeze Puppy Looking at Annabeth" />
       
       <p>Annabeth and Brinks and Breeze Puppy watching each other, wondering who the other is.</p>
       
@@ -66,13 +67,13 @@ get_page_sect_top();
       
       <h3>Chloe Puppies Howling</h3>
       
-      <iframe title="YouTube video player" width="480" height="360" src="http://www.youtube.com/embed/GmkjtrgSD2w?rel=0" frameborder="0" allowfullscreen></iframe>
+      <iframe class="cen-il-fr" title="YouTube video player" width="480" height="360" src="http://www.youtube.com/embed/GmkjtrgSD2w?rel=0" frameborder="0" allowfullscreen></iframe>
       
       <hr />
 
       <h3>Breeze and Nate</h3>
       
-      <img src="albums/breeze/frontpage.jpg" alt="Nate and Breeze with reserve trophy and ribbon at Big E" />
+      <img class="cen-il-fr" src="util/thumb.php?src=../albums/breeze/frontpage.jpg&conv=view" alt="Nate and Breeze with reserve trophy and ribbon at Big E" />
       
       <p class="leftbold">
         This is Breeze and Nate at the Big E in September, 2007 after winning Reserve Highest Scoring Off-Leash Obedience in the 4-H dog show.<br />
