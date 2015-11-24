@@ -12,6 +12,8 @@ $_DB = array (
   'dbname' => ''
 );
 
+include_once('db_creds.php');
+
 function db_connect() {
   global $_DB;
   @mysql_connect($_DB['host'], $_DB['uname'], $_DB['upass']) or
