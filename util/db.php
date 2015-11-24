@@ -65,16 +65,6 @@ function db_setup() {
   );
   
   db_query(
-"CREATE TABLE IF NOT EXISTS `$_DB[dbname]`.`dog_links` (
- `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
- `dog_id` INT(11) NOT NULL,
- `name` VARCHAR(20) NOT NULL,
- `location` VARCHAR(100) NOT NULL
-)",
-'An error has occured when creating the <b>dog_links</b> table:'
-  );
-  
-  db_query(
 "CREATE TABLE IF NOT EXISTS `$_DB[dbname]`.`pedigrees` (
  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
  `sire_id` INT(11) NOT NULL,
