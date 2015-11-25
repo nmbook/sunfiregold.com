@@ -55,12 +55,11 @@ if ($is_signed_in) {
       case 1:
       case 2:
         $dateb = isset($_POST['litter_date']) ? $_POST['litter_date'] : '';
-        $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
-        $born = (bool) (isset($_POST['litter_verb']) ? $_POST['litter_verb'] : 0);
-        if ($born == '') $born = '0';
+        $dateb_v = intval(preg_match('/\d{4}-\d{2}-\d{2}/', $dateb));
+        $born = isset($_POST['litter_verb']) ? intval($_POST['litter_verb']) : 0;
         $ownb = isset($_POST['own_by']) ? $_POST['own_by'] : '';
-        $countm = isset($_POST['count_males']) ? $_POST['count_males'] : 0;
-        $countf = isset($_POST['count_females']) ? $_POST['count_females'] : 0;
+        $countm = isset($_POST['count_males']) ? intval($_POST['count_males']) : 0;
+        $countf = isset($_POST['count_females']) ? intval($_POST['count_females']) : 0;
         $descs = isset($_POST['desc_short']) ? $_POST['desc_short'] : '';
         $descl = isset($_POST['desc_long']) ? $_POST['desc_long'] : '';
         $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
@@ -77,7 +76,7 @@ if ($is_signed_in) {
           "INSERT INTO `$_DB[dbname]`.`litters` (
            ".($dateb_v ? "`date_birth`," : '')."
            `born`, `own_by`,
-           ".($born ? "`count_males`, `count_females`, `desc_short`," : '')."
+           ".($born == 1 ? "`count_males`, `count_females`, `desc_short`," : '')."
            `desc_long`,
            ".($sid_v ? "`sire_id`," : '')."
            ".($did_v ? "`dam_id`," : '')."
@@ -85,9 +84,9 @@ if ($is_signed_in) {
            `active`
            ) VALUES (
            ".($dateb_v ? "'$dateb'," : '')."
-           '$born',
+           '".db_sanitize($born)."',
            '".db_sanitize($ownb)."',
-           ".($born ? "'".db_sanitize($countm)."',
+           ".($born == 1 ? "'".db_sanitize($countm)."',
                        '".db_sanitize($countf)."',
                        '".db_sanitize($descs)."'," : '')."
            '".db_sanitize($descl)."',
@@ -101,8 +100,8 @@ if ($is_signed_in) {
           "UPDATE `$_DB[dbname]`.`litters`
            SET
             ".($dateb_v ? "`date_birth` = '$dateb'," : '')."
-            `born` = '$born', `own_by` = '".db_sanitize($ownb)."',
-            ".($born ? "`count_males` = '".db_sanitize($countm)."',
+            `born` = '".db_sanitize($born)."', `own_by` = '".db_sanitize($ownb)."',
+            ".($born == 1 ? "`count_males` = '".db_sanitize($countm)."',
                         `count_females` = '".db_sanitize($countf)."',
                         `desc_short` = '".db_sanitize($descs)."'," : '')."
             `desc_long` = '".db_sanitize($descl)."',
@@ -195,13 +194,21 @@ switch ($act) {
 <?php
     
     $order_by = '`date_birth` ASC';
-    echo print_litter_list('`active` = 1 AND `born` = 1', $order_by);
-    echo print_litter_list('`active` = 1 AND `born` = 0', $order_by);
+    $o = '';
+    $o .= print_litter_list('`active` = 1 AND `born` = 3', $order_by);
+    $o .= print_litter_list('`active` = 1 AND `born` = 2', $order_by);
+    $o .= print_litter_list('`active` = 1 AND `born` = 1', $order_by);
+    $o .= print_litter_list('`active` = 1 AND `born` = 0', $order_by);
+    if ($o == '') {
+        $o = '      <p><i>There are no litters here. Please check back soon!</i></p>';
+    }
+    echo $o;
     
     if ($is_signed_in) {
 ?>
       <h3>Hidden Litters</h3>
 <?php
+      $order_by = '`date_birth` DESC';
       echo print_litter_list('`active` = 0', $order_by);
     }
     break;
@@ -221,10 +228,10 @@ switch ($act) {
                    'active' => 1);
     }
     
-    $born = (bool) $row['born'];
-    $c_m = (int) $row['count_males'];
-    $c_f = (int) $row['count_females'];
-    $active = (bool) $row['active'];
+    $born = intval($row['born']);
+    $c_m = intval($row['count_males']);
+    $c_f = intval($row['count_females']);
+    $active = (intval($row['active']) == 1);
 
     if ($act == 1) {
 ?>
@@ -238,37 +245,39 @@ switch ($act) {
 ?>
       <form method="post" action="litters.php?act=<?php echo $act_n; if (isset($row['id'])) echo "&id=$row[id]"; ?>&submit=1">
         <label for="litter_verb">Litter Status:</label>
-        <select name="litter_verb">
-          <option value="0"<?php if (!$born) echo ' selected="selected"'; ?>>Upcoming (due)</option>
-          <option value="1"<?php if ($born) echo ' selected="selected"'; ?>>Current (born)</option>
+        <select name="litter_verb" class="long">
+          <option value="0"<?php if ($born == 0) echo ' selected="selected"'; ?>>Upcoming (due)</option>
+          <option value="1"<?php if ($born == 1) echo ' selected="selected"'; ?>>Current (born)</option>
+          <option value="2"<?php if ($born == 2) echo ' selected="selected"'; ?>>Non-litter (for dogs)</option>
+          <option value="3"<?php if ($born == 3) echo ' selected="selected"'; ?>>Special (note only)</option>
         </select>
-        <label for="litter_date">Date <?php if ($born) echo 'Born'; else echo 'Due'; ?>:</label>
+        <label for="litter_date">Date <?php if ($born != 0) echo 'Born'; else echo 'Due'; ?>:</label>
         <input name="litter_date" class="input_date date_birth_for_pedigree" type="text" value="<?php echo $row['date_birth']; ?>">
         <label for="own_by">Owned by field:</label>
         <input name="own_by" class="short" type="text" maxlength="50" value="<?php echo htmlentities($row['own_by']); ?>">
         <div id="sect_born"<?php if ($born) echo ' style="display: block;"'; ?>>
           <label for="count_males">Number of males:</label>
           <select name="count_males" class="short">
-            <option value="-1"<?php if (!$born) echo ' selected="selected"'; ?>>Not born yet</option>
+            <option value="-1"<?php if ($born != 0) echo ' selected="selected"'; ?>>No value</option>
 <?php
     for ($i = 0; $i < 11; $i++) {
       echo '<option value="';
       echo $i;
       echo '"';
-      if ($born && $c_m == $i) echo ' selected="selected"';
+      if ($born == 1 && $c_m == $i) echo ' selected="selected"';
       echo ">$i</option>";
     }
 ?>
           </select>
           <label for="count_females">Number of females:</label>
           <select name="count_females" class="short">
-            <option value="-1"<?php if (!$born) echo ' selected="selected"'; ?>>Not born yet</option>
+            <option value="-1"<?php if ($born != 0) echo ' selected="selected"'; ?>>No value</option>
 <?php
     for ($i = 0; $i < 11; $i++) {
       echo '<option value="';
       echo $i;
       echo '"';
-      if ($born && $c_f == $i) echo ' selected="selected"';
+      if ($born == 1 && $c_f == $i) echo ' selected="selected"';
       echo ">$i</option>";
     }
 ?>

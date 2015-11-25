@@ -459,6 +459,8 @@ function print_litter($id) {
   global $is_signed_in;
   
   $o = '';
+  $type_noun = '';
+  $born_verb = '';
 
   $sql =
   "SELECT *
@@ -466,17 +468,39 @@ function print_litter($id) {
    WHERE `id` = '$id'
    LIMIT 1";
   $row = mysql_fetch_array(db_query($sql));
-  $born = $row['born'];
-  if ($born) {
+  $born = intval($row['born']);
+  if ($born == 1) { // BORN
     $born_verb = 'born';
-  } else {
+    $type_noun = 'Litter ';
+  } elseif ($born == 2) { // NONLITTER
+    $born_verb = 'Born';
+    $type_noun = '';
+  } elseif ($born == 3) { // SPECIALNOTE
+    if (strlen($row['desc_long']) > 0) {
+    
+      $o .= '        <p><i>';
+      $o .= stml_parse($row['desc_long']);
+      $o .= "</i>\r\n";
+    }
+  
+    if ($is_signed_in) {
+      $o .= '          <a class="edit" href="litters.php?act=edit&id=';
+      $o .= $row['id'];
+      $o .= '">Edit</a>';
+      $o .= "\r\n";
+    }
+
+    $o .= "      </p>\r\n";
+    return $o;
+  } else { // DUE
     $born_verb = 'due';
+    $type_noun = 'Litter ';
   }
   $born_date = date('F j, Y', strtotime($row['date_birth']));
   
   $o .= '      <p class="litter">'."\r\n";
   $o .= '        <span class="litter_head"><b>';
-  $o .= "Litter $born_verb $born_date:</b>\r\n";
+  $o .= "$type_noun$born_verb $born_date:</b>\r\n";
   if (strlen($row['pedigree_id']) > 0) {
     $o .= print_pedigree_link($row['pedigree_id']);
   }
@@ -495,7 +519,7 @@ function print_litter($id) {
     $o .= "</span>\r\n";
   }
       
-  if ($born) {
+  if ($born == 1) {
     $litter_text = number_to_words($row['count_males'], 1).' male'.plural($row['count_males']).' and '.
                    number_to_words($row['count_females']).' female'.plural($row['count_females']);
     if (strlen($row['desc_short']) > 0) {

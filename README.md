@@ -43,11 +43,12 @@ reduction of code.
 <b>"v4.0.0"</b> (2010)
 More converting, this time adding the backend and editing forms.
 
-<b>"v4.1.0"</b> (2010-2014)
+<b>"v4.1.0"</b> (2010-2015)
 PHP conversion continues and Albums gets a dedicated thumbnail creator, to
 improve the speed of the image delivery and allow arbitrary image sizes stored
 that will be scaled before delivery.
 
 The first uploaded version is retroactively named "v4.100.0" since an unknown
 number of changes have occured.
+
 
