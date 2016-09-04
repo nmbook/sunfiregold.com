@@ -224,6 +224,7 @@ function print_titles($title_str, $affix_pos, $show_abbr = false) {
   $titles = explode(' ', $title_str);
   
   $title_m = '';
+  $title_modifier_printed = false;
   foreach ($titles as $title) {
     if (substr($title, -1, 1) == '.' ||
         substr($title, -1, 1) == ',' ||
@@ -287,7 +288,7 @@ function print_titles($title_str, $affix_pos, $show_abbr = false) {
     $row = mysql_fetch_array(db_query($sql));
     
     $row['abbr'] = str_replace('#', $title_number, $row['abbr']);
-    $row['descr'] = str_replace('#', $title_number, $row['descr']);
+    $row['descr'] = str_replace('#', $title_number, isset($row['descr']) ? $row['descr'] : '');
     
     $title_x = str_replace('#', $title_number, $title_x);
     
