@@ -25,6 +25,12 @@ get_page_sect_top();
       
       <hr />
 
+      <h3>Thor Dock Diving</h3>
+
+      <img class="cen-il-fr" src="util/thumb.php?src=../albums/thordock2016/thor dock diving.jpg&conv=view1024" alt="Thor Dock Diving" />
+      
+      <hr />
+
       <h3>SUNFIRE is 2014 AKC Breeder of the Year for Obedience!</h3>
 
       <a href="albums.php?id=63#img_1"><img class="cen-il-fr" width="320" src="util/thumb.php?src=../albums/botyob2014/letter.jpg&conv=thumbsq320" alt="AKC Letter acknowledging Breeder of the Year in Obedience for 2014" /></a>
