@@ -3,6 +3,8 @@
 $src = isset($_GET['src']) ? $_GET['src'] : '';
 $conv = isset($_GET['conv']) ? $_GET['conv'] : 'thumb';
 
+ini_set('memory_limit', '500M');
+
 // Content type
 //header('Content-type: image/jpeg');
 
@@ -90,8 +92,14 @@ if (file_exists($src)) {
   // Resize
   imagecopyresized($canvas, $source, 0, 0, $left, $top, $newwidth, $newheight, $width, $height);
   
+  // Destroy source
+  imagedestroy($source);
+  
   // Output
   imagejpeg($canvas);
+  
+  // Destroy canvas
+  imagedestroy($canvas);
 } else {
   if (strlen($src) == 0)
     header('Location: /');
