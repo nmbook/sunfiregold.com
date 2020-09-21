@@ -24,10 +24,10 @@ $(document).ready(function() {
         v = v.substr(0, 5) + '01-01';
       else if (v.substr(8, 2) == '00')
         v = v.substr(0, 8) + '01';
-      today = new Date(v); // set to default value for this date-- the value in the text box
+      today = new Date(v + 'T00:00:00'); // set to default value for this date-- the value in the text box
       if (today.getFullYear() <= 1900) {
         v = new Date().getFullYear() + v.substr(4, 6);
-        today = new Date(v);
+        today = new Date(v + 'T00:00:00');
       }
     } else {
       today = new Date();
@@ -55,7 +55,7 @@ $(document).ready(function() {
       dy_options += '<option ' + (select ? 'selected="selected" ' : '') + 'value="00">--</option>';
     }
     for (var i = 1; i <= 31; i++) {
-      var select = (dy_selected ? false : (today.getDate() + 1) == i);
+      var select = (dy_selected ? false : (today.getDate()) == i);
       if (select)
         dy_selected = true;
       dy_options += '<option ' + (select ? 'selected="selected" ' : '') + 'value="' + '00'.substr(0, 2 - i.toString().length) + i.toString() + '">' + i.toString() + '</option>';
@@ -89,11 +89,11 @@ $(document).ready(function() {
     '</div></div>';
     $(this).after(input_html);
     $(this).hide();
-    $('#' + name + '_field_mo').change(function() {
-      var date = new Date($('#' + name + '_field_yr').val() + '-' +
-                          $(this).val() + '-' +
+    $('#' + name + '_field_mo, #' + name + '_field_yr').change(function() {
+      var date = new Date($('#' + name + '_field_yr').val(),
+                          $('#' + name + '_field_mo').val() - 1,
                           $('#' + name + '_field_dy').val());
-      var molen = [31,28 + (date.getFullYear() % 4 == 0) ? 1 : 0,31,30,31,30,31,31,30,31,30,31];
+      var molen = [31,28 + (((date.getFullYear() % 4) == 0) ? 1 : 0),31,30,31,30,31,31,30,31,30,31];
       var dayopts = [
         '<option value="29">29</option>',
         '<option value="30">30</option>',
@@ -108,6 +108,8 @@ $(document).ready(function() {
         }
       }
     });
+    
+    $('#' + name + '_field_mo').trigger('change');
     
     $('#' + name + '_field_mo, #' + name + '_field_dy, #' + name + '_field_yr').change(function() {
       $('input[name=' + name + ']').val(

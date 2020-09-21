@@ -197,7 +197,7 @@ switch ($act) {
   case 0: // normal, view, completed action, error
     $order_by = '`date_birth` ASC';
     echo "      <h3>Present</h3>\r\n";
-    echo print_dog_list("`own_cat` = 'OLD'", $order_by, 4, 'Oldies');
+    echo print_dog_list("`own_cat` = 'OLD'", $order_by, 4, 'Retired');
     echo print_dog_list("`own_cat` = 'MAIN'", $order_by, 4, 'Main Dogs');
     echo print_dog_list("`own_cat` = 'YOUNG'", $order_by, 4, 'Up and Coming Youngsters');
     echo print_dog_list("`own_cat` = 'PUP'", $order_by, 4, 'Puppies');
@@ -267,7 +267,7 @@ switch ($act) {
           <option value="PUP"<?php if ($o_c == 'PUP') echo ' selected="selected"'; ?>>Puppy</option>
           <option value="YOUNG"<?php if ($o_c == 'YOUNG') echo ' selected="selected"'; ?>>Up and Coming Youngster</option>
           <option value="MAIN"<?php if ($o_c == 'MAIN') echo ' selected="selected"'; ?>>Main Dog</option>
-          <option value="OLD"<?php if ($o_c == 'OLD') echo ' selected="selected"'; ?>>Oldie</option>
+          <option value="OLD"<?php if ($o_c == 'OLD') echo ' selected="selected"'; ?>>Retired</option>
           <option value="PAST"<?php if ($o_c == 'PAST') echo ' selected="selected"'; ?>>Past Dog</option>
           <option value="NOLIST"<?php if ($o_c == 'NOLIST') echo ' selected="selected"'; ?>>Do Not List</option>
         </select>

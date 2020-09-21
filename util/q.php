@@ -150,7 +150,7 @@ function print_dog($id, $style = 0, $return_to = 'ourdogs') {
     $o .= print_pedigree_link($row['pedigree_id'], 0, false, 'dog_link');
   }
   
-  if ($style == 2 || $style == 4) {
+  if ($style == 2 || $style == 4 || ($style == 1 && $is_signed_in)) {
     $date_b = $row['date_birth'];
     $date_d = $row['date_death'];
     
