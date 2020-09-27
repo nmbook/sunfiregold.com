@@ -24,7 +24,7 @@ if (strlen($findbydir) > 0) {
   exit;
 }
 
-$id = isset($_GET['id']) ? $_GET['id'] : $set_id;
+$id = isset($_GET['id']) ? $_GET['id'] : (isset($set_id) ? $set_id : 0);
 if (isset($id) && $id != 0 && $id != '') {
   $sql =
   "SELECT *
@@ -1378,7 +1378,7 @@ function loadText(sdesc, ldesc, tdesc, fsize, imgNum, thumb, changeFragment) {
     }
 ?>
         <label for="datetext">Taken (Date Text):</label>
-        <input name="datetext" class="long" type="text" maxlength="50" value="<?php echo htmlentities($row['datetext']); ?>">
+        <input name="datetext" type="text" maxlength="50" value="<?php echo htmlentities($row['datetext']); ?>">
         <label for="active">Visible:</label>
         <select name="active" class="short">
           <option value="1"<?php if ($active) echo ' selected="selected"'; ?>>Yes</option>

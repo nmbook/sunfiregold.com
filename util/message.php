@@ -30,8 +30,10 @@ function dump_messages() {
   global $templ_page_body_ready; // var comes from templ.php
   global $messages;
   if ($templ_page_body_ready) {
-    for ($i = 0; $i < count($_SESSION['messages']); $i++) {
-      show_message($_SESSION['messages'][$i]['msg'], $_SESSION['messages'][$i]['type']);
+    if (isset($_SESSION['messages'])) {
+      for ($i = 0; $i < count($_SESSION['messages']); $i++) {
+        show_message($_SESSION['messages'][$i]['msg'], $_SESSION['messages'][$i]['type']);
+      }
     }
     // clear array
     $_SESSION['messages'] = array();

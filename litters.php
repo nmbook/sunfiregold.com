@@ -245,7 +245,7 @@ switch ($act) {
 ?>
       <form method="post" action="litters.php?act=<?php echo $act_n; if (isset($row['id'])) echo "&id=$row[id]"; ?>&submit=1">
         <label for="litter_verb">Litter Status:</label>
-        <select name="litter_verb" class="long">
+        <select name="litter_verb">
           <option value="0"<?php if ($born == 0) echo ' selected="selected"'; ?>>Upcoming (due)</option>
           <option value="1"<?php if ($born == 1) echo ' selected="selected"'; ?>>Current (born)</option>
           <option value="2"<?php if ($born == 2) echo ' selected="selected"'; ?>>Non-litter (for dogs)</option>
@@ -254,7 +254,7 @@ switch ($act) {
         <label for="litter_date">Date <?php if ($born != 0) echo 'Born'; else echo 'Due'; ?>:</label>
         <input name="litter_date" class="input_date date_birth_for_pedigree" type="text" value="<?php echo $row['date_birth']; ?>">
         <label for="own_by">Owned by field:</label>
-        <input name="own_by" class="short" type="text" maxlength="50" value="<?php echo htmlentities($row['own_by']); ?>">
+        <input name="own_by" type="text" maxlength="50" value="<?php echo htmlentities($row['own_by']); ?>">
         <div id="sect_born"<?php if ($born) echo ' style="display: block;"'; ?>>
           <label for="count_males">Number of males:</label>
           <select name="count_males" class="short">
@@ -283,7 +283,7 @@ switch ($act) {
 ?>
           </select>
           <label for="desc_short">Litter description:</label>
-          <input name="desc_short" class="short" type="text" maxlength="50" value="<?php if ($born) echo htmlentities($row['desc_short']); ?>">
+          <input name="desc_short" type="text" maxlength="50" value="<?php if ($born) echo htmlentities($row['desc_short']); ?>">
         </div>
         <label for="desc_long">Litter note field:</label>
         <input name="desc_long" class="long" type="text" maxlength="200" value="<?php echo htmlentities($row['desc_long']); ?>">

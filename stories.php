@@ -8,7 +8,7 @@ db_connect();
 
 check_session();
 
-$id = isset($_GET['id']) ? $_GET['id'] : $set_id;
+$id = isset($_GET['id']) ? $_GET['id'] : (isset($set_id) ? $set_id : 0);
 if (isset($id) && $id != 0 && $id != '') {
   $sql =
   "SELECT *

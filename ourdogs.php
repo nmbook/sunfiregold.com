@@ -252,18 +252,18 @@ switch ($act) {
         <label for="dog_name">Dog AKC Name:</label>
         <input name="dog_name" class="long dog_name_for_k9data_id" type="text" value="<?php echo htmlentities($row['name_full']); ?>">
         <label for="dog_nick">Dog Nick Name:</label>
-        <input name="dog_nick" class="short" type="text" value="<?php echo htmlentities($row['name_short']); ?>">
+        <input name="dog_nick" type="text" value="<?php echo htmlentities($row['name_short']); ?>">
         <label for="dog_pre">Dog Prefix Titles:</label>
-        <input name="dog_pre" type="text" value="<?php echo htmlentities($row['titles_pre']); ?>">
+        <input name="dog_pre" class="long" type="text" value="<?php echo htmlentities($row['titles_pre']); ?>">
         <label for="dog_post">Dog Postfix Titles:</label>
-        <input name="dog_post" type="text" value="<?php echo htmlentities($row['titles_post']); ?>">
+        <input name="dog_post" class="long" type="text" value="<?php echo htmlentities($row['titles_post']); ?>">
         <label for="gender">Dog Gender:</label>
         <select name="gender" class="short">
           <option value="MALE"<?php if ($gender == 'MALE') echo ' selected="selected"'; ?>>Male</option>
           <option value="FEMALE"<?php if ($gender == 'FEMALE') echo ' selected="selected"'; ?>>Female</option>
         </select>
         <label for="dog_own_cat">Location on &quot;Our Dogs&quot;:</label>
-        <select name="dog_own_cat" class="long">
+        <select name="dog_own_cat">
           <option value="PUP"<?php if ($o_c == 'PUP') echo ' selected="selected"'; ?>>Puppy</option>
           <option value="YOUNG"<?php if ($o_c == 'YOUNG') echo ' selected="selected"'; ?>>Up and Coming Youngster</option>
           <option value="MAIN"<?php if ($o_c == 'MAIN') echo ' selected="selected"'; ?>>Main Dog</option>
@@ -277,7 +277,7 @@ switch ($act) {
           <option value="NOLIST"<?php if ($h_c == 'NOLIST') echo ' selected="selected"'; ?>>No</option>
         </select>
         <label for="dog_own_state">Owner:</label>
-        <select name="dog_own_state" class="long">
+        <select name="dog_own_state">
           <option value="LW"<?php if ($o_s == 'LW') echo ' selected="selected"'; ?>><?php echo $o_b_text['LW']; ?>...</option>
           <option value="LWP"<?php if ($o_s == 'LWP') echo ' selected="selected"'; ?>><?php echo $o_b_text['LW']; ?> pet home</option>
           <option value="SW"<?php if ($o_s == 'SW') echo ' selected="selected"'; ?>><?php echo $o_b_text['SW']; ?>...</option>

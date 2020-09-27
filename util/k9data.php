@@ -285,4 +285,64 @@ function is_titled($dog_name) {
 //print_r($off_list);
 
 //print_r(parse_dogdata(474));
-?>
+
+//$start_id = isset($_GET['id']) ? $_GET['id'] : '0';
+//
+//if (!is_dir('images_backup')) {
+//    mkdir('images_backup');
+//}
+//
+//$data = read_p_page_get_pb($start_id);
+//echo '<pre>';
+//print_r($data);
+
+function read_p_page_get_pb($id) {
+    $pedigree_page = k9data_get('pedigree', $id);
+
+    $data = array();
+    $pos = 0;
+
+    $pos = strpos($pedigree_page, '<font size="4">', $pos);
+    if ($pos === false)
+        return array();
+    $pos += 15;
+
+    $e = strpos($pedigree_page, '</font>', $pos);
+    if ($e === false)
+        return array();
+
+    $data['name'] = substr($pedigree_page, $pos, $e - $pos);
+    $data['url'] = '';
+
+    $pos = strpos($pedigree_page, ' target="_blank"><img src="', $pos);
+    if ($pos !== false) {
+        $pos += 27;
+
+        $e = strpos($pedigree_page, '"', $pos);
+        if ($e !== false) {
+            $data['url'] = substr($pedigree_page, $pos, $e - $pos);
+        }
+    }
+    $pos = 0;
+
+    $pos2 = $pos;
+    $links = array();
+    do {
+        $pos2 = strpos($pedigree_page, '<a href="pedigree.asp?ID=', $pos2);
+        if ($pos2 === false)
+            break;
+
+        $pos2 += 25;
+      
+        $e = strpos($pedigree_page, '">', $pos2);
+        if ($e === false)
+            break;
+
+        $links[] = substr($pedigree_page, $pos2, $e - $pos2);
+
+        $pos2 = $e + 1;
+    } while ($pos2 > 0 && $pos2 < strlen($pedigree_page));
+    $data['links'] = $links;
+
+    return $data;
+}

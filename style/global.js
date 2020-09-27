@@ -126,7 +126,7 @@ $(document).ready(function() {
     $(this).attr('id', name);
     var input_html =
     '<div id="' + name + '_wrapper" class="multi_input_wrapper">' +
-    '<input class="input_dog_field" id="' + name + '_field" autocomplete="off" type="text" value="">' +
+    '<input class="long input_dog_field" id="' + name + '_field" autocomplete="off" type="text" value="">' +
     '</div>' +
     '<div class="input_dog_box" id="' + name + '_box"><ul></ul></div>';
     $(this).after(input_html);
@@ -137,16 +137,18 @@ $(document).ready(function() {
       $.ajax({
         async: true,
         cache: false,
-        dataType: 'text',
+        dataType: 'json',
         error: function (xhr, result, exception) {
           alert(result + ': ' + exception.toString());
         },
-        success: function (text, result, xhr) {
-          var curval = text;
-          $('#' + name + '_field').val(curval);
+        success: function (json, result, xhr) {
+          if (json.result) {
+            var curval = json.text;
+            $('#' + name + '_field').val(curval);
+          }
         },
         type: 'GET',
-        url: '/util/a.php?act=getdogbyid&q=' + $(this).val()
+        url: '/util/api.php?act=getdogbyid&q=' + $(this).val()
       });
       
       ajax_appending = true;
@@ -156,25 +158,25 @@ $(document).ready(function() {
         complete: function (xhr, result) {
           ajax_appending = false;
         },
-        dataType: 'html',
+        dataType: 'json',
         error: function (xhr, result, exception) {
           ajax_appending = false;
           alert(result + ': ' + exception.toString());
         },
-        success: function (html, result, xhr) {
+        success: function (json, result, xhr) {
           if (ajax_appending) {
             ajax_appending = false;
-            if (html.length > 0) {
+            if (json.result) {
               html =
               '<div id="' + name + '_preview" class="input_preview">' +
               '<span class="x" title="remove">x</span>' +
-              html + '</div>';
+              json.html + '</div>';
               $('#' + name + '_wrapper').after(html);
             }
           }
         },
         type: 'GET',
-        url: '/util/a.php?act=printdog&q=' + $(this).val()
+        url: '/util/api.php?act=printdog&q=' + $(this).val()
       });
     }
     var list, lastval, ajax_active;
@@ -199,7 +201,7 @@ $(document).ready(function() {
         box.show();
       }
       
-      if (!list) {
+      if (!list || true) {
         if (!ajax_active) {
           ajax_active = true;
           $.ajax({
@@ -208,14 +210,14 @@ $(document).ready(function() {
             complete: function (xhr, result) {
               ajax_active = false;
             },
-            dataType: 'html',
+            dataType: 'json',
             error: function (xhr, result, exception) {
               box.hide();
               alert(result + ': ' + exception.toString());
             },
-            success: function (html, result, xhr) {
-              if (html.length > 0) {
-                var li = $(html).find('li');
+            success: function (json, result, xhr) {
+              if (json.result) {
+                var li = $(json.html).find('li');
                 list = new Array($(li).length);
                 $(li).each(function(index) {
                   list[index] = this;
@@ -225,7 +227,7 @@ $(document).ready(function() {
               }
             },
             type: 'GET',
-            url: '/util/a.php?act=getdog&q=' + val + '&f=' + gender
+            url: '/util/api.php?act=finddog&q=' + val + '&f=' + gender
           });
         }
       }
@@ -298,25 +300,25 @@ $(document).ready(function() {
         complete: function (xhr, result) {
           ajax_appending = false;
         },
-        dataType: 'html',
+        dataType: 'json',
         error: function (xhr, result, exception) {
           ajax_appending = false;
           alert(result + ': ' + exception.toString());
         },
-        success: function (html, result, xhr) {
+        success: function (json, result, xhr) {
           if (ajax_appending) {
             ajax_appending = false;
-            if (html.length > 0) {
+            if (json.result) {
               html =
               '<div id="' + name + '_preview" class="input_preview">' +
               '<span class="x" title="remove">x</span>' +
-              html + '</div>';
+              json.html + '</div>';
               $('#' + name + '_wrapper').after(html);
             }
           }
         },
         type: 'GET',
-        url: '/util/a.php?act=printdog&q=' + set_id
+        url: '/util/api.php?act=printdog&q=' + set_id
       });
     });
   });
@@ -337,16 +339,18 @@ $(document).ready(function() {
       $.ajax({
         async: true,
         cache: false,
-        dataType: 'text',
+        dataType: 'json',
         error: function (xhr, result, exception) {
           alert(result + ': ' + exception.toString());
         },
-        success: function (text, result, xhr) {
-          var curval = text;
-          $('#' + name + '_field').val(curval);
+        success: function (json, result, xhr) {
+          if (json.result) {
+            var curval = json.text;
+            $('#' + name + '_field').val(curval);
+          }
         },
         type: 'GET',
-        url: '/util/a.php?act=getpedbyid&q=' + $(this).val()
+        url: '/util/api.php?act=getpedbyid&q=' + $(this).val()
       });
       
       ajax_appending = true;
@@ -356,25 +360,25 @@ $(document).ready(function() {
         complete: function (xhr, result) {
           ajax_appending = false;
         },
-        dataType: 'html',
+        dataType: 'json',
         error: function (xhr, result, exception) {
           ajax_appending = false;
           alert(result + ': ' + exception.toString());
         },
-        success: function (html, result, xhr) {
+        success: function (json, result, xhr) {
           if (ajax_appending) {
             ajax_appending = false;
-            if (html.length > 0) {
+            if (json.result) {
               html =
               '<div id="' + name + '_preview" class="input_preview">' +
               '<span class="x" title="remove">x</span>' +
-              html + '</div>';
+              json.html + '</div>';
               $('#' + name + '_wrapper').after(html);
             }
           }
         },
         type: 'GET',
-        url: '/util/a.php?act=printped&q=' + $(this).val()
+        url: '/util/api.php?act=printped&q=' + $(this).val()
       });
     }
     
@@ -389,70 +393,74 @@ $(document).ready(function() {
       $.ajax({
         async: true,
         cache: false,
-        dataType: 'text',
+        dataType: 'json',
         error: function (xhr, result, exception) {
           alert(result + ': ' + exception.toString());
         },
-        success: function (text, result, xhr) {
-          var ped_id = Number(text);
-          if (ped_id > 0) {
-            is_set = true;
-            $('input[name='+name+']').val(ped_id);
-            $.ajax({
-              async: true,
-              cache: false,
-              dataType: 'text',
-              error: function (xhr, result, exception) {
-                alert(result + ': ' + exception.toString());
-              },
-              success: function (text, result, xhr) {
-                var curval = text;
-                $('#' + name + '_field').val(curval);
-              },
-              type: 'GET',
-              url: '/util/a.php?act=getpedbyid&q=' + ped_id
-            });
-            
-            ajax_appending = true;
-            $.ajax({
-              async: true,
-              cache: false,
-              complete: function (xhr, result) {
-                ajax_appending = false;
-              },
-              dataType: 'html',
-              error: function (xhr, result, exception) {
-                ajax_appending = false;
-                alert(result + ': ' + exception.toString());
-              },
-              success: function (html, result, xhr) {
-                if (ajax_appending) {
-                  ajax_appending = false;
-                  if (html.length > 0) {
-                    html =
-                    '<div id="' + name + '_preview" class="input_preview">' +
-                    '<span class="x" title="remove">x</span>' +
-                    html + '</div>';
-                    $('#' + name + '_wrapper').after(html);
+        success: function (json, result, xhr) {
+          if (json.result) {
+            var ped_id = Number(json.id);
+            if (ped_id > 0) {
+              is_set = true;
+              $('input[name='+name+']').val(ped_id);
+              $.ajax({
+                async: true,
+                cache: false,
+                dataType: 'json',
+                error: function (xhr, result, exception) {
+                  alert(result + ': ' + exception.toString());
+                },
+                success: function (json, result, xhr) {
+                  if (json.result) {
+                    var curval = json.text;
+                    $('#' + name + '_field').val(curval);
                   }
-                }
-              },
-              type: 'GET',
-              url: '/util/a.php?act=printped&q=' + ped_id
-            });
-          } else {
-            var e = '';
-            if (ped_id <= 0)
-              e = 'No pedigree file found matching the sire, dam, and birthdate. Those must be the same as the ones stored with the pedigree file.';
-            var new_html =
-            '<div id="' + name + '_preview" class="input_preview input_preview_error">' +
-            '<span class="x" title="hide">x</span>' +
-            e + '</div>';
-            $('#' + name + '_wrapper').after(new_html);
+                },
+                type: 'GET',
+                url: '/util/api.php?act=getpedbyid&q=' + ped_id
+              });
+              
+              ajax_appending = true;
+              $.ajax({
+                async: true,
+                cache: false,
+                complete: function (xhr, result) {
+                  ajax_appending = false;
+                },
+                dataType: 'json',
+                error: function (xhr, result, exception) {
+                  ajax_appending = false;
+                  alert(result + ': ' + exception.toString());
+                },
+                success: function (json, result, xhr) {
+                  if (ajax_appending) {
+                    ajax_appending = false;
+                    if (json.result) {
+                      html =
+                      '<div id="' + name + '_preview" class="input_preview">' +
+                      '<span class="x" title="remove">x</span>' +
+                      json.html + '</div>';
+                      $('#' + name + '_wrapper').after(html);
+                    }
+                  }
+                },
+                type: 'GET',
+                url: '/util/api.php?act=printped&q=' + ped_id
+              });
+            } else {
+              var e = '';
+              if (ped_id <= 0)
+                e = 'No pedigree file found matching the sire, dam, and birthdate. Those must be the same as the ones stored with the pedigree file.';
+              var new_html =
+              '<div id="' + name + '_preview" class="input_preview input_preview_error">' +
+              '<span class="x" title="hide">x</span>' +
+              e + '</div>';
+              $('#' + name + '_wrapper').after(new_html);
+            }
           }
         },
         type: 'GET',
-        url: '/util/a.php?act=findpedfile&q=' + query
+        url: '/util/api.php?act=findpedfile&q=' + query
       });
     });
     
@@ -499,40 +507,42 @@ $(document).ready(function() {
       $.ajax({
         async: true,
         cache: false,
-        dataType: 'text',
+        dataType: 'json',
         error: function (xhr, result, exception) {
           alert(result + ': ' + exception.toString());
         },
-        success: function (text, result, xhr) {
-          var k9data_id = Number(text);
-          if (k9data_id > 0) {
-            is_set = true;
-            $('input[name='+name+']').val(k9data_id);
-            $('#' + name + '_field').val(k9data_id);
-            var html_follow =
-            '<br id="' + name + '_break" /><a id="' + name + '_follow" class="edit" ' +
-            'href="http://www.k9data.com/pedigree.asp?ID=' + k9data_id + '" ' +
-            'target="_blank">Test Link</a>' +
-            '<a id="' + name + '_remove" class="edit" ' +
-            'href="#">Remove</a>';
-            $('#' + name + '_finder').after(html_follow);
-          } else {
-            var e = '';
-            if (k9data_id == 0)
-              e = 'No dogs found matching the "Dog AKC Name" field. Make sure the name above is the ' +
-            'K9DATA has.';
-            else if (k9data_id < 0)
-              e = 'Multiple dogs found matching the "Dog AKC Name" field. Make sure the name above is the ' +
-            'K9DATA has.';
-            var new_html =
-            '<div id="' + name + '_preview" class="input_preview input_preview_error">' +
-            '<span class="x" title="hide">x</span>' +
-            e + '</div>';
-            $('#' + name + '_wrapper').after(new_html);
+        success: function (json, result, xhr) {
+          if (json.result) {
+            var k9data_id = Number(json.id);
+            if (k9data_id > 0) {
+              is_set = true;
+              $('input[name='+name+']').val(k9data_id);
+              $('#' + name + '_field').val(k9data_id);
+              var html_follow =
+              '<br id="' + name + '_break" /><a id="' + name + '_follow" class="edit" ' +
+              'href="http://www.k9data.com/pedigree.asp?ID=' + k9data_id + '" ' +
+              'target="_blank">Test Link</a>' +
+              '<a id="' + name + '_remove" class="edit" ' +
+              'href="#">Remove</a>';
+              $('#' + name + '_finder').after(html_follow);
+            } else {
+              var e = '';
+              if (k9data_id == 0)
+                e = 'No dogs found matching the "Dog AKC Name" field. Make sure the name above is the ' +
+              'K9DATA has.';
+              else if (k9data_id < 0)
+                e = 'Multiple dogs found matching the "Dog AKC Name" field. Make sure the name above is the ' +
+              'K9DATA has.';
+              var new_html =
+              '<div id="' + name + '_preview" class="input_preview input_preview_error">' +
+              '<span class="x" title="hide">x</span>' +
+              e + '</div>';
+              $('#' + name + '_wrapper').after(new_html);
+            }
           }
         },
         type: 'GET',
-        url: '/util/a.php?act=findk9datapage&q=' + query
+        url: '/util/api.php?act=findk9datapage&q=' + query
       });
     });
     

@@ -337,7 +337,7 @@ function print_pedigree_link_list($where, $order_by, $year_headers = false) {
   while ($row = mysql_fetch_array($result)) {
     $count++;
     $yr = substr($row['date_birth'], 0, 4);
-    if (!$h_year[$yr]) {
+    if (!array_key_exists($yr, $h_year)) {
       if ($dl_open) {
         $o .= "</dl>";
         $dl_open = false;
