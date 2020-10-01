@@ -227,7 +227,7 @@ $(document).ready(function() {
               }
             },
             type: 'GET',
-            url: '/util/api.php?act=finddog&q=' + val + '&f=' + gender
+            url: '/util/api.php?act=searchdog&q=' + val + '&f=' + gender
           });
         }
       }

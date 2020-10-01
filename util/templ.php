@@ -19,31 +19,6 @@ function get_page_file_name() {
   return substr($script_name, $start + 1, -4);
 }
 
-// this function returns the name from known pages of this page.
-function get_page_name() {
-  global $_DB;
-  $sql = 
-  "SELECT `title`
-   FROM `$_DB[dbname]`.`pages`
-   WHERE `location` = '".get_page_file_name()."'
-   LIMIT 1";
-  $result = db_query($sql);
-  $row = mysql_fetch_row($result);
-  return $row[0];
-}
-
-function get_page_id() {
-  global $_DB;
-  $sql = 
-  "SELECT `id`
-   FROM `$_DB[dbname]`.`pages`
-   WHERE `location` = '".get_page_file_name()."'
-   LIMIT 1";
-  $result = db_query($sql);
-  $row = mysql_fetch_row($result);
-  return $row[0];
-}
-
 // this function returns the last edit time of this page.
 // TODO: why does SELECT `UPDATE_TIME` take so long?
 function get_last_edit($page) {
@@ -109,19 +84,26 @@ function get_valid_referer() {
 // this function writes the head section of the page.
 // upon completion, will call get_page_sect_top
 function get_page_sect_head() {
+  global $DBCONN;
+  global $act;
+  global $verb;
   header('Content-Type: text/html; charset=utf-8');
+
+  $fname = get_page_file_name();
+  $page_obj = api_pages_find($DBCONN, $fname);
+  $page_title = $page_obj['result'] ? $page_obj['title'] : $fname;
 ?>
+<!DOCTYPE html>
 <!--
- - Sunfire Golden Retrievers - <?php echo(get_page_name()); ?> -
- - Last Edited on: <?php echo(date('l, F j, Y', get_last_edit(get_page_file_name()))); ?> -
+ - Sunfire Golden Retrievers - <?php echo($page_title); ?> -
+ - Last Edited on: <?php echo(date('l, F j, Y', get_last_edit($fname))); ?> -
  - Nate Book -
 -->
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
-    <title>Sunfire Golden Retrievers - <?php echo(get_page_name()); if ($act != 0) echo " - $verb"; ?></title>
+    <title>Sunfire Golden Retrievers - <?php echo($page_title); if ($act != 0) echo " - $verb"; ?></title>
 <?php
-  if (get_page_file_name() == 'index') {
+  if ($fname == 'index') {
 ?>
     <!-- Search Engine Information -->
     <meta name="keywords" content="Sunfire,golden retriever,golden retrievers,dog,dogs,puppy,puppies,Sunfire Golden Retrievers,SunfireGold" />
@@ -133,7 +115,7 @@ function get_page_sect_head() {
     <!-- Page Links -->
     <link href="/style/style.css" rel="stylesheet" type="text/css" />
 <?php
-  if (get_page_file_name() != 'error') {
+  if ($fname != 'error') {
 ?>
     <script type="text/javascript" src="/style/jquery.js"></script>
     <script type="text/javascript" src="/style/global.js"></script>
@@ -148,9 +130,14 @@ function get_page_sect_head() {
 // after completion, will set $templ_page_body_ready to true
 // and print pending messages
 function get_page_sect_top() {
+  global $DBCONN;
   global $templ_page_body_ready;
   global $act;
   global $verb;
+
+  $fname = get_page_file_name();
+  $page_obj = api_pages_find($DBCONN, $fname);
+  $page_title = $page_obj['result'] ? $page_obj['title'] : $fname;
 ?>
   <body>
     <a name="Top"></a>
@@ -168,7 +155,7 @@ function get_page_sect_top() {
   dump_messages();
 
 ?>
-      <h2><?php echo(get_page_name()); if ($act != 0) echo " - $verb"; ?></h2>
+      <h2><?php echo($page_title); if ($act != 0) echo " - $verb"; ?></h2>
       
       <hr />
 <?php
@@ -176,22 +163,16 @@ function get_page_sect_top() {
 
 // this function writes the navigation section of the page.
 function get_page_sect_nav() {
-  global $_DB;
+  global $DBCONN;
+
+  $fname = get_page_file_name();
+  $page_obj = api_pages_find($DBCONN, $fname);
+  $page_title = $page_obj['result'] ? $page_obj['title'] : $fname;
 ?>
-    <div class="nav">
-      <h5>Navigation</h5>
+    <div class="nav"><?php /*      <h5>Navigation</h5> */ ?>
 <?php
-  $sql = 
-  "SELECT *
-   FROM `$_DB[dbname]`.`pages`
-   WHERE `index` > 0
-   ORDER BY `index` ASC";
-  $result = db_query($sql);
-  while ($row = mysql_fetch_array($result)) {
-?>
-      <a href="<?php echo "/$row[location].php"; ?>" title="<?php echo $row['title']; ?>"><?php echo $row['anchor']; ?></a>
-<?php
-  }
+  $obj = api_pages_list($DBCONN);
+  echo $obj['html'];
 ?>
     </div>
 <?php
@@ -199,28 +180,29 @@ function get_page_sect_nav() {
 
 // this function writes the end section of the page.
 function get_page_sect_bottom() {
-  global $is_signed_in, $logout;
+    global $is_signed_in;
+    $fname = get_page_file_name();
 ?>
     </div>
     <div class="bottom">
       <a href="#Top" title="Go to the top of the page.">Top</a>
 <?php
-  if (get_page_file_name() != 'identify') {
-    if ($is_signed_in) {
+    if ($fname != 'identify') {
+        if ($is_signed_in) {
 ?>
-    | <a href="/identify.php?out=1&referer=<?php echo get_page_file_name().'.php'; ?>" title="Sign out of edit system.">Sign out</a>
+    | <a href="/identify.php?out=1&referer=<?php echo $fname.'.php'; ?>" title="Sign out of edit system.">Sign out</a>
 <?php
-    } /*else {
+        } /*else {
 ?>
-    | <a href="/identify.php?referer=<?php echo get_page_file_name().'.php'; ?>" title="Sign in to edit this page.">Edit</a>
+    | <a href="/identify.php?referer=<?php echo $fname.'.php'; ?>" title="Sign in to edit this page.">Edit</a>
 <?php
-    }*/
-  }
+        }*/
+    }
 ?>
-      <p>This page was last modified on <?php echo(date('l, F j, Y', get_last_edit(get_page_file_name()))); ?>.</p>
+      <p>This page was last modified on <?php echo(date('l, F j, Y', get_last_edit($fname))); ?>.</p>
     </div>
   </body>
 </html>
 <?php
+    exit();
 }
-?>

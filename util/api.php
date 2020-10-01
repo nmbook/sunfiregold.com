@@ -3,9 +3,6 @@
 // 2020-09-20: PDO DATA LAYER API
 // Nate Book / Ribose
 
-ini_set( "display_errors", "on" );
-error_reporting( E_ALL );
-
 if (isset($templ_page_valid) && $templ_page_valid)
 {
     $script_embed = true;
@@ -49,9 +46,17 @@ if ($script_embed === false)
         'print_pedigree_link' => 'printped',
         'get_dog_by_id' => 'getdogbyid',
         'get_pedigree_by_id' => 'getpedbyid',
+        'get_stml_template' => 'getstml',
         'find_k9data_page' => 'findk9datapage',
         'find_pedigree_file' => 'findpedfile',
-        'find_dog' => 'finddog',
+        'search_dog' => 'searchdog',
+        'pages_find' => 'findpage',
+        'pages_list' => 'listpages',
+        'dogs_list' => 'listdogs',
+        'litters_find' => 'findlitter',
+        'litters_list' => 'listlitters',
+        'pedigrees_list' => 'listpeds',
+        'links_list' => 'listlinks',
     ];
     $act_masked = array_search($act, $acts);
     header('Content-Type: application/json');
@@ -642,6 +647,27 @@ function api_get_pedigree_by_id($pdo, $id, $filter = '')
     return json_result(true, $row['location']);
 }
 
+function api_get_stml_template($pdo, $q, $filter = '')
+{
+    $sql =
+    'SELECT *
+     FROM `stml_templates`
+     WHERE `name` = :name
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['name' => $q]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    return json_result(true, '', '', ['id' => $row['id']]);
+}
+
 function api_find_k9data_page($pdo, $q, $filter = '')
 {
     $query_result = k9data_post_search($q);
@@ -681,12 +707,12 @@ function api_find_pedigree_file($pdo, $q, $filter = '')
     return json_result(true, '', '', ['id' => $row['id']]);
 }
 
-function api_find_dog($pdo, $q, $filter = '', $limit = 10, $limit_offset = 0)
+function api_search_dog($pdo, $q, $filter = '', $limit = 10, $limit_offset = 0)
 {
     if (strlen(trim($q)) == 0)
     {
-        // empty input, empty output
-        return json_result(false, 'Not found.');
+        // empty input
+        return json_result(false, 'Query required.');
     }
 
     $filter = strtoupper($filter);
@@ -759,6 +785,542 @@ function api_find_dog($pdo, $q, $filter = '', $limit = 10, $limit_offset = 0)
 
     return json_result(true, $t, $o, [
         'q' => $q, 'filter' => $gender,
+        'limit' => $limit, 'limit_offset' => $limit_offset,
+        'results' => $results_assoc
+    ]);
+}
+
+function hash_password1($pass)
+{
+    return md5($pass.'.fkl;uv0');
+}
+
+function hash_password2($pass)
+{
+    return password_hash($pass);
+}
+
+function api_session_account_login($pdo, $username, $password)
+{
+    $sql =
+    'SELECT `id`, `username`, `first_name`, `last_name`, `access`
+     FROM `accounts`
+     WHERE `username` = :username
+      AND `password` = :password
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['username' => $username, 'password' => hash_password1($password)]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    return json_result(true, '', '', $row);
+}
+
+function api_session_account_check($pdo, $account_id)
+{
+    $sql =
+    'SELECT `id`, `username`, `first_name`, `last_name`, `access`
+     FROM `accounts`
+     WHERE `id` = :id
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id' => $account_id]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    return json_result(true, '', '', $row);
+}
+
+function api_session_start($pdo, $account_id, $time)
+{
+    $sql =
+    'INSERT INTO `sessions`
+     ( `user_id`, `start`, `open` )
+     VALUES
+     ( :account_id, :time, :open )';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+            'account_id' => $account_id,
+            'time' => db_date($time), 'open' => 1]);
+    $stmt = null;
+
+    return json_result(true, '', '', $pdo->lastInsertId());
+}
+
+function api_session_end($pdo, $user_id, $sess_id, $time)
+{
+    $sql =
+    'UPDATE `sessions`
+     SET `open` = :open, `end` = :time
+     WHERE `user_id` = :user_id
+       AND `id` = :sess_id';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+            'user_id' => $user_id, 'sess_id' => $sess_id,
+            'time' => db_date($time), 'open' => 0]);
+    $stmt = null;
+
+    return json_result(true);
+}
+
+function api_pages_find($pdo, $file_name, $filter = '')
+{
+    $sql = 
+    'SELECT `id`, `location`, `title`, `anchor`, `index`
+     FROM `pages`
+     WHERE `location` = :location
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['location' => $file_name]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    return json_result(true, '', '', $row);
+}
+
+function api_pages_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset = 0)
+{
+    $sql = 
+    'SELECT `id`, `location`, `title`, `anchor`, `index`, `search_chfreq`, `search_priority`
+     FROM `pages`
+     WHERE `index` > 0
+     ORDER BY `index` ASC
+     LIMIT :limit_offset, :limit';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['limit' => $limit, 'limit_offset' => $limit_offset]);
+
+    $o = '';
+    $t = '';
+    $results_assoc = [];
+    while (($row = $stmt->fetch()) !== false)
+    {
+        $o .= '<a href="./';
+        $o .= htmlspecialchars($row['location']);
+        $o .= '.php" title="';
+        $o .= htmlspecialchars($row['title']);
+        $o .= '">';
+        $o .= htmlspecialchars($row['anchor']);
+        $o .= '</a>';
+        $t .= $row['anchor']."\n";
+        $results_assoc[$row['id']] = $row;
+    }
+    $stmt = null;
+
+    return json_result(true, $t, $o, [
+        'q' => $q, 'filter' => $filter,
+        'limit' => $limit, 'limit_offset' => $limit_offset,
+        'results' => $results_assoc
+    ]);
+}
+
+function api_dogs_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset = 0, $where = '1', $order_by = '`id` ASC', $header_level = 3, $header_text = '', $return_to = 'ourdogs')
+{
+    global $is_signed_in;
+
+
+    $sql =
+    "SELECT `id`, `name_short`
+     FROM `dogs`
+     WHERE $where
+     ORDER BY $order_by, `name_short` ASC
+     LIMIT :limit_offset, :limit";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['limit' => $limit, 'limit_offset' => $limit_offset]);
+
+    $o = '';
+    $t = '';
+    $results_assoc = [];
+    $count = 0;
+    while (($row = $stmt->fetch()) !== false)
+    {
+        if ($count == 0)
+        {
+            if ($header_level >= 1)
+            {
+                $o .= "<h$header_level>";
+                $o .= htmlspecialchars($header_text);
+                $o .= "</h$header_level>";
+                $o .= "<dl>";
+            }
+
+            if ($is_signed_in)
+            {
+                $o .= ' <p><a class="edit" href="';
+                $o .= 'ourdogs.php?act=add';
+                if ($return_to != 'ourdogs')
+                {
+                    $o .= "&returnto=$return_to";
+                }
+                $o .= '">Create New</a></p>';
+            }
+        }
+
+        $dog_obj = api_print_dog($pdo, $row['id'], '', 1, $return_to);
+        $results_assoc[$row['id']] = $dog_obj;
+        $o .= '<div class="list_element">'.$dog_obj['html'].'</div>';
+        $t .= $dog_obj['text']."\n";
+
+        $count++;
+    }
+
+    if ($count > 0)
+    {
+        $o .= "</dl>";
+    }
+
+    return json_result(true, $t, $o, [
+        'q' => $q, 'filter' => $filter,
+        'limit' => $limit, 'limit_offset' => $limit_offset,
+        'results' => $results_assoc
+    ]);
+}
+
+function api_litters_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset = 0, $where = '1', $order_by = '`id` ASC')
+{
+    global $is_signed_in;
+
+    $sql =
+    "SELECT `id`
+     FROM `litters`
+     WHERE $where
+     ORDER BY $order_by
+     LIMIT :limit_offset, :limit";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['limit' => $limit, 'limit_offset' => $limit_offset]);
+
+    $o = '';
+    $t = '';
+    $results_assoc = [];
+    $count = 0;
+    while (($row = $stmt->fetch()) !== false)
+    {
+        if ($count == 0)
+        {
+            if ($is_signed_in)
+            {
+                $o .= '        <p><a class="edit" href="litters.php?act=add">Create New</a></p>'."\r\n";
+            }
+        }
+        $litter_obj = api_litters_find($pdo, $row['id']);
+        $o .= '<div class="list_element">'.$litter_obj['html'].'</div>';
+        $results_assoc[$row['id']] = $litter_obj;
+        $count++;
+    }
+    $stmt = null;
+
+    return json_result(true, $t, $o, [
+        'q' => $q, 'filter' => $filter,
+        'limit' => $limit, 'limit_offset' => $limit_offset,
+        'results' => $results_assoc
+    ]);
+}
+
+function api_litters_find($pdo, $id, $filter = '')
+{
+    global $is_signed_in;
+
+    $o = '';
+    $t = '';
+    $type_noun = '';
+    $born_verb = '';
+
+    $sql =
+    'SELECT `id`, `born`, `desc_short`, `desc_long`, `date_birth`, `pedigree_id`, `own_by`, `sire_id`, `dam_id`, `count_males`, `count_females`
+     FROM `litters`
+     WHERE `id` = :id
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id' => $id]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    $born = intval($row['born']);
+    if ($born == 1)
+    { // BORN
+        $born_verb = 'born';
+        $type_noun = 'Litter ';
+    }
+    elseif ($born == 2)
+    { // NONLITTER
+        $born_verb = 'Born';
+        $type_noun = '';
+    }
+    elseif ($born == 3)
+    { // SPECIALNOTE
+        if (strlen($row['desc_long']) > 0)
+        {
+            $o .= '        <p><i>';
+            $o .= stml_parse($row['desc_long']);
+            $o .= "</i>\r\n";
+        }
+
+        if ($is_signed_in)
+        {
+            $o .= '          <a class="edit" href="litters.php?act=edit&id=';
+            $o .= $row['id'];
+            $o .= '">Edit</a>';
+            $o .= "\r\n";
+        }
+
+        $o .= "      </p>\r\n";
+        return $o;
+    }
+    else
+    { // DUE
+        $born_verb = 'due';
+        $type_noun = 'Litter ';
+    }
+    $born_date = date('F j, Y', strtotime($row['date_birth']));
+
+    $o .= '      <p class="litter">'."\r\n";
+    $o .= '        <span class="litter_head"><b>';
+    $o .= "$type_noun$born_verb $born_date:</b>\r\n";
+    if (strlen($row['pedigree_id']) > 0)
+    {
+        $ped_link = api_print_pedigree_link($pdo, $row['pedigree_id']);
+        if ($ped_link['result'])
+        {
+            $o .= $ped_link['html'];
+        }
+    }
+
+    if ($is_signed_in)
+    {
+        $o .= '          <a class="edit" href="litters.php?act=edit&id=';
+        $o .= $row['id'];
+        $o .= '">Edit</a>';
+    }
+
+    $o .= "        </span>\r\n";
+
+    if (strlen($row['own_by']) > 0)
+    {
+        $o .= '        <span class="litter_note"><b>Owned by:</b> ';
+        $o .= stml_parse($row['own_by']);
+        $o .= "</span>\r\n";
+    }
+
+    if ($born == 1)
+    {
+        $litter_text = number_to_words($row['count_males'], 1).' male'.plural($row['count_males']).' and '.
+                       number_to_words($row['count_females']).' female'.plural($row['count_females']);
+        if (strlen($row['desc_short']) > 0)
+        {
+            $litter_text .='; '.stml_parse($row['desc_short']);
+        }
+
+        $o .= '        <span class="litter_pups"><b>Litter:</b> ';
+        $o .= $litter_text;
+        $o .= "</span>\r\n";
+    }
+
+    $dog_obj1 = api_print_dog($pdo, $row['sire_id'], '', 0);
+    $dog_obj2 = api_print_dog($pdo, $row['dam_id'], '', 0);
+    $o .= '        <span class="litter_sire"><b>Sire:</b> ';
+    $o .= $dog_obj1['html'];
+    $o .= "</span>\r\n";
+    $o .= '        <span class="litter_dam"><b>Dam:</b> ';
+    $o .= $dog_obj2['html'];
+    $o .= "</span>\r\n";
+  
+    if (strlen($row['desc_long']) > 0)
+    {
+        $o .= '        <span class="litter_note"><b>Note:</b> ';
+        $o .= stml_parse($row['desc_long']);
+        $o .= "</span>\r\n";
+    }
+
+    $o .= "      </p>\r\n";
+
+    return json_result(true, '', $o, $row);
+}
+
+function api_pedigrees_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset = 0, $where = '1', $order_by = '`id` ASC', $year_headers = false)
+{
+    global $is_signed_in;
+
+    $sql =
+    "SELECT `id`, `date_birth`
+     FROM `pedigrees`
+     WHERE $where
+     ORDER BY $order_by
+     LIMIT :limit_offset, :limit";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['limit' => $limit, 'limit_offset' => $limit_offset]);
+
+    $dl_open = false;
+    $h_year = [];
+    $o = '';
+    $t = '';
+    $results_assoc = [];
+    while (($row = $stmt->fetch()) !== false)
+    {
+        $yr = substr($row['date_birth'], 0, 4);
+        if (!array_key_exists($yr, $h_year))
+        {
+            if ($dl_open)
+            {
+                $o .= "</dl>";
+                $dl_open = false;
+            }
+
+            if ($year_headers)
+            {
+                $o .= "<h3>$yr</h3>\r\n";
+            }
+
+            $h_year[$yr] = true;
+
+            if ($is_signed_in)
+            {
+                $o .= '<p><a class="edit" href="pedigrees.php?act=add">Create New</a></p>';
+            }
+        }
+
+        if (!$dl_open)
+        {
+            $o .= "<dl>";
+            $dl_open = true;
+        }
+
+        $ped_obj = api_print_pedigree_link($pdo, $row['id'], '', 1, true);
+        $o .= '<div class="list_element">'.$ped_obj['html'].'</div>';
+        $results_assoc[$row['id']] = $ped_obj;
+    }
+    $stmt = null;
+
+    if ($dl_open)
+    {
+        $o .= "</dl>";
+    }
+
+    return json_result(true, $t, $o, [
+        'q' => $q, 'filter' => $filter,
+        'limit' => $limit, 'limit_offset' => $limit_offset,
+        'results' => $results_assoc
+    ]);
+}
+
+function api_links_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset = 0)
+{
+    global $is_signed_in;
+
+    $sql =
+    'SELECT *
+     FROM `links`
+     WHERE `index` > 0
+     ORDER BY `index` ASC
+     LIMIT :limit_offset, :limit';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['limit' => $limit, 'limit_offset' => $limit_offset]);
+    $link_count = $stmt->rowCount();
+
+    $dl_open = false;
+    $o = '';
+    $t = '';
+    $results_assoc = [];
+    while (($row = $stmt->fetch()) !== false)
+    {
+        if (!$dl_open)
+        {
+            $o .= "<dl>";
+            $dl_open = true;
+        }
+
+        $location = $row['location'];
+        $title = $row['title'];
+
+        if (strtolower(substr($location, 0, 8)) == 'https://')
+        {
+            if (substr_count($location, '/') == 2)
+            {
+                $location .= '/';
+            }
+        }
+        else
+        {
+            if (substr_count($location, '/') == 0)
+            {
+                $location .= '/';
+            }
+            $location = "https://$location";
+        }
+
+        $location_friendly = substr($location, 8);
+        if (substr_count($location_friendly, '/') == 1)
+        {
+            $location_friendly = substr($location_friendly, 0, strlen($location_friendly) - 1);
+        }
+
+        $t .= $location."\n";
+        $o .= '<dt><a href="';
+        $o .= htmlspecialchars($location);
+        $o .= ' target="_blank" title="';
+        $o .= htmlspecialchars($title);
+        $o .= '">';
+        $o .= htmlspecialchars($title);
+        $o .='</a></dt><dd>URL: ';
+        $o .= htmlspecialchars($location_friendly);
+        $o .= '</dd>';
+
+        if ($is_signed_in)
+        {
+            if ($row['index'] > 1)
+            {
+                $o .= '<a class="edit" href="links.php?act=up&id=';
+                $o .= $row['id'];
+                $o .= '">Move Up</a>';
+            }
+            if ($row['index'] < $link_count)
+            {
+                $o .= '<a class="edit" href="links.php?act=down&id=';
+                $o .= $row['id'];
+                $o .= '">Move Down</a>';
+            }
+            if ($link_count > 1)
+            {
+                $o .= ' | ';
+            }
+            $o .= '<a class="edit" href="links.php?act=edit&id=';
+            $o .= $row['id'];
+            $o .= '">Edit</a>';
+        }
+
+        $results_assoc[$row['id']] = $row;
+    }
+    $stmt = null;
+
+    if ($dl_open)
+    {
+        $o .= "</dl>";
+    }
+
+    return json_result(true, $t, $o, [
+        'q' => $q, 'filter' => $filter,
         'limit' => $limit, 'limit_offset' => $limit_offset,
         'results' => $results_assoc
     ]);

@@ -4,7 +4,7 @@ $templ_page_valid = TRUE;
 
 include_once('util/incl.php');
 
-db_connect();
+//db_connect();
 
 check_session();
 
@@ -195,15 +195,17 @@ get_page_sect_top();
 switch ($act) {
   default:
   case 0: // normal, view, completed action, error
-    $order_by = '`date_birth` ASC';
     echo "      <h3>Present</h3>\r\n";
-    echo print_dog_list("`own_cat` = 'OLD'", $order_by, 4, 'Retired');
-    echo print_dog_list("`own_cat` = 'MAIN'", $order_by, 4, 'Main Dogs');
-    echo print_dog_list("`own_cat` = 'YOUNG'", $order_by, 4, 'Up and Coming Youngsters');
-    echo print_dog_list("`own_cat` = 'PUP'", $order_by, 4, 'Puppies');
-    echo print_dog_list("`own_cat` = 'PAST'", $order_by, 3, 'Past');
-    if ($is_signed_in) {
-      echo print_dog_list("`own_cat` = 'NOLIST'", $order_by, 3, 'Hidden Dogs');
+    $order_by = '`date_birth` ASC';
+    $where = ['OLD', 'MAIN', 'YOUNG', 'PUP', 'PAST', 'NOLIST'];
+    $header_text = ['Retired', 'Main Dogs', 'Up and Coming Youngsters', 'Puppies', 'Past', 'Hidden'];
+    $header_level = [4, 4, 4, 4, 3, 3];
+    for ($i = 0; $i < ($is_signed_in ? 6 : 5); $i++)
+    {
+        $where_inst = "`own_cat` = '$where[$i]'";
+        $dogs = api_dogs_list($DBCONN, '', '', 1000, 0, $where_inst,
+            $order_by, $header_level[$i], $header_text[$i]);
+        echo $dogs['html'];
     }
     break;
   case 1: // create
@@ -349,5 +351,3 @@ switch ($act) {
 
 // bottom of page
 get_page_sect_bottom();
-
-?>

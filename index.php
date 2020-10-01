@@ -4,7 +4,7 @@ $templ_page_valid = TRUE;
 
 include_once('util/incl.php');
 
-db_connect();
+//db_connect();
 
 check_session();
 
@@ -45,7 +45,7 @@ get_page_sect_top();
       
       <p>Jodie Broussard shared this video compilation of some puppy pictures!</p>
       
-      <iframe class="cen-il-fr" title="YouTube video player" width="480" height="360" src="http://www.youtube.com/embed/30AvudaCiGs?rel=0" frameborder="0" allowfullscreen></iframe>
+      <iframe class="cen-il-fr" title="YouTube video player" width="480" height="360" src="https://www.youtube.com/embed/30AvudaCiGs?rel=0" frameborder="0" allowfullscreen></iframe>
       
       <hr />
       
@@ -73,7 +73,7 @@ get_page_sect_top();
       
       <h3>Chloe Puppies Howling</h3>
       
-      <iframe class="cen-il-fr" title="YouTube video player" width="480" height="360" src="http://www.youtube.com/embed/GmkjtrgSD2w?rel=0" frameborder="0" allowfullscreen></iframe>
+      <iframe class="cen-il-fr" title="YouTube video player" width="480" height="360" src="https://www.youtube.com/embed/GmkjtrgSD2w?rel=0" frameborder="0" allowfullscreen></iframe>
       
       <hr />
 
@@ -89,5 +89,3 @@ get_page_sect_top();
 
 // bottom of page
 get_page_sect_bottom();
-
-?>

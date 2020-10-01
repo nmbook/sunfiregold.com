@@ -4,7 +4,7 @@ $templ_page_valid = TRUE;
 
 include_once('util/incl.php');
 
-db_connect();
+//db_connect();
 
 check_session();
 
@@ -34,9 +34,10 @@ get_page_sect_top();
 
 $order_by = '`date_birth` ASC';
 $return_to = 'honordogs';
-echo print_dog_list("`honor_cat` = 'LIST'", $order_by, 3, 'Sunfire\'s Honor Roll', $return_to);
+$where = "`honor_cat` = 'LIST'";
+$header_text = "Sunfire's Honor Roll";
+$dogs = api_dogs_list($DBCONN, '', '', 1000, 0, $where, $order_by, 3, $header_text, $return_to);
+echo $dogs['html'];
 
 // bottom of page
 get_page_sect_bottom();
-
-?>

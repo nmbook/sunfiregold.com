@@ -4,7 +4,7 @@ $templ_page_valid = TRUE;
 
 include_once('util/incl.php');
 
-db_connect();
+//db_connect();
 
 check_session();
 
@@ -194,22 +194,29 @@ switch ($act) {
 <?php
     
     $order_by = '`date_birth` ASC';
-    $o = '';
-    $o .= print_litter_list('`active` = 1 AND `born` = 3', $order_by);
-    $o .= print_litter_list('`active` = 1 AND `born` = 2', $order_by);
-    $o .= print_litter_list('`active` = 1 AND `born` = 1', $order_by);
-    $o .= print_litter_list('`active` = 1 AND `born` = 0', $order_by);
-    if ($o == '') {
-        $o = '      <p><i>There are no litters here. Please check back soon!</i></p>';
+    $born_no = [3, 2, 1, 0];
+    $count = 0;
+    for ($i = 0; $i < 4; $i++)
+    {
+        $where = "`active` = 1 AND `born` = $born_no[$i]";
+        $litters = api_litters_list($DBCONN, '', '', 1000, 0, $where, $order_by);
+        $count += count($litters['results']);
+        echo $litters['html'];
     }
-    echo $o;
+    $order_by = '`date_birth` ASC';
+    if ($count == 0)
+    {
+        echo '      <p><i>There are no litters here. Please check back soon!</i></p>';
+    }
     
     if ($is_signed_in) {
 ?>
       <h3>Hidden Litters</h3>
 <?php
-      $order_by = '`date_birth` DESC';
-      echo print_litter_list('`active` = 0', $order_by);
+        $order_by = '`date_birth` DESC';
+        $where = '`active` = 0';
+        $litters = api_litters_list($DBCONN, '', '', 1000, 0, $where, $order_by);
+        echo $litters['html'];
     }
     break;
   case 1: // create
@@ -334,5 +341,3 @@ switch ($act) {
 
 // bottom of page
 get_page_sect_bottom();
-
-?>

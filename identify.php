@@ -4,7 +4,7 @@ $templ_page_valid = TRUE;
 
 include_once('util/incl.php');
 
-db_connect();
+//db_connect();
 
 check_session();
 
@@ -60,5 +60,3 @@ get_page_sect_top();
 
 // bottom of page
 get_page_sect_bottom();
-
-?>

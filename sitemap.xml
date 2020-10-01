@@ -9,27 +9,23 @@ $templ_page_valid = TRUE;
 
 include_once('util/incl.php');
 
-db_connect();
+//db_connect();
 
 ?><? echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<?php 
-  $sql = 
-  "SELECT *
-   FROM `$_DB[dbname]`.`pages`
-   WHERE `index` > 0
-   ORDER BY `index` ASC";
-  $result = db_query($sql);
-  while ($row = mysql_fetch_array($result)) {
-    $mtime = date('Y-m-d', get_last_edit($row['location']));
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<?php
+    $obj = api_pages_list($DBCONN);
+    foreach ($obj['results'] as $id => $row)
+    {
+        $mtime = date('Y-m-d', get_last_edit($row['location']);
 ?>
   <url>
-    <loc><?php echo htmlentities("http://www.sunfiregold.com/$row[location].php"); ?></loc>
+    <loc><?php echo htmlspecialchars("https://www.sunfiregold.com/$row[location].php"); ?></loc>
     <lastmod><?php echo $mtime; ?></lastmod>
-    <changefreq><?php echo $row['search_chfreq']; ?></changefreq>
-    <priority><?php echo $row['search_priority']; ?></priority>
+    <changefreq><?php echo htmlspecialchars($row['search_chfreq']); ?></changefreq>
+    <priority><?php echo htmlspecialchars($row['search_priority']); ?></priority>
   </url>
 <?php
-  }
+    }
 ?>
 </urlset>

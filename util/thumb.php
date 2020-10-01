@@ -106,5 +106,3 @@ if (file_exists($src)) {
   else
     header("Location: $src");
 }
-
-?>

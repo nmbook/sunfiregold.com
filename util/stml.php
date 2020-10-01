@@ -23,7 +23,8 @@ function stml_parse_multiline($fulltext) {
 }
 
 function stml_parse($stml_p) {
-  global $_DB;
+  return $stml_p;
+  global $DBCONN;
   $pos = 0;
   
   $stml_p = htmlentities($stml_p);
@@ -62,12 +63,8 @@ function stml_parse($stml_p) {
     
     $title = $argv[0];
     
-    $sql =
-    "SELECT *
-     FROM `$_DB[dbname]`.`stml_templates`
-     WHERE `name` = '".db_sanitize($title)."'
-     LIMIT 1";
-    $template = mysql_fetch_array(db_query($sql));
+    $template = api_get_stml_template($DBCONN, $title);
+    
     if (strlen($template['name'])) {
       $result = $template['result'];
       for ($argn = 0; $argn <= $template['args']; $argn++) {
@@ -94,5 +91,3 @@ function stml_parse($stml_p) {
 function stml_encode($fulltext) {
   return $fulltext;
 }
-
-?>

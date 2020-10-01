@@ -4,7 +4,7 @@ $templ_page_valid = TRUE;
 
 include_once('util/incl.php');
 
-db_connect();
+//db_connect();
 
 check_session();
 
@@ -291,68 +291,12 @@ switch ($act) {
       <p><a class="edit" href="links.php?act=add">Create New</a></p>
 <?php
     }
-?>
-      <dl>
-<?php
     
-    $sql =
-    "SELECT COUNT(*)
-     FROM `$_DB[dbname]`.`links`
-     WHERE `index` > 0";
-    $result = mysql_fetch_row(db_query($sql));
-    $link_count = $result[0];
+    $objs = api_links_list($DBCONN, '', '', 1000, 0);
+    echo $objs['html'];
     
-    $sql =
-    "SELECT *
-     FROM `$_DB[dbname]`.`links`
-     WHERE `index` > 0
-     ORDER BY `index` ASC";
-    $result = db_query($sql);
-
-    while ($row = mysql_fetch_array($result)) {
-      $location = $row['location'];
-      $title = $row['title'];
-      if (strtolower(substr($location, 0, 7)) == 'http://') {
-        if (substr_count($location, '/') == 2) {
-          $location .= '/';
-        }
-      } else {
-        if (substr_count($location, '/') == 0) {
-          $location .= '/';
-        }
-        $location = "http://$location";
-      }
-      
-      $location_friendly = substr($location, 7);
-      if (substr_count($location_friendly, '/') == 1) {
-        $location_friendly = substr($location_friendly, 0, strlen($location_friendly) - 1);
-      }
-      
-?>
-        <dt><a href="<?php echo $location; ?>" target="_blank" title="<?php echo $title; ?>"><?php echo $title; ?></a></dt>
-          <dd>URL: <?php echo $location_friendly; ?></dd>
-<?php
-      if ($is_signed_in) {
-        if ($row['index'] > 1) {
-?>
-          <a class="edit" href="links.php?act=up&id=<?php echo $row['id']; ?>">Move Up</a>
-<?php
-        }
-        if ($row['index'] < $link_count) {
-?>
-          <a class="edit" href="links.php?act=down&id=<?php echo $row['id']; ?>">Move Down</a>
-<?php
-        }
-?>
-        <?php if ($link_count > 1) echo '|'; ?> <a class="edit" href="links.php?act=edit&id=<?php echo $row['id']; ?>">Edit</a>
-<?php
-      }
-    }
-?>
-      </dl>
-<?php
-    
-    if ($is_signed_in) {
+    if ($is_signed_in)
+    {
       $h_hidden = false;
       
       $sql =
@@ -477,5 +421,3 @@ switch ($act) {
 
 // bottom of page
 get_page_sect_bottom();
-
-?>

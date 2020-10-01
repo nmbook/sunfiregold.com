@@ -4,7 +4,7 @@ $templ_page_valid = TRUE;
 
 include_once('util/incl.php');
 
-db_connect();
+//db_connect();
 
 check_session();
 
@@ -220,9 +220,12 @@ switch ($act) {
 <?php
     
     $order_by = '`date_birth` DESC';
-    echo print_pedigree_link_list('`active` = 1', $order_by, true);
-    if ($is_signed_in) {
-      echo print_pedigree_link_list('`active` = 0', $order_by, false);
+    $objs = api_pedigrees_list($DBCONN, '', '', 1000, 0, '`active` = 1', $order_by, true);
+    echo $objs['html'];
+    if ($is_signed_in)
+    {
+        $objs = api_pedigrees_list($DBCONN, '', '', 1000, 0, '`active` = 0', $order_by, false);
+        echo $objs['html'];
     }
     break;
   case 1: // upload
@@ -312,5 +315,3 @@ switch ($act) {
 
 // bottom of page
 get_page_sect_bottom();
-
-?>

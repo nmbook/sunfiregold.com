@@ -43,4 +43,3 @@ function dump_messages() {
     }
   } // else do nothing
 }
-?>

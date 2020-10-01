@@ -30,4 +30,3 @@ function number_to_words($no, $caps = 0) {
   }
   return $as_words;
 }
-?>
