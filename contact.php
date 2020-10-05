@@ -20,9 +20,7 @@ get_page_sect_top();
         <dt>E-mail:&nbsp;&nbsp;<script type="text/javascript">document.writeln("<a href=\"mail" + "to:" + "sunfiregold" + String.fromCharCode(64) + "yahoo" + "." + "com\" target=\"_blank\" title=\"sunfiregold" + String.fromCharCode(64) + "yahoo" + "." + "com\">");</script>Sunfire Golden Retrievers<script type="text/javascript">document.writeln("<\/a>");</script></dt>
           <dd>Address:&nbsp;&nbsp;<script type="text/javascript">document.writeln("sunfiregold" + String.fromCharCode(64) + "yahoo" + "." + "com");</script></dd>
 
-        <dt>Telephone Number:&nbsp;&nbsp;860-668-6143</dt>
-
-        <dt>Fax Number:&nbsp;&nbsp;860-683-6016</dt>
+        <dt>Telephone:&nbsp;&nbsp;860-668-6143</dt>
       </dl>
 <?php
 
