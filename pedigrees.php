@@ -36,15 +36,9 @@ if ($is_signed_in) {
   }
   
   if (isset($id)) {
-    $sql =
-    "SELECT *
-     FROM `$_DB[dbname]`.`pedigrees`
-     WHERE `id` = '".db_sanitize($id)."'
-     LIMIT 1";
-    $result = db_query($sql);
-    $row = mysql_fetch_array($result);
-    if ($row['id'] != $id) {
-      show_message("Pedigree File ID '$id' not found.", 'error');
+    $row = api_get_pedigree_by_id($DBCONN, $id);
+    if ($row['result'] === false) {
+      show_message("Pedigree file ID '$id' not found.", 'error');
       $act = 0;
     }
   }
@@ -53,149 +47,117 @@ if ($is_signed_in) {
   if ($submit) {
     switch ($act) {
       case 1:
-        switch ($_FILES['pedigree']['error']) {
-          case UPLOAD_ERR_OK:
+      case 2:
+        $file_saved = false;
+        if ($act == 1)
+        {
+            switch ($_FILES['pedigree']['error'])
+            {
+            case UPLOAD_ERR_OK:
+                $fname = basename($_FILES['pedigree']['name']);
+                $fext = substr($fname, strrpos($fname, '.'));
+                if ($fext != '.pdf')
+                {
+                    show_message("Provided file was not a PDF.", 'error');
+                    break;
+                }
+
+                // 1 MB (1024 * 1024)
+                if ($_FILES['pedigree']['size'] > 1048576)
+                {
+                    show_message("Provided file was too large.", 'error');
+                    break;
+                }
+
+                $target = "pedigrees/$fname";
+                if (move_uploaded_file($_FILES['pedigree']['tmp_name'], $target))
+                {
+                    $file_saved = true;
+                }
+                else
+                {
+                    show_message('Unknown upload failure (could not move temporary file).', 'error');
+                }
+                break;
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                show_message('Upload failed: File too large.', 'error');
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                show_message('The upload failed to complete.', 'error');
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                show_message('No file uploaded.', 'error');
+                break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+                show_message('Internal upload failure (no temporary directory).', 'error');
+                break;
+            case UPLOAD_ERR_CANT_WRITE:
+                show_message('Internal upload failure (could not write temporary file).', 'error');
+                break;
+            case UPLOAD_ERR_EXTENSION:
+                show_message('Internal upload failure (extension stopped upload).', 'error');
+                break;
+            default:
+                show_message('Unknown upload failure.', 'error');
+                break;
+            }
+        }
+        else
+        {
+            $file_saved = true;
+        }
+
+        if ($file_saved)
+        {
             $dateb = isset($_POST['date_birth']) ? $_POST['date_birth'] : '';
-            $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
-            if (!$dateb_v) $dateb = db_date(time());
             $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
-            $sid_v = (bool) preg_match('/\d+/', $sid);
-            if (!$sid_v) $sid = 0;
             $did = isset($_POST['dam']) ? $_POST['dam'] : 0;
-            $did_v = (bool) preg_match('/\d+/', $did);
-            if (!$did_v) $did = 0;
             $active = (bool) (isset($_POST['active']) ? $_POST['active'] : '');
-            
-            $fname = basename($_FILES['pedigree']['name']);
-            $fext = substr($fname, strrpos($fname, '.'));
-            if ($fext != '.pdf') {
-              show_message("Provided file was not a PDF.", 'error');
-              break;
+
+            $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
+            $sid_v = (bool) preg_match('/\d+/', $sid);
+            $did_v = (bool) preg_match('/\d+/', $did);
+
+            $params = [];
+            if ($sid_v) { $params['sire_id'] = $sid; }
+            if ($did_v) { $params['dam_id'] = $did; }
+            if ($dateb_v) { $params['date_birth'] = $dateb; }
+            $params['active'] = $active;
+            if ($act == 1) { $params['location'] = $fname; }
+
+            $act_descr = ($act == 1 ?
+                "Upload of pedigree file '$fname' (ID=$id) succeeded." :
+                "Updated '$row[location]' pedigree file (ID=$row[id]).");
+
+            if ($act == 1)
+            {
+                $result = api_pedigree_insert($DBCONN, $params, $act_descr);
+                if ($result['result'] === true)
+                {
+                    $id = $result['id'];
+                }
             }
-            $target = "pedigrees/$fname";
-            
-            // 512 KILABYTES
-            if ($_FILES['pedigree']['size'] > 524288) {
-              show_message("Provided file was too large.", 'error');
-              break;
+            else
+            {
+                $result = api_pedigree_update($DBCONN, $id, $params, $act_descr);
             }
-            
-            if (move_uploaded_file($_FILES['pedigree']['tmp_name'], $target)) {
-              $sql =
-              "INSERT INTO `$_DB[dbname]`.`pedigrees` (
-               `sire_id`, `dam_id`, `date_birth`, `location`, `active`
-               ) VALUES (
-               '$sid', '$did', '$dateb', '".db_sanitize($fname)."', '$active'
-               )";
-              db_query($sql);
-              
-              $sql =
-              "SELECT `id` FROM `$_DB[dbname]`.`pedigrees`
-               ORDER BY `id` DESC
-               LIMIT 1";
-              $row_ = mysql_fetch_row(db_query($sql));
-              $id = $row_[0];
-        
-              $sql =
-              "INSERT INTO `$_DB[dbname]`.`actions` (
-               `user_id`, `page_id`, `date`, `edit_type`, `data_desc`
-               ) VALUES (
-               '$_SESSION[user_id]', '".get_page_id()."',
-               '".db_date(time())."', '".($act == 1 ? 'ADD' : 'EDIT')."',
-               'Uploaded ".db_sanitize($fname)." pedigree file (ID=$id).'
-               )";
-              db_query($sql);
-              
-              show_message("Upload of pedigree file '$fname' (ID=$id) succeeded.", 'notice');
-            } else {
-              show_message('Unknown upload failure (could not move temporary file).', 'error');
-            }
-            break;
-          case UPLOAD_ERR_INI_SIZE:
-          case UPLOAD_ERR_FORM_SIZE:
-            show_message('Upload failed: File too large.', 'error');
-            break;
-          case UPLOAD_ERR_PARTIAL:
-            show_message('The upload failed to complete.', 'error');
-            break;
-          case UPLOAD_ERR_NO_FILE:
-            show_message('No file uploaded.', 'error');
-            break;
-          case UPLOAD_ERR_NO_TMP_DIR:
-            show_message('Internal upload failure (no temporary directory).', 'error');
-            break;
-          case UPLOAD_ERR_CANT_WRITE:
-            show_message('Internal upload failure (could not write temporary file).', 'error');
-            break;
-          case UPLOAD_ERR_EXTENSION:
-            show_message('Internal upload failure (extension stopped upload).', 'error');
-            break;
-          default:
-            show_message('Unknown upload failure.', 'error');
-            break;
+
+            show_message($act_descr, 'notice');
         }
         $act = 0;
         header("Location: pedigrees.php");
         exit;
-      case 2:
-        $dateb = isset($_POST['date_birth']) ? $_POST['date_birth'] : '';
-        $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
-        $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
-        $sid_v = (bool) preg_match('/\d+/', $sid);
-        $did = isset($_POST['dam']) ? $_POST['dam'] : 0;
-        $did_v = (bool) preg_match('/\d+/', $did);
-        $active = (bool) (isset($_POST['active']) ? $_POST['active'] : '');
-        
-        $sql =
-        "UPDATE `$_DB[dbname]`.`pedigrees`
-         SET `sire_id` = '$sid',
-             `dam_id` = '$did',
-             `date_birth` = '$dateb',
-             `active` = '$active'
-         WHERE `id` = '$id'";
-        db_query($sql);
-        
-        $sql =
-        "INSERT INTO `$_DB[dbname]`.`actions` (
-         `user_id`, `page_id`, `date`, `edit_type`, `data_desc`
-         ) VALUES (
-         '$_SESSION[user_id]', '".get_page_id()."',
-         '".db_date(time())."', 'REMOVE',
-         'Updated ".db_sanitize($row['location'])." pedigree file (ID=$row[id]).'
-         )";
-        db_query($sql);
-        
-        show_message("Updated '$row[location]' pedigree file (ID=$row[id]).", 'notice');
-        
-        $act = 0;
-        header("Location: pedigrees.php");
-        exit;
       case 3:
-        $sql =
-        "SELECT `location`
-         FROM `$_DB[dbname]`.`pedigrees`
-         WHERE `id` = '$id'";
-        $result = mysql_fetch_row(db_query($sql));
-        $location = "pedigrees/$result[0]";
+        $location = "pedigrees/$row[location]";
         @unlink($location);
-        
-        $sql =
-        "DELETE FROM `$_DB[dbname]`.`pedigrees`
-         WHERE `id` = '$id'";
-        db_query($sql);
-        
-        $sql =
-        "INSERT INTO `$_DB[dbname]`.`actions` (
-         `user_id`, `page_id`, `date`, `edit_type`, `data_desc`
-         ) VALUES (
-         '$_SESSION[user_id]', '".get_page_id()."',
-         '".db_date(time())."', 'REMOVE',
-         'Removed '".db_sanitize($row['location'])."' pedigree file (ID=$row[id]).'
-         )";
-        db_query($sql);
-        
-        show_message("Removed '$row[location]' pedigree file (ID=$row[id]).", 'notice');
-        
+
+        $act_descr = "Removed '$row[location]' pedigree file (ID=$row[id]).";
+
+        $result = api_pedigree_delete($DBCONN, $row['id'], $act_descr);
+
+        show_message($act_descr, 'notice');
+
         $act = 0;
         header("Location: pedigrees.php");
         exit;
@@ -261,7 +223,9 @@ switch ($act) {
     if (!file_exists("./pedigrees/$row[location]")) {
       $ftype = 'File not found.';
     } else {
-      $ftype = 'Type: pdf';
+      $fsize = filesize("./pedigrees/$row[location]");
+      $fsizekb = round($fsize / 1024, 1)." KB";
+      $ftype = "Type: pdf | Size: $fsizekb";
     }
     $active = $row['active'];
 ?>
@@ -283,7 +247,7 @@ switch ($act) {
         <a class="edit" href="pedigrees/<?php echo $row['location']; ?>" target="_blank" title="Pedigree File">
         <img src="pdficon.png" class="pdficon" title="This document requires Adobe Acrobat Reader" Alt="[PDF]" />
         Pedigree File</a><br />
-        <div class="input_preview">Location: /pedigrees/<?php echo htmlentities($row['location']); ?> | <?php echo $ftype; ?></div>
+        <div class="input_preview">Location: /pedigrees/<?php echo htmlentities($row['location']); ?><br><?php echo $ftype; ?></div>
         <label for="remove">Remove Pedigree:</label>
         <a name="remove" href="pedigrees.php?act=remove&id=<?php echo $row['id']; ?>" class="edit">Click to Remove</a>
         <div class="input_button_wrapper">

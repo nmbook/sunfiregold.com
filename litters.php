@@ -36,14 +36,8 @@ if ($is_signed_in) {
   }
   
   if (isset($id)) {
-    $sql =
-    "SELECT *
-     FROM `$_DB[dbname]`.`litters`
-     WHERE `id` = '".db_sanitize($id)."'
-     LIMIT 1";
-    $result = db_query($sql);
-    $row = mysql_fetch_array($result);
-    if ($row['id'] != $id) {
+    $row = api_get_litter_by_id($DBCONN, $id);
+    if ($row['result'] === false) {
       show_message("Litter ID '$id' not found.", 'error');
       $act = 0;
     }
@@ -55,7 +49,6 @@ if ($is_signed_in) {
       case 1:
       case 2:
         $dateb = isset($_POST['litter_date']) ? $_POST['litter_date'] : '';
-        $dateb_v = intval(preg_match('/\d{4}-\d{2}-\d{2}/', $dateb));
         $born = isset($_POST['litter_verb']) ? intval($_POST['litter_verb']) : 0;
         $ownb = isset($_POST['own_by']) ? $_POST['own_by'] : '';
         $countm = isset($_POST['count_males']) ? intval($_POST['count_males']) : 0;
@@ -63,96 +56,69 @@ if ($is_signed_in) {
         $descs = isset($_POST['desc_short']) ? $_POST['desc_short'] : '';
         $descl = isset($_POST['desc_long']) ? $_POST['desc_long'] : '';
         $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
-        $sid_v = (bool) preg_match('/\d+/', $sid);
         $did = isset($_POST['dam']) ? $_POST['dam'] : 0;
-        $did_v = (bool) preg_match('/\d+/', $did);
         $pid = isset($_POST['pedigree']) ? $_POST['pedigree'] : '';
-        $pid_v = (bool) preg_match('/\d+/', $pid);
         $active = (bool) (isset($_POST['active']) ? $_POST['active'] : 0);
-        if ($active == '') $active = '0';
-        
-        if ($act == 1) {
-          $sql =
-          "INSERT INTO `$_DB[dbname]`.`litters` (
-           ".($dateb_v ? "`date_birth`," : '')."
-           `born`, `own_by`,
-           ".($born == 1 ? "`count_males`, `count_females`, `desc_short`," : '')."
-           `desc_long`,
-           ".($sid_v ? "`sire_id`," : '')."
-           ".($did_v ? "`dam_id`," : '')."
-           ".($pid_v ? "`pedigree_id`," : '')."
-           `active`
-           ) VALUES (
-           ".($dateb_v ? "'$dateb'," : '')."
-           '".db_sanitize($born)."',
-           '".db_sanitize($ownb)."',
-           ".($born == 1 ? "'".db_sanitize($countm)."',
-                       '".db_sanitize($countf)."',
-                       '".db_sanitize($descs)."'," : '')."
-           '".db_sanitize($descl)."',
-           ".($sid_v ? "'$sid'," : '')."
-           ".($did_v ? "'$did'," : '')."
-           ".($pid_v ? "'$pid'," : '')."
-           '$active'
-           )";
-        } else {
-          $sql =
-          "UPDATE `$_DB[dbname]`.`litters`
-           SET
-            ".($dateb_v ? "`date_birth` = '$dateb'," : '')."
-            `born` = '".db_sanitize($born)."', `own_by` = '".db_sanitize($ownb)."',
-            ".($born == 1 ? "`count_males` = '".db_sanitize($countm)."',
-                        `count_females` = '".db_sanitize($countf)."',
-                        `desc_short` = '".db_sanitize($descs)."'," : '')."
-            `desc_long` = '".db_sanitize($descl)."',
-            ".($sid_v ? "`sire_id` = '$sid'," : '')."
-            ".($did_v ? "`dam_id` = '$did'," : '')."
-            ".($pid_v ? "`pedigree_id` = '$pid'," : '')."
-            `active` = '$active'
-           WHERE `id` = '$id'";
+
+        $dateb_v = intval(preg_match('/\d{4}-\d{2}-\d{2}/', $dateb));
+        $sid_v = (bool) preg_match('/\d+/', $sid);
+        $did_v = (bool) preg_match('/\d+/', $did);
+        $pid_v = (bool) preg_match('/\d+/', $pid);
+
+        $params = [];
+        $params['date_birth'] = $dateb;
+        $params['born'] = $born;
+        $params['own_by'] = $ownb;
+        if ($born)
+        {
+            $params['count_males'] = $countm;
+            $params['count_females'] = $countf;
+            $params['desc_short'] = $descs;
         }
-        db_query($sql);
-        if ($act == 1) {
-          $sql =
-          "SELECT `id` FROM `$_DB[dbname]`.`litters`
-           ORDER BY `id` DESC
-           LIMIT 1";
-          $row_ = mysql_fetch_row(db_query($sql));
-          $id = $row_[0];
+        $params['desc_long'] = $descl;
+        if ($sid_v) { $params['sire_id'] = $sid; }
+        if ($did_v) { $params['dam_id'] = $did; }
+        if ($pid_v) { $params['pedigree_id'] = $pid; }
+        $params['active'] = $active;
+
+        $act_descr = ($act == 1 ? 'Added ' : 'Updated ')
+                .api_print_dog($DBCONN, $row['sire_id'], '', 3)['text']
+                .' x '
+                .api_print_dog($DBCONN, $row['dam_id'], '', 3)['text']
+                .' litter '
+                .($born ? 'born' : 'due').
+                " on $dateb (ID=$id).";
+
+        if ($act == 1)
+        {
+            $result = api_litter_insert($DBCONN, $params, $act_descr);
+            if ($result['result'] === true)
+            {
+                $id = $result['id'];
+            }
         }
-        
-        $sql =
-        "INSERT INTO `$_DB[dbname]`.`actions` (
-         `user_id`, `page_id`, `date`, `edit_type`, `data_desc`
-         ) VALUES (
-         '$_SESSION[user_id]', '".get_page_id()."',
-         '".db_date(time())."', '".($act == 1 ? 'ADD' : 'EDIT')."',
-         '".($act == 1 ? 'Added ' : 'Updated ').db_sanitize(print_dog($row['sire_id'], 3).' x '.print_dog($row['dam_id'], 3)).' litter '.($born ? 'born' : 'due')." on $dateb (ID=$id).'
-         )";
-        db_query($sql);
-        
-        show_message(($act == 1 ? 'Added ' : 'Updated ').print_dog($row['sire_id'], 3).' x '.print_dog($row['dam_id'], 3).' litter '.($born ? 'born' : 'due')." on $dateb in the database (ID=$id).", 'notice');
-        
+        else
+        {
+            $result = api_litter_update($DBCONN, $id, $params, $act_descr);
+        }
+
+        show_message($act_descr, 'notice');
+
         $act = 0;
         header("Location: litters.php");
         exit;
       case 3:
-        $sql =
-        "DELETE FROM `$_DB[dbname]`.`litters`
-         WHERE `id` = '$id'";
-        db_query($sql);
+        $act_descr = 'Removed '
+                .api_print_dog($DBCONN, $row['sire_id'], '', 3)['text']
+                .' x '
+                .api_print_dog($DBCONN, $row['dam_id'], '', 3)['text']
+                .' litter '
+                .($row['born'] ? 'born' : 'due').
+                " on $row[date_birth] (ID=$row[id]).";
+
+        $result = api_litter_delete($DBCONN, $row['id'], $act_descr);
         
-        $sql =
-        "INSERT INTO `$_DB[dbname]`.`actions` (
-         `user_id`, `page_id`, `date`, `edit_type`, `data_desc`
-         ) VALUES (
-         '$_SESSION[user_id]', '".get_page_id()."',
-         '".db_date(time())."', 'REMOVE',
-         'Removed ".db_sanitize(print_dog($row['sire_id'], 3).' x '.print_dog($row['dam_id'], 3)).' litter '.($row['born'] ? 'born' : 'due')." on $row[date_birth] (ID=$row[id]).'
-         )";
-        db_query($sql);
-        
-        show_message('Removed '.print_dog($row['sire_id'], 3).' x '.print_dog($row['dam_id'], 3).' litter '.($row['born'] ? 'born' : 'due')." on $row[date_birth] from the database (ID=$row[id]).", 'notice');
+        show_message($act_descr, 'notice');
         
         $act = 0;
         header("Location: litters.php");
@@ -246,7 +212,7 @@ switch ($act) {
 <?php
     } elseif ($act == 2) {
 ?>
-      <h3>Edit <?php echo print_dog($row['sire_id'], 3).' x '.print_dog($row['dam_id'], 3); ?> Litter</h3>
+      <h3>Edit <?php echo api_print_dog($DBCONN, $row['sire_id'], '', 3)['text'].' x '.api_print_dog($DBCONN, $row['dam_id'], '', 3)['text']; ?> Litter</h3>
 <?php
     }
 ?>
@@ -322,7 +288,7 @@ switch ($act) {
     break;
   case 3: // confirm remove
 ?>
-      <h3>Remove <?php echo print_dog($row['sire_id'], 3).' x '.print_dog($row['dam_id'], 3); ?> Litter</h3>
+      <h3>Remove <?php echo api_print_dog($DBCONN, $row['sire_id'], '', 3).' x '.api_print_dog($DBCONN, $row['dam_id'], '', 3); ?> Litter</h3>
 
       <p>
         Are you sure you want to remove this litter? Instead of completely removing,

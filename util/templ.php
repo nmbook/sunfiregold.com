@@ -7,16 +7,27 @@
 
 $templ_page_body_ready = false;
 
-if (!isset($templ_page_valid)) {
-  header('Location: /');
-  exit();
+if (!isset($templ_page_valid))
+{
+    header('Location: /');
+    exit();
 }
 
 // this function returns the file name of this page.
-function get_page_file_name() {
-  $script_name = $_SERVER['SCRIPT_NAME'];
-  $start = strpos($script_name, '/');
-  return substr($script_name, $start + 1, -4);
+function get_page_file_name()
+{
+    $script_name = $_SERVER['SCRIPT_NAME'];
+    $start = strpos($script_name, '/');
+    return substr($script_name, $start + 1, -4);
+}
+
+function get_page_id()
+{
+    global $DBCONN;
+    $fname = get_page_file_name();
+    $page_obj = api_pages_find($DBCONN, $fname);
+    $page_id = $page_obj['result'] ? $page_obj['id'] : 0;
+    return $page_id;
 }
 
 // this function returns the last edit time of this page.

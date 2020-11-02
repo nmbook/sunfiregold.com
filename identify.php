@@ -14,8 +14,8 @@ $logout = isset($_GET['out']) ? $_GET['out'] : 0;
 if ($submit) {
   $username = isset($_POST['username']) ? $_POST['username'] : '';
   $password = isset($_POST['password']) ? $_POST['password'] : '';
-  if (start_session($username, $password)) {
-    show_message("Welcome $account[full_name], you have signed in.", 'notice');
+  if (start_session($username, $password) !== false) {
+    show_message("Welcome, $account[first_name]! You have signed in.", 'notice');
     if (strlen($referer) > 0 && $referer != 'identify.php') {
       header("Location: /$referer");
     } else {

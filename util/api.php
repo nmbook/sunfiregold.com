@@ -47,13 +47,13 @@ if ($script_embed === false)
         'get_dog_by_id' => 'getdogbyid',
         'get_pedigree_by_id' => 'getpedbyid',
         'get_stml_template' => 'getstml',
+        'get_litter_by_id' => 'getlitterbyid',
         'find_k9data_page' => 'findk9datapage',
         'find_pedigree_file' => 'findpedfile',
         'search_dog' => 'searchdog',
         'pages_find' => 'findpage',
         'pages_list' => 'listpages',
         'dogs_list' => 'listdogs',
-        'litters_find' => 'findlitter',
         'litters_list' => 'listlitters',
         'pedigrees_list' => 'listpeds',
         'links_list' => 'listlinks',
@@ -98,6 +98,25 @@ function db_connect($_DB, $_OPTS)
     }
 }
 
+// return a MySQL date
+// Style 0: DATETIME
+// Style 1: DATE
+// Style 2: TIME
+function db_date($date, $style = 0)
+{
+    switch ($style)
+    {
+    default:
+    case 0:
+        return date('Y-m-d H:i:s', $date);
+    case 1:
+        return date('Y-m-d', $date);
+    case 2:
+        return date('H:i:s', $date);
+    }
+}
+
+
 // API.PHP
 function handle_api_error($errno, $errstr, $errfile, $errline,$errcontext)
 {
@@ -134,6 +153,113 @@ function json_result($result, $text = '', $html = '', $extra = [])
 {
     $res = ['result' => $result, 'text' => $text, 'html' => $html];
     return array_merge($res, $extra);
+}
+
+function session_action_insert($pdo, $table_name, $params, $save_action_log = false, $save_action_log_desc = '')
+{
+    $columns = '';
+    $value_params = '';
+    foreach ($params as $key => $value)
+    {
+        $columns .= "`$key`, ";
+        $value_params .= ":$key, ";
+    }
+    if (strlen($columns) >= 2) { $columns = substr($columns, 0, -2); }
+    if (strlen($value_params) >= 2) { $value_params = substr($value_params, 0, -2); }
+
+    $sql = "INSERT INTO `$table_name` ( $columns ) VALUES ( $value_params )";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    $stmt = null;
+
+    if ($save_action_log)
+    {
+        session_action_insert($pdo, 'actions', [
+                'user_id' => $_SESSION[user_id],
+                'page_id' => get_page_id(),
+                'date' => db_date(time()),
+                'edit_type' => 'ADD',
+                'data_desc' => $save_action_log_desc ], false);
+    }
+
+    return json_result(true, '', '', ['id' => $pdo->lastInsertId()]);
+}
+
+function session_action_update($pdo, $table_name, $matches, $params, $save_action_log = false, $save_action_log_desc = '')
+{
+    if (count($params) == 0)
+    {
+        throw new Exception('Must have something to update.');
+    }
+    $kvp_params = '';
+    foreach ($params as $key => $value)
+    {
+        $kvp_params .= "`$key` = :$key, ";
+    }
+    if (strlen($kvp_params) >= 2) { $kvp_params = substr($kvp_params, 0, -2); }
+
+    if (count($matches) > 0)
+    {
+        $kvp_matches = '';
+        foreach ($matches as $key => $value)
+        {
+            $kvp_matches .= "`$key` = :$key AND ";
+        }
+        if (strlen($kvp_matches) >= 5) { $kvp_matches = substr($kvp_matches, 0, -5); }
+    }
+    else
+    {
+        $kvp_matches = '1';
+    }
+    $sql = "UPDATE `$table_name` SET $kvp_params WHERE $kvp_matches";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array_merge($params, $matches));
+    $stmt = null;
+
+    if ($save_action_log)
+    {
+        session_action_insert($pdo, 'actions', [
+                'user_id' => $_SESSION['user_id'],
+                'page_id' => get_page_id(),
+                'date' => db_date(time()),
+                'edit_type' => 'EDIT',
+                'data_desc' => $save_action_log_desc ], false);
+    }
+
+    return json_result(true);
+}
+
+function session_action_delete($pdo, $table_name, $matches, $save_action_log = false, $save_action_log_desc = '')
+{
+    if (count($matches) > 0)
+    {
+        $kvp_matches = '';
+        foreach ($matches as $key => $value)
+        {
+            $kvp_matches .= "`$key` = :$key AND ";
+        }
+        if (strlen($kvp_matches) >= 5) { $kvp_matches = substr($kvp_matches, 0, -5); }
+    }
+    else
+    {
+        $kvp_matches = '1';
+    }
+    $sql = "DELETE FROM `$table_name` WHERE $kvp_matches";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array_merge($params, $matches));
+    $stmt = null;
+
+    if ($save_action_log)
+    {
+        session_action_insert($pdo, 'actions', [
+                'user_id' => $_SESSION['user_id'],
+                'page_id' => get_page_id(),
+                'date' => db_date(time()),
+                'edit_type' => 'REMOVE',
+                'data_desc' => $save_action_log_desc ], false);
+    }
+
+    return json_result(true);
 }
 
 // prints a dog from the dogs database in one of a few styles.
@@ -608,7 +734,11 @@ function api_print_pedigree_link($pdo, $id, $filter = '', $style = 1, $show_edit
 function api_get_dog_by_id($pdo, $id, $filter = '')
 {
     $sql =
-    'SELECT `id`, `name_full`
+    'SELECT
+     `id`, `name_full`, `name_short`, `own_cat`, `own_by`,
+     `own_state`, `honor_cat`, `gender`, `date_death_mask`,
+     `titles_pre`, `titles_post`, `date_birth`, `date_death`,
+     `sire_id`, `dam_id`, `pedigree_id`, `k9data_id`
      FROM `dogs`
      WHERE `id` = :id
      LIMIT 1';
@@ -623,13 +753,13 @@ function api_get_dog_by_id($pdo, $id, $filter = '')
         return json_result(false, 'Not found.');
     }
 
-    return json_result(true, $row['name_full']);
+    return json_result(true, $row['name_full'], '', $row);
 }
 
 function api_get_pedigree_by_id($pdo, $id, $filter = '')
 {
     $sql =
-    'SELECT `id`, `location`
+    'SELECT `id`, `location`, `active`, `date_birth`, `sire_id`, `dam_id`
      FROM `pedigrees`
      WHERE `id` = :id
      LIMIT 1';
@@ -644,7 +774,7 @@ function api_get_pedigree_by_id($pdo, $id, $filter = '')
         return json_result(false, 'Not found.');
     }
 
-    return json_result(true, $row['location']);
+    return json_result(true, $row['location'], '', $row);
 }
 
 function api_get_stml_template($pdo, $q, $filter = '')
@@ -795,11 +925,6 @@ function hash_password1($pass)
     return md5($pass.'.fkl;uv0');
 }
 
-function hash_password2($pass)
-{
-    return password_hash($pass);
-}
-
 function api_session_account_login($pdo, $username, $password)
 {
     $sql =
@@ -845,34 +970,21 @@ function api_session_account_check($pdo, $account_id)
 
 function api_session_start($pdo, $account_id, $time)
 {
-    $sql =
-    'INSERT INTO `sessions`
-     ( `user_id`, `start`, `open` )
-     VALUES
-     ( :account_id, :time, :open )';
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-            'account_id' => $account_id,
-            'time' => db_date($time), 'open' => 1]);
-    $stmt = null;
-
-    return json_result(true, '', '', $pdo->lastInsertId());
+    return session_action_insert($pdo, 'sessions',
+        [ 'user_id' => $account_id,
+          'start' => db_date($time),
+          'open' => 1 ],
+        false);
 }
 
 function api_session_end($pdo, $user_id, $sess_id, $time)
 {
-    $sql =
-    'UPDATE `sessions`
-     SET `open` = :open, `end` = :time
-     WHERE `user_id` = :user_id
-       AND `id` = :sess_id';
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-            'user_id' => $user_id, 'sess_id' => $sess_id,
-            'time' => db_date($time), 'open' => 0]);
-    $stmt = null;
-
-    return json_result(true);
+    return session_action_update($pdo, 'sessions',
+        [ 'user_id' => $user_id,
+          'id' => $sess_id ],
+        [ 'open' => 0,
+          'end' => db_date($time) ],
+        false);
 }
 
 function api_pages_find($pdo, $file_name, $filter = '')
@@ -1019,7 +1131,7 @@ function api_litters_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offse
                 $o .= '        <p><a class="edit" href="litters.php?act=add">Create New</a></p>'."\r\n";
             }
         }
-        $litter_obj = api_litters_find($pdo, $row['id']);
+        $litter_obj = api_get_litter_by_id($pdo, $row['id']);
         $o .= '<div class="list_element">'.$litter_obj['html'].'</div>';
         $results_assoc[$row['id']] = $litter_obj;
         $count++;
@@ -1033,7 +1145,7 @@ function api_litters_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offse
     ]);
 }
 
-function api_litters_find($pdo, $id, $filter = '')
+function api_get_litter_by_id($pdo, $id, $filter = '')
 {
     global $is_signed_in;
 
@@ -1043,7 +1155,7 @@ function api_litters_find($pdo, $id, $filter = '')
     $born_verb = '';
 
     $sql =
-    'SELECT `id`, `born`, `desc_short`, `desc_long`, `date_birth`, `pedigree_id`, `own_by`, `sire_id`, `dam_id`, `count_males`, `count_females`
+    'SELECT `id`, `born`, `desc_short`, `desc_long`, `date_birth`, `pedigree_id`, `own_by`, `sire_id`, `dam_id`, `count_males`, `count_females`, `active`
      FROM `litters`
      WHERE `id` = :id
      LIMIT 1';
@@ -1324,4 +1436,49 @@ function api_links_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset 
         'limit' => $limit, 'limit_offset' => $limit_offset,
         'results' => $results_assoc
     ]);
+}
+
+function api_litter_insert($pdo, $params, $act_descr = '')
+{
+    return session_action_insert($pdo, 'litters', $params, true, $act_descr);
+}
+
+function api_litter_update($pdo, $id, $params, $act_descr = '')
+{
+    return session_action_update($pdo, 'litters', [ 'id' => $id ], $params, true, $act_descr);
+}
+
+function api_litter_delete($pdo, $id, $act_descr = '')
+{
+    return session_action_delete($pdo, 'litters', [ 'id' => $id ], true, $act_descr);
+}
+
+function api_dog_insert($pdo, $params, $act_descr = '')
+{
+    return session_action_insert($pdo, 'dogs', $params, true, $act_descr);
+}
+
+function api_dog_update($pdo, $id, $params, $act_descr = '')
+{
+    return session_action_update($pdo, 'dogs', [ 'id' => $id ], $params, true, $act_descr);
+}
+
+function api_dog_delete($pdo, $id, $act_descr = '')
+{
+    return session_action_delete($pdo, 'dogs', [ 'id' => $id ], true, $act_descr);
+}
+
+function api_pedigree_insert($pdo, $params, $act_descr = '')
+{
+    return session_action_insert($pdo, 'pedigrees', $params, true, $act_descr);
+}
+
+function api_pedigree_update($pdo, $id, $params, $act_descr = '')
+{
+    return session_action_update($pdo, 'pedigrees', [ 'id' => $id ], $params, true, $act_descr);
+}
+
+function api_pedigree_delete($pdo, $id, $act_descr = '')
+{
+    return session_action_delete($pdo, 'pedigrees', [ 'id' => $id ], true, $act_descr);
 }

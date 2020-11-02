@@ -39,14 +39,8 @@ if ($is_signed_in) {
   }
   
   if (isset($id)) {
-    $sql =
-    "SELECT *
-     FROM `$_DB[dbname]`.`dogs`
-     WHERE `id` = '".db_sanitize($id)."'
-     LIMIT 1";
-    $result = db_query($sql);
-    $row = mysql_fetch_array($result);
-    if ($row['id'] != $id) {
+    $row = api_get_dog_by_id($DBCONN, $id);
+    if ($row['result'] === false) {
       show_message("Dog ID '$id' not found.", 'error');
       $act = 0;
     }
@@ -58,19 +52,8 @@ if ($is_signed_in) {
       case 1:
       case 2:
         $dateb = isset($_POST['date_birth']) ? $_POST['date_birth'] : '';
-        $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
         $dated = isset($_POST['date_death']) ? $_POST['date_death'] : '';
-        $dated_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dated);
         $datedp = isset($_POST['dog_past']) ? $_POST['dog_past'] : 0;
-        $datedmask = $datedp;
-        if ($datedp && strlen($dated) > 0) {
-          if ($dated == '0000-00-00')
-            $datedmask = 4;
-          else if (substr($dated, 5, 2) == '00')
-            $datedmask = 3;
-          else if (substr($dated, 8, 2) == '00')
-            $datedmask = 2;
-        }
         $gender = isset($_POST['gender']) ? $_POST['gender'] : 'MALE';
         $owns = isset($_POST['dog_own_state']) ? $_POST['dog_own_state'] : '';
         $ownc = isset($_POST['dog_own_cat']) ? $_POST['dog_own_cat'] : 'NOLIST';
@@ -81,104 +64,71 @@ if ($is_signed_in) {
         $titlep = isset($_POST['dog_pre']) ? $_POST['dog_pre'] : '';
         $titles = isset($_POST['dog_post']) ? $_POST['dog_post'] : '';
         $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
-        $sid_v = (bool) preg_match('/\d+/', $sid);
         $did = isset($_POST['dam']) ? $_POST['dam'] : 0;
-        $did_v = (bool) preg_match('/\d+/', $did);
         $pid = isset($_POST['pedigree']) ? $_POST['pedigree'] : '';
-        $pid_v = (bool) preg_match('/\d+/', $pid);
         $kid = isset($_POST['k9data_id']) ? $_POST['k9data_id'] : '';
+
+        $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
+        $dated_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dated);
+        $datedmask = $datedp;
+        if ($datedp && strlen($dated) > 0) {
+          if ($dated == '0000-00-00')
+            $datedmask = 4;
+          else if (substr($dated, 5, 2) == '00')
+            $datedmask = 3;
+          else if (substr($dated, 8, 2) == '00')
+            $datedmask = 2;
+        }
+        $sid_v = (bool) preg_match('/\d+/', $sid);
+        $did_v = (bool) preg_match('/\d+/', $did);
+        $pid_v = (bool) preg_match('/\d+/', $pid);
         $kid_v = (bool) preg_match('/\d+/', $kid);
-        
-        if ($act == 1) {
-          $sql =
-          "INSERT INTO `$_DB[dbname]`.`dogs` (
-           ".($dateb_v ? "`date_birth`," : '')."
-           ".($dated_v ? "`date_death`," : '')."
-           `date_death_mask`,
-           `gender`, `own_state`, `own_cat`, `own_by`,
-           `honor_cat`,
-           `name_full`, `name_short`, `titles_pre`, `titles_post`
-           ".($sid_v ? ", `sire_id`" : '')."
-           ".($did_v ? ", `dam_id`" : '')."
-           ".($pid_v ? ", `pedigree_id`" : '')."
-           ".($kid_v ? ", `k9data_id`" : '')."
-           ) VALUES (
-           ".($dateb_v ? "'$dateb'," : '')."
-           ".($dated_v ? "'$dated'," : '')."
-           '$datedmask',
-           '$gender', '$owns', '$ownc',
-           '".db_sanitize($ownb)."',
-           '$honorc',
-           '".db_sanitize($namef)."',
-           '".db_sanitize($names)."',
-           '".db_sanitize($titlep)."',
-           '".db_sanitize($titles)."'
-           ".($sid_v ? ", '$sid'" : '')."
-           ".($did_v ? ", '$did'" : '')."
-           ".($pid_v ? ", '$pid'" : '')."
-           ".($kid_v ? ", '$kid'" : '')."
-           )";
-        } else {
-          $sql =
-          "UPDATE `$_DB[dbname]`.`dogs`
-           SET
-            ".($dateb_v ? "`date_birth` = '$dateb'," : '')."
-            ".($dated_v ? "`date_death` = '$dated'," : '')."
-            `date_death_mask` = '$datedmask',
-            `gender` = '$gender', `own_state` = '$owns',
-            `own_cat` = '$ownc', `own_by` = '".db_sanitize($ownb)."',
-            `honor_cat` = '$honorc',
-            `name_full` = '".db_sanitize($namef)."', `name_short` = '".db_sanitize($names)."',
-            `titles_pre` = '".db_sanitize($titlep)."', `titles_post` = '".db_sanitize($titles)."'
-            ".($sid_v ? ", `sire_id` = '$sid'" : '')."
-            ".($did_v ? ", `dam_id` = '$did'" : '')."
-            ".($pid_v ? ", `pedigree_id` = '$pid'" : '')."
-            ".($kid_v ? ", `k9data_id` = '$kid'" : '')."
-           WHERE `id` = '$id'";
+
+        $params = [];
+        if ($dateb_v) { $params['date_birth'] = $dateb; }
+        if ($dated_v) { $params['date_death'] = $dated; }
+        $params['date_death_mask'] = $datedmask;
+        $params['gender'] = $gender;
+        $params['own_state'] = $owns;
+        $params['own_cat'] = $ownc;
+        $params['own_by'] = $ownb;
+        $params['honor_cat'] = $honorc;
+        $params['name_full'] = $namef;
+        $params['name_short'] = $names;
+        $params['titles_pre'] = $titlep;
+        $params['titles_post'] = $titles;
+        if ($sid_v) { $params['sire_id'] = $sid; }
+        if ($did_v) { $params['dam_id'] = $did; }
+        if ($pid_v) { $params['pedigree_id'] = $pid; }
+        if ($kid_v) { $params['k9data_id'] = $kid; }
+
+        $act_descr = ($act == 1 ? 'Added dog ' : 'Updated dog ')."$namef (ID=$id).";
+
+        if ($act == 1)
+        {
+            $result = api_dog_insert($DBCONN, $params, $act_descr);
+            if ($result['result'] === true)
+            {
+                $id = $result['id'];
+            }
         }
-        db_query($sql);
-        if ($act == 1) {
-          $sql =
-          "SELECT `id` FROM `$_DB[dbname]`.`dogs`
-           ORDER BY `id` DESC
-           LIMIT 1";
-          $row_ = mysql_fetch_row(db_query($sql));
-          $id = $row_[0];
+        else
+        {
+            $result = api_dog_update($DBCONN, $id, $params, $act_descr);
         }
-        
-        $sql =
-        "INSERT INTO `$_DB[dbname]`.`actions` (
-         `user_id`, `page_id`, `date`, `edit_type`, `data_desc`
-         ) VALUES (
-         '$_SESSION[user_id]', '".get_page_id()."',
-         '".db_date(time())."', '".($act == 1 ? 'ADD' : 'EDIT')."',
-         '".($act == 1 ?'Added dog ':'Updated dog ').db_sanitize($namef)." (ID=$id).'
-         )";
-        db_query($sql);
-        
-        show_message(($act == 1 ? 'Added' : 'Updated')." dog '$namef' (ID=$id).", 'notice');
-        
+
+        show_message($act_descr, 'notice');
+
         $act = 0;
         header("Location: $returnto.php");
         exit;
       case 3:
-        $sql =
-        "DELETE FROM `$_DB[dbname]`.`dogs`
-         WHERE `id` = '$id'";
-        db_query($sql);
-        
-        $sql =
-        "INSERT INTO `$_DB[dbname]`.`actions` (
-         `user_id`, `page_id`, `date`, `edit_type`, `data_desc`
-         ) VALUES (
-         '$_SESSION[user_id]', '".get_page_id()."',
-         '".db_date(time())."', 'REMOVE',
-         'Removed dog ".db_sanitize($row['name_full'])." (ID=$row[id]).'
-         )";
-        db_query($sql);
-        
-        show_message("Removed dog '$row[name_full]' (ID=$row[id]).", 'notice');
-        
+        $act_descr = "Removed dog '$row[name_full]' (ID=$row[id]).";
+
+        $result = api_dog_delete($DBCONN, $row['id'], $act_descr);
+
+        show_message($act_descr, 'notice');
+
         $act = 0;
         header("Location: $returnto.php");
         exit;
