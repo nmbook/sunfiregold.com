@@ -175,7 +175,7 @@ function session_action_insert($pdo, $table_name, $params, $save_action_log = fa
     if ($save_action_log)
     {
         session_action_insert($pdo, 'actions', [
-                'user_id' => $_SESSION[user_id],
+                'user_id' => $_SESSION['user_id'],
                 'page_id' => get_page_id(),
                 'date' => db_date(time()),
                 'edit_type' => 'ADD',
@@ -1213,7 +1213,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     $o .= "$type_noun$born_verb $born_date:</b>\r\n";
     if (strlen($row['pedigree_id']) > 0)
     {
-        $ped_link = api_print_pedigree_link($pdo, $row['pedigree_id']);
+        $ped_link = api_print_pedigree_link($pdo, $row['pedigree_id'], '', 0);
         if ($ped_link['result'])
         {
             $o .= $ped_link['html'];
