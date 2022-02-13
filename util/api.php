@@ -118,7 +118,7 @@ function db_date($date, $style = 0)
 
 
 // API.PHP
-function handle_api_error($errno, $errstr, $errfile, $errline,$errcontext)
+function handle_api_error($errno, $errstr, $errfile, $errline = 0, $errcontext = [])
 {
     if (!(error_reporting() & $errno))
     {
@@ -397,7 +397,7 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
         $t .= '"';
     }
 
-    if (strlen($row['k9data_id']) > 0 &&
+    if ($row['k9data_id'] != null && strlen($row['k9data_id']) > 0 &&
             ($style == 0 || $style == 1))
     {
         $o .= ' <a href="http://www.k9data.com/pedigree.asp?ID=';
@@ -405,7 +405,7 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
         $o .= '" target="_blank" title="K9Data Entry" class="dog_link">K9Data</a>';
     }
 
-    if (strlen($row['pedigree_id']) > 0 &&
+    if ($row['pedigree_id'] != null && strlen($row['pedigree_id']) > 0 &&
             ($style == 0 || $style == 1))
     {
         $ped_link = api_print_pedigree_link($pdo, $row['pedigree_id'], '', 0, false, 'dog_link');
@@ -421,10 +421,17 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
         $date_d = $row['date_death'];
 
         $date_b = date('m/d/Y', strtotime($date_b));
-        $date_d = str_replace('-00', '-01', $date_d);
-        $date_d = strtotime($date_d);
+        if ($date_d != null)
+        {
+            $date_d = str_replace('-00', '-01', $date_d);
+            $date_d = strtotime($date_d);
+        }
+        else
+        {
+            $date_d = strtotime('1900-01-01');
+        }
 
-        $date_txt = "($date_b - ";
+        $date_txt = " ($date_b - ";
         switch ($row['date_death_mask']) {
         case 0: // alive
             $date_txt .= 'present'; break;
@@ -1183,7 +1190,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     }
     elseif ($born == 3)
     { // SPECIALNOTE
-        if (strlen($row['desc_long']) > 0)
+        if ($row['desc_long'] != null && strlen($row['desc_long']) > 0)
         {
             $o .= '        <p><i>';
             $o .= stml_parse($row['desc_long']);
@@ -1211,7 +1218,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     $o .= '      <p class="litter">'."\r\n";
     $o .= '        <span class="litter_head"><b>';
     $o .= "$type_noun$born_verb $born_date:</b>\r\n";
-    if (strlen($row['pedigree_id']) > 0)
+    if ($row['pedigree_id'] != null && strlen($row['pedigree_id']) > 0)
     {
         $ped_link = api_print_pedigree_link($pdo, $row['pedigree_id'], '', 0);
         if ($ped_link['result'])
@@ -1229,7 +1236,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
 
     $o .= "        </span>\r\n";
 
-    if (strlen($row['own_by']) > 0)
+    if ($row['own_by'] != null && strlen($row['own_by']) > 0)
     {
         $o .= '        <span class="litter_note"><b>Owned by:</b> ';
         $o .= stml_parse($row['own_by']);
@@ -1240,7 +1247,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     {
         $litter_text = number_to_words($row['count_males'], 1).' male'.plural($row['count_males']).' and '.
                        number_to_words($row['count_females']).' female'.plural($row['count_females']);
-        if (strlen($row['desc_short']) > 0)
+        if ($row['desc_short'] != null && strlen($row['desc_short']) > 0)
         {
             $litter_text .='; '.stml_parse($row['desc_short']);
         }
@@ -1259,7 +1266,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     $o .= $dog_obj2['html'];
     $o .= "</span>\r\n";
   
-    if (strlen($row['desc_long']) > 0)
+    if ($row['desc_long'] != null && strlen($row['desc_long']) > 0)
     {
         $o .= '        <span class="litter_note"><b>Note:</b> ';
         $o .= stml_parse($row['desc_long']);
