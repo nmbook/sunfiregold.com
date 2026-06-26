@@ -284,7 +284,7 @@ switch ($act) {
     break;
   case 3: // confirm remove
 ?>
-      <h3>Remove <?php echo api_print_dog($DBCONN, $row['sire_id'], '', 3).' x '.api_print_dog($DBCONN, $row['dam_id'], '', 3); ?> Litter</h3>
+      <h3>Remove <?php echo api_print_dog($DBCONN, $row['sire_id'], '', 3)['text'].' x '.api_print_dog($DBCONN, $row['dam_id'], '', 3)['text']; ?> Litter</h3>
 
       <p>
         Are you sure you want to remove this litter? Instead of completely removing,
