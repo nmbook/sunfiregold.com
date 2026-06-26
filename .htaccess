@@ -1,14 +1,54 @@
-# -FrontPage-
+# Use PHP5.4 Single php.ini as default
+# AddHandler application/x-httpd-ea-php56 .php
+# For security reasons, Option followsymlinks cannot be overridden.
+#Options -Indexes +FollowSymLinks
+Options -Indexes +SymLinksIfOwnerMatch
+
+Header set X-Frame-Options "Deny"
+Header set Strict-Transport-Security "max-age=31536000; includeSubdomains; preload" env=HTTPS
+
+DirectoryIndex index.php index.html
+
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+RewriteCond %{SERVER_NAME} ^www\.sunfiregold\.com$ [NC]
+#RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+#RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+#RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule .* https://sunfiregold.com%{REQUEST_URI} [R=301,L]
 
 Redirect 301 /index.html /index.php
 Redirect 301 /albums.html /albums.php
 Redirect 301 /stories.html /stories.php
 Redirect 301 /litters.html /litters.php
 Redirect 301 /ourdogs.html /ourdogs.php
+Redirect 301 /contactus.html /contact.php
+Redirect 301 /contact.html /contact.php
+Redirect 301 /aboutus.html /contact.php
+Redirect 301 /about.html /contact.php
 Redirect 301 /links.html /links.php
 Redirect 301 /pedigrees.html /pedigrees.php
 
-IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */default/*
+ErrorDocument 400 /error.php?e=400
+ErrorDocument 401 /error.php?e=401
+ErrorDocument 403 /error.php?e=403
+ErrorDocument 404 /error.php?e=404
+ErrorDocument 410 /error.php?e=410
+ErrorDocument 500 /error.php?e=500
+ErrorDocument 503 /error.php?e=503
+
+<FilesMatch "sitemap\.xml">
+SetHandler application/x-httpd-php
+</FilesMatch>
+
+IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */default/* php.ini */error_log
 
 <Limit GET POST>
 order deny,allow
@@ -19,6 +59,17 @@ allow from all
 order deny,allow
 deny from all
 </Limit>
+<Files php.ini>
+order allow,deny
+deny from all
+</Files>
 AuthName sunfiregold.com
-AuthUserFile /home/sunfire1/public_html/_vti_pvt/service.pwd
-AuthGroupFile /home/sunfire1/public_html/_vti_pvt/service.grp
+AuthUserFile /home/sunfire1/public_html/default/_vti_pvt/service.pwd
+AuthGroupFile /home/sunfire1/public_html/default/_vti_pvt/service.grp
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php85” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php85___lsphp .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
