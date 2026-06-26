@@ -1,19 +1,44 @@
 <?php
 
-$src = isset($_GET['src']) ? $_GET['src'] : '';
-$conv = isset($_GET['conv']) ? $_GET['conv'] : 'thumb';
+$src = $_GET['src'] ?? '';
+$conv = $_GET['conv'] ?? 'thumb';
 
 ini_set('memory_limit', '500M');
 
 // Content type
 //header('Content-type: image/jpeg');
 
-if (file_exists($src)) {
+try {
+  if (strlen($src) === 0) {
+    header('Location: /');
+  }
+  
   $info = pathinfo($src);
-  
-  header('Content-type: image/jpeg');
-  
-  list($width, $height) = getimagesize($src);
+
+  if (!file_exists($src)) {
+    throw new Exception("Not allowed"); //throw new Exception("File not found {$info['basename']}");
+  }
+
+  if (strlen($info['basename']) > 0 && ($info['basename'][0] == '.' || $info['basename'] == 'php.ini')) {
+    throw new Exception("Not allowed");
+  }
+
+  $known_format = match (strtolower($info['extension'])) {
+    'bmp', 'png', 'gif', 'jpg', 'jpeg', 'webp', 'tga' => true,
+    default => false
+  };
+
+  if ($known_format === false) {
+    // Error on interpreting format
+    throw new Exception("Not allowed"); //throw new Exception("Format not known image type {$info['extension']}");
+  }
+
+  $width_height = getimagesize($src);
+  if ($width_height === null) {
+    // Error on reading width/height
+    throw new Exception("Not allowed"); //throw new Exception("Unable to get width/height from {$info['basename']}");
+  }
+  list($width, $height) = $width_height;
   $top = $left = 0;
   switch ($conv) {
     case 'thumb':
@@ -71,38 +96,38 @@ if (file_exists($src)) {
       $newwidth = $width;
       $newheight = $height;
       break;
+    default:
+      throw new Exception("Invalid conv mode $conv");
   }
   
-  $canvas = imagecreatetruecolor($newwidth, $newheight);
-  switch (strtolower($info['extension'])) {
-    case 'bmp':
-      $source = imagecreatefrombmp($src);
-      break;
-    case 'png':
-      $source = imagecreatefrompng($src);
-      break;
-    case 'gif':
-      $source = imagecreatefromgif($src);
-      break;
-    case 'jpg':
-      $source = imagecreatefromjpeg($src);
-      break;
+  $source = match (strtolower($info['extension'])) {
+    'bmp' => imagecreatefrombmp($src),
+    'png' => imagecreatefrompng($src),
+    'gif' => imagecreatefromgif($src),
+    'jpg', 'jpeg' => imagecreatefromjpeg($src),
+    'webp' => imagecreatefromwebp($src),
+    'tga' => imagecreatefromtga($src),
+    default => null
+  };
+
+  if ($source === null) {
+    // Error on interpreting format
+    throw new Exception("Format not known image type {$info['extension']}");
   }
+
+  if ($source === false) {
+    // Error on reading file
+    throw new Exception("Unable to read {$info['basename']}");
+  }
+
+  $canvas = imagecreatetruecolor($newwidth, $newheight);
   
   // Resize
   imagecopyresized($canvas, $source, 0, 0, $left, $top, $newwidth, $newheight, $width, $height);
   
-  // Destroy source
-  imagedestroy($source);
-  
   // Output
+  header('Content-type: image/jpeg');
   imagejpeg($canvas);
-  
-  // Destroy canvas
-  imagedestroy($canvas);
-} else {
-  if (strlen($src) == 0)
-    header('Location: /');
-  else
-    header("Location: $src");
+} catch (Exception $conv_failure) {
+  echo htmlspecialchars($conv_failure->getMessage());
 }
