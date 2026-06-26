@@ -136,14 +136,14 @@ switch ($act) {
 ?>
       <p>
         All parents are
-        <a href="http://www.offa.org/" target="_blank" title="The Orthopedic Foundation for Animals">OFA</a> certified hips,
+        <a href="http://www.offa.org/" target="_blank" title="The Orthopedic Foundation for Animals">OFA</a> (The Orthopedic Foundation for Animals) certified hips,
         <a href="http://www.offa.org/" target="_blank" title="The Orthopedic Foundation for Animals">OFA</a> certified elbows,
         cardiologist certified, and ophthalmologist certified.
       </p>
       
       <p>
         To see the parents' pedigrees, go to
-        <a href="http://www.k9data.com/" target="_blank" title="K9Data">K9data.com</a>,
+        <a href="https://k9-data.org/" target="_blank" title="k9-data.org Website">k9-data.org</a>,
         and type in the dog's registered name in the searchbox.
       </p>
       

@@ -412,9 +412,9 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
     if ($row['k9data_id'] !== null && strlen($row['k9data_id']) > 0 &&
             ($style == 0 || $style == 1))
     {
-        $o .= ' <a href="http://www.k9data.com/pedigree.asp?ID=';
+        $o .= ' <a href="https://k9-data.org/dog/detail/';
         $o .= $row['k9data_id'];
-        $o .= '" target="_blank" title="K9Data Entry" class="dog_link">K9Data</a>';
+        $o .= '" target="_blank" title="k9-data.org Entry" class="dog_link">k9-data</a>';
     }
 
     if ($row['pedigree_id'] !== null && strlen($row['pedigree_id']) > 0 &&
