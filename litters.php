@@ -82,27 +82,23 @@ if ($is_signed_in) {
         $params['active'] = $active;
 
         $act_descr = ($act == 1 ? 'Added ' : 'Updated ')
-                .api_print_dog($DBCONN, $row['sire_id'], '', 3)['text']
+                .api_print_dog($DBCONN, $params['sire_id'], '', 3)['text']
                 .' x '
-                .api_print_dog($DBCONN, $row['dam_id'], '', 3)['text']
+                .api_print_dog($DBCONN, $params['dam_id'], '', 3)['text']
                 .' litter '
                 .($born ? 'born' : 'due').
-                " on $dateb (ID=$id).";
+                " on $dateb.";
 
         if ($act == 1)
         {
             $result = api_litter_insert($DBCONN, $params, $act_descr);
-            if ($result['result'] === true)
-            {
-                $id = $result['id'];
-            }
         }
         else
         {
             $result = api_litter_update($DBCONN, $id, $params, $act_descr);
         }
 
-        show_message($act_descr, 'notice');
+        show_message($result['text'], 'notice');
 
         $act = 0;
         header("Location: litters.php");
@@ -114,11 +110,11 @@ if ($is_signed_in) {
                 .api_print_dog($DBCONN, $row['dam_id'], '', 3)['text']
                 .' litter '
                 .($row['born'] ? 'born' : 'due').
-                " on $row[date_birth] (ID=$row[id]).";
+                " on $row[date_birth].";
 
         $result = api_litter_delete($DBCONN, $row['id'], $act_descr);
         
-        show_message($act_descr, 'notice');
+        show_message($result['text'], 'notice');
         
         $act = 0;
         header("Location: litters.php");
