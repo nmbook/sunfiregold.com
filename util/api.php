@@ -59,17 +59,30 @@ if ($script_embed === false)
         'links_list' => 'listlinks',
     ];
     $act_masked = array_search($act, $acts);
-    header('Content-Type: application/json');
     if (!empty($act_masked) && $act_masked !== false)
     {
         $act_masked = "api_$act_masked";
-        set_error_handler('handle_api_error');
-        echo json_encode($act_masked($DBCONN, $q, $f));
-        restore_error_handler();
+        try
+        {
+            set_error_handler('handle_api_error');
+            header('Content-Type: application/json');
+            echo json_encode($act_masked($DBCONN, $q, $f));
+        }
+        catch (Exception $ex)
+        {
+            return json_decode($ex->getMessage());
+        }
+        finally
+        {
+            restore_error_handler();
+            exit(0);
+        }
     }
     else
     {
+        header('Content-Type: application/json');
         echo json_encode(json_result(false, 'Unknown action.'));
+        exit(0);
     }
 }
 else
@@ -116,9 +129,13 @@ function db_date($date, $style = 0)
     }
 }
 
+function json_result($result, $text = '', $html = '', $extra = [])
+{
+    $res = ['result' => $result, 'text' => $text, 'html' => $html];
+    return array_merge($res, $extra);
+}
 
-// API.PHP
-function handle_api_error($errno, $errstr, $errfile, $errline = 0, $errcontext = [])
+function handle_api_error($errno, $errstr, $errfile = '', $errline = 0, $errcontext = [])
 {
     if (!(error_reporting() & $errno))
     {
@@ -129,30 +146,19 @@ function handle_api_error($errno, $errstr, $errfile, $errline = 0, $errcontext =
     
     switch ($errno) {
     case E_ERROR:
-        echo json_encode(json_result(false, "E_ERROR: $errstr"));
-        exit(1);
+        throw new Exception(json_encode(json_result(false, "E_ERROR: $errstr")));
     case E_WARNING:
-        echo json_encode(json_result(false, "E_WARNING: $errstr"));
-        exit(1);
+        throw new Exception(json_encode(json_result(false, "E_WARNING: $errstr")));
     case E_NOTICE:
-        echo json_encode(json_result(false, "E_NOTICE: $errstr"));
-        exit(1);
+        throw new Exception(json_encode(json_result(false, "E_NOTICE: $errstr")));
     case E_STRICT:
-        echo json_encode(json_result(false, "E_STRICT: $errstr"));
-        exit(1);
+        throw new Exception(json_encode(json_result(false, "E_STRICT: $errstr")));
     default:
-        echo json_encode(json_result(false, "E($errno): $errstr"));
-        exit(1);
+        throw new Exception(json_encode(json_result(false, "E($errno): $errstr")));
     }
 
     /* Don't execute PHP internal error handler */
-    return true;
-}
-
-function json_result($result, $text = '', $html = '', $extra = [])
-{
-    $res = ['result' => $result, 'text' => $text, 'html' => $html];
-    return array_merge($res, $extra);
+    //return true;
 }
 
 function session_action_insert($pdo, $table_name, $params, $save_action_log = false, $save_action_log_desc = '')
@@ -172,6 +178,8 @@ function session_action_insert($pdo, $table_name, $params, $save_action_log = fa
     $stmt->execute($params);
     $stmt = null;
 
+    $id = $pdo->lastInsertId();
+    $save_action_log_desc .= " (ID=$id)";
     if ($save_action_log)
     {
         session_action_insert($pdo, 'actions', [
@@ -182,7 +190,7 @@ function session_action_insert($pdo, $table_name, $params, $save_action_log = fa
                 'data_desc' => $save_action_log_desc ], false);
     }
 
-    return json_result(true, '', '', ['id' => $pdo->lastInsertId()]);
+    return json_result(true, $save_action_log_desc, '', ['id' => $id]);
 }
 
 function session_action_update($pdo, $table_name, $matches, $params, $save_action_log = false, $save_action_log_desc = '')
@@ -216,6 +224,10 @@ function session_action_update($pdo, $table_name, $matches, $params, $save_actio
     $stmt->execute(array_merge($params, $matches));
     $stmt = null;
 
+    if (array_key_exists('id', $matches))
+    {
+        $save_action_log_desc .= " (ID=$matches[id])";
+    }
     if ($save_action_log)
     {
         session_action_insert($pdo, 'actions', [
@@ -226,7 +238,7 @@ function session_action_update($pdo, $table_name, $matches, $params, $save_actio
                 'data_desc' => $save_action_log_desc ], false);
     }
 
-    return json_result(true);
+    return json_result(true, $save_action_log_desc);
 }
 
 function session_action_delete($pdo, $table_name, $matches, $save_action_log = false, $save_action_log_desc = '')
@@ -246,7 +258,7 @@ function session_action_delete($pdo, $table_name, $matches, $save_action_log = f
     }
     $sql = "DELETE FROM `$table_name` WHERE $kvp_matches";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(array_merge($params, $matches));
+    $stmt->execute($matches);
     $stmt = null;
 
     if ($save_action_log)
@@ -259,7 +271,7 @@ function session_action_delete($pdo, $table_name, $matches, $save_action_log = f
                 'data_desc' => $save_action_log_desc ], false);
     }
 
-    return json_result(true);
+    return json_result(true, $save_action_log_desc);
 }
 
 // prints a dog from the dogs database in one of a few styles.
@@ -397,7 +409,7 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
         $t .= '"';
     }
 
-    if ($row['k9data_id'] != null && strlen($row['k9data_id']) > 0 &&
+    if ($row['k9data_id'] !== null && strlen($row['k9data_id']) > 0 &&
             ($style == 0 || $style == 1))
     {
         $o .= ' <a href="http://www.k9data.com/pedigree.asp?ID=';
@@ -405,7 +417,7 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
         $o .= '" target="_blank" title="K9Data Entry" class="dog_link">K9Data</a>';
     }
 
-    if ($row['pedigree_id'] != null && strlen($row['pedigree_id']) > 0 &&
+    if ($row['pedigree_id'] !== null && strlen($row['pedigree_id']) > 0 &&
             ($style == 0 || $style == 1))
     {
         $ped_link = api_print_pedigree_link($pdo, $row['pedigree_id'], '', 0, false, 'dog_link');
@@ -421,7 +433,7 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
         $date_d = $row['date_death'];
 
         $date_b = date('m/d/Y', strtotime($date_b));
-        if ($date_d != null)
+        if ($date_d !== null)
         {
             $date_d = str_replace('-00', '-01', $date_d);
             $date_d = strtotime($date_d);
@@ -1190,7 +1202,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     }
     elseif ($born == 3)
     { // SPECIALNOTE
-        if ($row['desc_long'] != null && strlen($row['desc_long']) > 0)
+        if ($row['desc_long'] !== null && strlen($row['desc_long']) > 0)
         {
             $o .= '        <p><i>';
             $o .= stml_parse($row['desc_long']);
@@ -1218,7 +1230,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     $o .= '      <p class="litter">'."\r\n";
     $o .= '        <span class="litter_head"><b>';
     $o .= "$type_noun$born_verb $born_date:</b>\r\n";
-    if ($row['pedigree_id'] != null && strlen($row['pedigree_id']) > 0)
+    if ($row['pedigree_id'] !== null && strlen($row['pedigree_id']) > 0)
     {
         $ped_link = api_print_pedigree_link($pdo, $row['pedigree_id'], '', 0);
         if ($ped_link['result'])
@@ -1236,7 +1248,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
 
     $o .= "        </span>\r\n";
 
-    if ($row['own_by'] != null && strlen($row['own_by']) > 0)
+    if ($row['own_by'] !== null && strlen($row['own_by']) > 0)
     {
         $o .= '        <span class="litter_note"><b>Owned by:</b> ';
         $o .= stml_parse($row['own_by']);
@@ -1247,7 +1259,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     {
         $litter_text = number_to_words($row['count_males'], 1).' male'.plural($row['count_males']).' and '.
                        number_to_words($row['count_females']).' female'.plural($row['count_females']);
-        if ($row['desc_short'] != null && strlen($row['desc_short']) > 0)
+        if ($row['desc_short'] !== null && strlen($row['desc_short']) > 0)
         {
             $litter_text .='; '.stml_parse($row['desc_short']);
         }
@@ -1266,7 +1278,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     $o .= $dog_obj2['html'];
     $o .= "</span>\r\n";
   
-    if ($row['desc_long'] != null && strlen($row['desc_long']) > 0)
+    if ($row['desc_long'] !== null && strlen($row['desc_long']) > 0)
     {
         $o .= '        <span class="litter_note"><b>Note:</b> ';
         $o .= stml_parse($row['desc_long']);
