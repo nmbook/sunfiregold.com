@@ -322,27 +322,27 @@ switch ($act) {
 <?php
         }
         
-        $location = $row['location'];
+        $location_friendly = $location = $row['location'];
         $title = $row['title'];
-        if (strtolower(substr($location, 0, 7)) == 'http://') {
-          if (substr_count($location, '/') == 2) {
-            $location .= '/';
-          }
-        } else {
-          if (substr_count($location, '/') == 0) {
-            $location .= '/';
-          }
-          $location = "http://$location";
-        }
-        
-        $location_friendly = substr($location, 7);
-        if (substr_count($location_friendly, '/') == 1) {
-          $location_friendly = substr($location_friendly, 0, strlen($location_friendly) - 1);
-        }
+        //if (strtolower(substr($location, 0, 7)) == 'http://') {
+        //  if (substr_count($location, '/') == 2) {
+        //    $location .= '/';
+        //  }
+        //} else {
+        //  if (substr_count($location, '/') == 0) {
+        //    $location .= '/';
+        //  }
+        //  $location = "http://$location";
+        //}
+        //
+        //$location_friendly = substr($location, 7);
+        //if (substr_count($location_friendly, '/') == 1) {
+        //  $location_friendly = substr($location_friendly, 0, strlen($location_friendly) - 1);
+        //}
         
 ?>
-        <dt><a href="<?php echo $location; ?>" target="_blank" title="<?php echo $title; ?>"><?php echo $title; ?></a></dt>
-          <dd>URL: <?php echo $location_friendly; ?></dd>
+        <dt><a href="<?php echo htmlspecialchars($location, ENT_QUOTES); ?>" target="_blank" title="<?php echo $title; ?>"><?php echo $title; ?></a></dt>
+          <dd>URL: <?php echo htmlspecialchars($location_friendly); ?></dd>
           <a class="edit" href="links.php?act=edit&id=<?php echo $row['id']; ?>">Edit</a>
 <?php
       }

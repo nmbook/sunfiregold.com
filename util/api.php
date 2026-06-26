@@ -1398,10 +1398,18 @@ function api_links_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset 
             {
                 $location .= '/';
             }
+        }
+        if (strtolower(substr($location, 0, 7)) != 'http://')
+        {
             $location = "https://$location";
+            $ht_substr = 8;
+        }
+        else
+        {
+            $ht_substr = 7;
         }
 
-        $location_friendly = substr($location, 8);
+        $location_friendly = substr($location, $ht_substr);
         if (substr_count($location_friendly, '/') == 1)
         {
             $location_friendly = substr($location_friendly, 0, strlen($location_friendly) - 1);
@@ -1410,7 +1418,7 @@ function api_links_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset 
         $t .= $location."\n";
         $o .= '<dt><a href="';
         $o .= htmlspecialchars($location);
-        $o .= ' target="_blank" title="';
+        $o .= '" target="_blank" title="';
         $o .= htmlspecialchars($title);
         $o .= '">';
         $o .= htmlspecialchars($title);
