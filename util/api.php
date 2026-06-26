@@ -31,64 +31,64 @@ include_once('db_creds.php');
 include_once('stml.php');
 include_once('k9data.php');
 
-if ($script_embed === false)
+try
 {
-    // do bare action (JavaScript AJAX API)
-    $act = isset($_GET['act']) ? $_GET['act'] : '';
-    $q = isset($_GET['q']) ? $_GET['q'] : '';
-    $f = isset($_GET['f']) ? $_GET['f'] : '';
-    $DBCONN = db_connect($_DB, $_OPTS);
-
-    $acts = [
-        '' => null,
-        'print_dog' => 'printdog',
-        'print_titles' => 'printtitles',
-        'print_pedigree_link' => 'printped',
-        'get_dog_by_id' => 'getdogbyid',
-        'get_pedigree_by_id' => 'getpedbyid',
-        'get_stml_template' => 'getstml',
-        'get_litter_by_id' => 'getlitterbyid',
-        'find_k9data_page' => 'findk9datapage',
-        'find_pedigree_file' => 'findpedfile',
-        'search_dog' => 'searchdog',
-        'pages_find' => 'findpage',
-        'pages_list' => 'listpages',
-        'dogs_list' => 'listdogs',
-        'litters_list' => 'listlitters',
-        'pedigrees_list' => 'listpeds',
-        'links_list' => 'listlinks',
-    ];
-    $act_masked = array_search($act, $acts);
-    if (!empty($act_masked) && $act_masked !== false)
+    set_error_handler('handle_api_error');
+    if ($script_embed === false)
     {
-        $act_masked = "api_$act_masked";
-        try
+        // do bare action (JavaScript AJAX API)
+        $act = isset($_GET['act']) ? $_GET['act'] : '';
+        $q = isset($_GET['q']) ? $_GET['q'] : '';
+        $f = isset($_GET['f']) ? $_GET['f'] : '';
+        $DBCONN = db_connect($_DB, $_OPTS);
+
+        $acts = [
+            '' => null,
+            'print_dog' => 'printdog',
+            'print_titles' => 'printtitles',
+            'print_pedigree_link' => 'printped',
+            'get_dog_by_id' => 'getdogbyid',
+            'get_pedigree_by_id' => 'getpedbyid',
+            'get_stml_template' => 'getstml',
+            'get_litter_by_id' => 'getlitterbyid',
+            'find_k9data_page' => 'findk9datapage',
+            'find_pedigree_file' => 'findpedfile',
+            'search_dog' => 'searchdog',
+            'pages_find' => 'findpage',
+            'pages_list' => 'listpages',
+            'dogs_list' => 'listdogs',
+            'litters_list' => 'listlitters',
+            'pedigrees_list' => 'listpeds',
+            'links_list' => 'listlinks',
+        ];
+        $act_masked = array_search($act, $acts);
+        if (!empty($act_masked) && $act_masked !== false)
         {
-            set_error_handler('handle_api_error');
+            $act_masked = "api_$act_masked";
             header('Content-Type: application/json');
             echo json_encode($act_masked($DBCONN, $q, $f));
+            exit(0);
         }
-        catch (Exception $ex)
+        else
         {
-            return json_decode($ex->getMessage());
-        }
-        finally
-        {
-            restore_error_handler();
+            header('Content-Type: application/json');
+            echo json_encode(json_result(false, 'Unknown action.'));
             exit(0);
         }
     }
     else
     {
-        header('Content-Type: application/json');
-        echo json_encode(json_result(false, 'Unknown action.'));
-        exit(0);
+        // prepare database (action call from require-er)
+        $DBCONN = db_connect($_DB, $_OPTS);
     }
 }
-else
+catch (Exception $ex)
 {
-    // prepare database (action call from require-er)
-    $DBCONN = db_connect($_DB, $_OPTS);
+    return json_decode($ex->getMessage());
+}
+finally
+{
+    restore_error_handler();
 }
 
 function db_connect($_DB, $_OPTS)
