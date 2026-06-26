@@ -488,7 +488,7 @@ $(document).ready(function() {
       $('#' + name + '_field').val(k9data_id);
       var html_follow =
       '<br id="' + name + '_break" /><a id="' + name + '_follow" class="edit" ' +
-      'href="http://www.k9data.com/pedigree.asp?ID=' + k9data_id + '" ' +
+      'href="https://k9-data.org/dog/detail/' + k9data_id + '" ' +
       'target="_blank">Test Link</a>' +
       '<a id="' + name + '_remove" class="edit" ' +
       'href="#">Remove</a>';
@@ -520,7 +520,7 @@ $(document).ready(function() {
               $('#' + name + '_field').val(k9data_id);
               var html_follow =
               '<br id="' + name + '_break" /><a id="' + name + '_follow" class="edit" ' +
-              'href="http://www.k9data.com/pedigree.asp?ID=' + k9data_id + '" ' +
+              'href="https://k9-data.org/dog/detail/' + k9data_id + '" ' +
               'target="_blank">Test Link</a>' +
               '<a id="' + name + '_remove" class="edit" ' +
               'href="#">Remove</a>';
@@ -555,7 +555,7 @@ $(document).ready(function() {
         $('input[name='+name+']').val(k9data_id);
         var html_follow =
         '<br id="' + name + '_break" /><a id="' + name + '_follow" class="edit" ' +
-        'href="http://www.k9data.com/pedigree.asp?ID=' + k9data_id + '" ' +
+        'href="https://k9-data.org/dog/detail/' + k9data_id + '" ' +
         'target="_blank">Test Link</a>' +
         '<a id="' + name + '_remove" class="edit" ' +
         'href="#">Remove</a>';
