@@ -37,9 +37,9 @@ try
     if ($script_embed === false)
     {
         // do bare action (JavaScript AJAX API)
-        $act = isset($_GET['act']) ? $_GET['act'] : '';
-        $q = isset($_GET['q']) ? $_GET['q'] : '';
-        $f = isset($_GET['f']) ? $_GET['f'] : '';
+        $act = $_GET['act'] ?? '';
+        $q = $_GET['q'] ?? '';
+        $f = $_GET['f'] ?? '';
         $DBCONN = db_connect($_DB, $_OPTS);
 
         $acts = [
@@ -617,7 +617,7 @@ function api_print_titles($pdo, $title_str, $affix_pos = 'PRE', $show_abbr = tru
 
         // restore titles with ordinals
         $row['abbr'] = str_replace('#', $title_number, $row['abbr']);
-        $row['descr'] = str_replace('#', $title_number, isset($row['descr']) ? $row['descr'] : '');
+        $row['descr'] = str_replace('#', $title_number, $row['descr'] ?? '');
         
         // store in $titles_assoc for API
         if (strlen($row['abbr']) > 0)

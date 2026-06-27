@@ -10,7 +10,7 @@ check_session();
 
 $act = 0;
 if ($is_signed_in) {
-  $act = isset($_GET['act']) ? $_GET['act'] : '';
+  $act = $_GET['act'] ?? '';
   $act_n = $act;
   switch ($act) {
     case 'add':
@@ -22,13 +22,13 @@ if ($is_signed_in) {
       $verb = 'Edit Litter';
       $cmd = 'Save';
       $act = 2;
-      $id = isset($_GET['id']) ? $_GET['id'] : 0;
+      $id = $_GET['id'] ?? 0;
       break;
     case 'remove':
       $verb = 'Remove Litter';
       $cmd = 'Confirm';
       $act = 3;
-      $id = isset($_GET['id']) ? $_GET['id'] : 0;
+      $id = $_GET['id'] ?? 0;
       break;
     default: // view
       $act = 0;
@@ -43,22 +43,22 @@ if ($is_signed_in) {
     }
   }
   
-  $submit = isset($_GET['submit']) ? $_GET['submit'] : 0;
+  $submit = $_GET['submit'] ?? 0;
   if ($submit) {
     switch ($act) {
       case 1:
       case 2:
-        $dateb = isset($_POST['litter_date']) ? $_POST['litter_date'] : '';
-        $born = isset($_POST['litter_verb']) ? intval($_POST['litter_verb']) : 0;
-        $ownb = isset($_POST['own_by']) ? $_POST['own_by'] : '';
-        $countm = isset($_POST['count_males']) ? intval($_POST['count_males']) : 0;
-        $countf = isset($_POST['count_females']) ? intval($_POST['count_females']) : 0;
-        $descs = isset($_POST['desc_short']) ? $_POST['desc_short'] : '';
-        $descl = isset($_POST['desc_long']) ? $_POST['desc_long'] : '';
-        $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
-        $did = isset($_POST['dam']) ? $_POST['dam'] : 0;
-        $pid = isset($_POST['pedigree']) ? $_POST['pedigree'] : '';
-        $active = (bool) (isset($_POST['active']) ? $_POST['active'] : 0);
+        $dateb = $_POST['litter_date'] ?? '';
+        $born = intval($_POST['litter_verb'] ?? 0);
+        $ownb = $_POST['own_by'] ?? '';
+        $countm = intval($_POST['count_males'] ?? 0);
+        $countf = intval($_POST['count_females'] ?? 0);
+        $descs = $_POST['desc_short'] ?? '';
+        $descl = $_POST['desc_long'] ?? '';
+        $sid = $_POST['sire'] ?? 0;
+        $did = $_POST['dam'] ?? 0;
+        $pid = $_POST['pedigree'] ?? '';
+        $active = (bool) ($_POST['active'] ?? 0);
 
         $dateb_v = intval(preg_match('/\d{4}-\d{2}-\d{2}/', $dateb));
         $sid_v = (bool) preg_match('/\d+/', $sid);

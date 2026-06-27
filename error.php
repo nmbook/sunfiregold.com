@@ -8,7 +8,7 @@ include_once('util/incl.php');
 
 check_session();
 
-$code = isset($_GET['e']) ? $_GET['e'] : 0;
+$code = $_GET['e'] ?? 0;
 
 
 switch ($code) {

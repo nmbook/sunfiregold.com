@@ -10,7 +10,7 @@ check_session();
 
 $act = 0;
 if ($is_signed_in) {
-  $act = isset($_GET['act']) ? $_GET['act'] : '';
+  $act = $_GET['act'] ?? '';
   $act_n = $act;
   switch ($act) {
     case 'add':
@@ -22,13 +22,13 @@ if ($is_signed_in) {
       $verb = 'Edit Pedigree Details';
       $cmd = 'Save';
       $act = 2;
-      $id = isset($_GET['id']) ? $_GET['id'] : 0;
+      $id = $_GET['id'] ?? 0;
       break;
     case 'remove':
       $verb = 'Remove Pedigree';
       $cmd = 'Confirm';
       $act = 3;
-      $id = isset($_GET['id']) ? $_GET['id'] : 0;
+      $id = $_GET['id'] ?? 0;
       break;
     default: // view
       $act = 0;
@@ -43,7 +43,7 @@ if ($is_signed_in) {
     }
   }
   
-  $submit = isset($_GET['submit']) ? $_GET['submit'] : 0;
+  $submit = $_GET['submit'] ?? 0;
   if ($submit) {
     switch ($act) {
       case 1:
@@ -110,10 +110,10 @@ if ($is_signed_in) {
 
         if ($file_saved && $act !== 0)
         {
-          $dateb = isset($_POST['date_birth']) ? $_POST['date_birth'] : '';
-          $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
-          $did = isset($_POST['dam']) ? $_POST['dam'] : 0;
-          $active = (bool) (isset($_POST['active']) ? $_POST['active'] : '');
+          $dateb = $_POST['date_birth'] ?? '';
+          $sid = $_POST['sire'] ?? 0;
+          $did = $_POST['dam'] ?? 0;
+          $active = (bool) ($_POST['active'] ?? '');
 
           $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
           $sid_v = (bool) preg_match('/\d+/', $sid);

@@ -8,12 +8,12 @@ include_once('util/incl.php');
 
 check_session();
 
-$returnto = isset($_GET['returnto']) ? $_GET['returnto'] : 'ourdogs';
+$returnto = $_GET['returnto'] ?? 'ourdogs';
 if ($returnto != 'honordogs') $returnto = 'ourdogs';
 
 $act = 0;
 if ($is_signed_in) {
-  $act = isset($_GET['act']) ? $_GET['act'] : '';
+  $act = $_GET['act'] ?? '';
   $act_n = $act;
   switch ($act) {
     case 'add':
@@ -25,13 +25,13 @@ if ($is_signed_in) {
       $verb = 'Edit Dog';
       $cmd = 'Save';
       $act = 2;
-      $id = isset($_GET['id']) ? $_GET['id'] : 0;
+      $id = $_GET['id'] ?? 0;
       break;
     case 'remove':
       $verb = 'Remove Dog';
       $cmd = 'Confirm';
       $act = 3;
-      $id = isset($_GET['id']) ? $_GET['id'] : 0;
+      $id = $_GET['id'] ?? 0;
       break;
     default: // view
       $act = 0;
@@ -46,27 +46,27 @@ if ($is_signed_in) {
     }
   }
   
-  $submit = isset($_GET['submit']) ? $_GET['submit'] : 0;
+  $submit = $_GET['submit'] ?? 0;
   if ($submit) {
     switch ($act) {
       case 1:
       case 2:
-        $dateb = isset($_POST['date_birth']) ? $_POST['date_birth'] : '';
-        $dated = isset($_POST['date_death']) ? $_POST['date_death'] : '';
-        $datedp = isset($_POST['dog_past']) ? $_POST['dog_past'] : 0;
-        $gender = isset($_POST['gender']) ? $_POST['gender'] : 'MALE';
-        $owns = isset($_POST['dog_own_state']) ? $_POST['dog_own_state'] : '';
-        $ownc = isset($_POST['dog_own_cat']) ? $_POST['dog_own_cat'] : 'NOLIST';
-        $ownb = isset($_POST['own_by']) ? $_POST['own_by'] : '';
-        $honorc = isset($_POST['honor_cat']) ? $_POST['honor_cat'] : 'NOLIST';
-        $namef = isset($_POST['dog_name']) ? $_POST['dog_name'] : '';
-        $names = isset($_POST['dog_nick']) ? $_POST['dog_nick'] : '';
-        $titlep = isset($_POST['dog_pre']) ? $_POST['dog_pre'] : '';
-        $titles = isset($_POST['dog_post']) ? $_POST['dog_post'] : '';
-        $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
-        $did = isset($_POST['dam']) ? $_POST['dam'] : 0;
-        $pid = isset($_POST['pedigree']) ? $_POST['pedigree'] : '';
-        $kid = isset($_POST['k9data_id']) ? $_POST['k9data_id'] : '';
+        $dateb = $_POST['date_birth'] ?? '';
+        $dated = $_POST['date_death'] ?? '';
+        $datedp = $_POST['dog_past'] ?? 0;
+        $gender = $_POST['gender'] ?? 'MALE';
+        $owns = $_POST['dog_own_state'] ?? '';
+        $ownc = $_POST['dog_own_cat'] ?? 'NOLIST';
+        $ownb = $_POST['own_by'] ?? '';
+        $honorc = $_POST['honor_cat'] ?? 'NOLIST';
+        $namef = $_POST['dog_name'] ?? '';
+        $names = $_POST['dog_nick'] ?? '';
+        $titlep = $_POST['dog_pre'] ?? '';
+        $titles = $_POST['dog_post'] ?? '';
+        $sid = $_POST['sire'] ?? 0;
+        $did = $_POST['dam'] ?? 0;
+        $pid = $_POST['pedigree'] ?? '';
+        $kid = $_POST['k9data_id'] ?? '';
 
         $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
         $dated_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dated);

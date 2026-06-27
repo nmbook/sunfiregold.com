@@ -286,7 +286,7 @@ function is_titled($dog_name) {
 
 //print_r(parse_dogdata(474));
 
-//$start_id = isset($_GET['id']) ? $_GET['id'] : '0';
+//$start_id = $_GET['id'] ?? '0';
 //
 //if (!is_dir('images_backup')) {
 //    mkdir('images_backup');

@@ -8,12 +8,12 @@ include_once('util/incl.php');
 
 check_session();
 
-$submit = isset($_GET['submit']) ? $_GET['submit'] : 0;
-$referer = isset($_GET['referer']) ? $_GET['referer'] : '';
-$logout = isset($_GET['out']) ? $_GET['out'] : 0;
+$submit = $_GET['submit'] ?? 0;
+$referer = $_GET['referer'] ?? '';
+$logout = $_GET['out'] ?? 0;
 if ($submit) {
-  $username = isset($_POST['username']) ? $_POST['username'] : '';
-  $password = isset($_POST['password']) ? $_POST['password'] : '';
+  $username = $_POST['username'] ?? '';
+  $password = $_POST['password'] ?? '';
   if (start_session($username, $password) !== false) {
     show_message("Welcome, $account[first_name]! You have signed in.", 'notice');
     if (strlen($referer) > 0 && $referer != 'identify.php') {
