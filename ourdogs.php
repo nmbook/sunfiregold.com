@@ -102,32 +102,28 @@ if ($is_signed_in) {
         if ($pid_v) { $params['pedigree_id'] = $pid; }
         if ($kid_v) { $params['k9data_id'] = $kid; }
 
-        $act_descr = ($act == 1 ? 'Added dog ' : 'Updated dog ')."$namef (ID=$id).";
+        $act_descr = ($act == 1 ? 'Added dog ' : 'Updated dog ')."$namef.";
 
         if ($act == 1)
         {
-            $result = api_dog_insert($DBCONN, $params, $act_descr);
-            if ($result['result'] === true)
-            {
-                $id = $result['id'];
-            }
+          $result = api_dog_insert($DBCONN, $params, $act_descr);
         }
         else
         {
-            $result = api_dog_update($DBCONN, $id, $params, $act_descr);
+          $result = api_dog_update($DBCONN, $id, $params, $act_descr);
         }
 
-        show_message($act_descr, 'notice');
+        show_message($result['text'], 'notice');
 
         $act = 0;
         header("Location: $returnto.php");
         exit;
       case 3:
-        $act_descr = "Removed dog '$row[name_full]' (ID=$row[id]).";
+        $act_descr = "Removed dog $row[name_full].";
 
         $result = api_dog_delete($DBCONN, $row['id'], $act_descr);
 
-        show_message($act_descr, 'notice');
+        show_message($result['text'], 'notice');
 
         $act = 0;
         header("Location: $returnto.php");
@@ -182,7 +178,7 @@ switch ($act) {
     $o_c = $row['own_cat'];
     $o_s = $row['own_state'];
     $o_b_isshown = ($o_s == 'LW' || $o_s == 'SW' || $o_s == 'OW' || $o_s == 'OB' || $o_s == 'A' || $o_s == 'X');
-    $o_b_text = array('LW' => 'Live'.($o_c == 'PAST' ? 'd' : 's').' with', 'SW' => 'Shared with', 'OW' => 'Owned with', 'OB' => 'Owned by', 'A' => 'Available for', 'X' => 'Custom Subtitle:');
+    $o_b_text = array('LW' => 'Live'.($o_c == 'PAST' ? 'd' : 's').' with', 'SW' => 'Shared with', 'OW' => 'Owned with', 'OB' => 'Owned by', 'A' => 'Available for', 'X' => 'Custom Subtitle:', 'NONE' => '');
     $h_c = $row['honor_cat'];
     $gender = $row['gender'];
     $dog_past = ($row['date_death_mask'] > 0);
