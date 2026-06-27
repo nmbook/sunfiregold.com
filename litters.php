@@ -71,9 +71,9 @@ if ($is_signed_in) {
         $params['own_by'] = $ownb;
         if ($born)
         {
-            $params['count_males'] = $countm;
-            $params['count_females'] = $countf;
-            $params['desc_short'] = $descs;
+          $params['count_males'] = $countm;
+          $params['count_females'] = $countf;
+          $params['desc_short'] = $descs;
         }
         $params['desc_long'] = $descl;
         if ($sid_v) { $params['sire_id'] = $sid; }
@@ -91,11 +91,11 @@ if ($is_signed_in) {
 
         if ($act == 1)
         {
-            $result = api_litter_insert($DBCONN, $params, $act_descr);
+          $result = api_litter_insert($DBCONN, $params, $act_descr);
         }
         else
         {
-            $result = api_litter_update($DBCONN, $id, $params, $act_descr);
+          $result = api_litter_update($DBCONN, $id, $params, $act_descr);
         }
 
         show_message($result['text'], 'notice');
