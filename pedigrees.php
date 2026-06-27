@@ -51,99 +51,95 @@ if ($is_signed_in) {
         $file_saved = false;
         if ($act == 1)
         {
-            switch ($_FILES['pedigree']['error'])
+          switch ($_FILES['pedigree']['error'])
+          {
+          case UPLOAD_ERR_OK:
+            $fname = basename($_FILES['pedigree']['name']);
+            $fext = substr($fname, strrpos($fname, '.'));
+            if ($fext != '.pdf')
             {
-            case UPLOAD_ERR_OK:
-                $fname = basename($_FILES['pedigree']['name']);
-                $fext = substr($fname, strrpos($fname, '.'));
-                if ($fext != '.pdf')
-                {
-                    show_message("Provided file was not a PDF.", 'error');
-                    break;
-                }
-
-                // 1 MB (1024 * 1024)
-                if ($_FILES['pedigree']['size'] > 1048576)
-                {
-                    show_message("Provided file was too large.", 'error');
-                    break;
-                }
-
-                $target = "pedigrees/$fname";
-                if (move_uploaded_file($_FILES['pedigree']['tmp_name'], $target))
-                {
-                    $file_saved = true;
-                }
-                else
-                {
-                    show_message('Unknown upload failure (could not move temporary file).', 'error');
-                }
-                break;
-            case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-                show_message('Upload failed: File too large.', 'error');
-                break;
-            case UPLOAD_ERR_PARTIAL:
-                show_message('The upload failed to complete.', 'error');
-                break;
-            case UPLOAD_ERR_NO_FILE:
-                show_message('No file uploaded.', 'error');
-                break;
-            case UPLOAD_ERR_NO_TMP_DIR:
-                show_message('Internal upload failure (no temporary directory).', 'error');
-                break;
-            case UPLOAD_ERR_CANT_WRITE:
-                show_message('Internal upload failure (could not write temporary file).', 'error');
-                break;
-            case UPLOAD_ERR_EXTENSION:
-                show_message('Internal upload failure (extension stopped upload).', 'error');
-                break;
-            default:
-                show_message('Unknown upload failure.', 'error');
-                break;
+              show_message("Provided file was not a PDF.", 'error');
+              break;
             }
-        }
-        else
-        {
-            $file_saved = true;
-        }
 
-        if ($file_saved)
-        {
-            $dateb = isset($_POST['date_birth']) ? $_POST['date_birth'] : '';
-            $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
-            $did = isset($_POST['dam']) ? $_POST['dam'] : 0;
-            $active = (bool) (isset($_POST['active']) ? $_POST['active'] : '');
-
-            $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
-            $sid_v = (bool) preg_match('/\d+/', $sid);
-            $did_v = (bool) preg_match('/\d+/', $did);
-
-            $params = [];
-            if ($sid_v) { $params['sire_id'] = $sid; }
-            if ($did_v) { $params['dam_id'] = $did; }
-            if ($dateb_v) { $params['date_birth'] = $dateb; }
-            $params['active'] = $active;
-            if ($act == 1) { $params['location'] = $fname; }
-
-            $act_descr = ($act == 1 ?
-                "Upload of pedigree file '$fname' (ID=$id) succeeded." :
-                "Updated '$row[location]' pedigree file (ID=$row[id]).");
-
-            if ($act == 1)
+            // 1 MB (1024 * 1024)
+            if ($_FILES['pedigree']['size'] > 1048576)
             {
-                $result = api_pedigree_insert($DBCONN, $params, $act_descr);
-                if ($result['result'] === true)
-                {
-                    $id = $result['id'];
-                }
+              show_message("Provided file was too large.", 'error');
+              break;
+            }
+
+            $target = "pedigrees/$fname";
+            if (move_uploaded_file($_FILES['pedigree']['tmp_name'], $target))
+            {
+              $file_saved = true;
             }
             else
             {
-                $result = api_pedigree_update($DBCONN, $id, $params, $act_descr);
+              show_message('Unknown upload failure (could not move temporary file).', 'error');
             }
+            break;
+          case UPLOAD_ERR_INI_SIZE:
+          case UPLOAD_ERR_FORM_SIZE:
+            show_message('Upload failed: File too large.', 'error');
+            break;
+          case UPLOAD_ERR_PARTIAL:
+            show_message('The upload failed to complete.', 'error');
+            break;
+          case UPLOAD_ERR_NO_FILE:
+            show_message('No file uploaded.', 'error');
+            break;
+          case UPLOAD_ERR_NO_TMP_DIR:
+            show_message('Internal upload failure (no temporary directory).', 'error');
+            break;
+          case UPLOAD_ERR_CANT_WRITE:
+            show_message('Internal upload failure (could not write temporary file).', 'error');
+            break;
+          case UPLOAD_ERR_EXTENSION:
+            show_message('Internal upload failure (extension stopped upload).', 'error');
+            break;
+          default:
+            show_message('Unknown upload failure.', 'error');
+            break;
+          }
+        }
+        else
+        {
+          $file_saved = true;
+        }
 
-            show_message($act_descr, 'notice');
+        if ($file_saved && $act !== 0)
+        {
+          $dateb = isset($_POST['date_birth']) ? $_POST['date_birth'] : '';
+          $sid = isset($_POST['sire']) ? $_POST['sire'] : 0;
+          $did = isset($_POST['dam']) ? $_POST['dam'] : 0;
+          $active = (bool) (isset($_POST['active']) ? $_POST['active'] : '');
+
+          $dateb_v = (bool) preg_match('/\d{4}-\d{2}-\d{2}/', $dateb);
+          $sid_v = (bool) preg_match('/\d+/', $sid);
+          $did_v = (bool) preg_match('/\d+/', $did);
+
+          $params = [];
+          if ($sid_v) { $params['sire_id'] = $sid; }
+          if ($did_v) { $params['dam_id'] = $did; }
+          if ($dateb_v) { $params['date_birth'] = $dateb; }
+          $params['active'] = $active;
+          if ($act == 1) { $params['location'] = $fname; }
+
+          $act_descr = ($act == 1 ?
+              "Upload of pedigree file '$fname' succeeded." :
+              "Updated '$row[location]' pedigree file.");
+
+          if ($act == 1)
+          {
+            $result = api_pedigree_insert($DBCONN, $params, $act_descr);
+          }
+          else
+          {
+            $result = api_pedigree_update($DBCONN, $id, $params, $act_descr);
+          }
+
+          show_message($result['text'], 'notice');
         }
         $act = 0;
         header("Location: pedigrees.php");
@@ -152,11 +148,11 @@ if ($is_signed_in) {
         $location = "pedigrees/$row[location]";
         @unlink($location);
 
-        $act_descr = "Removed '$row[location]' pedigree file (ID=$row[id]).";
+        $act_descr = "Removed '$row[location]' pedigree file.";
 
         $result = api_pedigree_delete($DBCONN, $row['id'], $act_descr);
 
-        show_message($act_descr, 'notice');
+        show_message($result['text'], 'notice');
 
         $act = 0;
         header("Location: pedigrees.php");
@@ -186,8 +182,8 @@ switch ($act) {
     echo $objs['html'];
     if ($is_signed_in)
     {
-        $objs = api_pedigrees_list($DBCONN, '', '', 1000, 0, '`active` = 0', $order_by, false);
-        echo $objs['html'];
+      $objs = api_pedigrees_list($DBCONN, '', '', 1000, 0, '`active` = 0', $order_by, false);
+      echo $objs['html'];
     }
     break;
   case 1: // upload
