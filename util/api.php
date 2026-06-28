@@ -295,14 +295,14 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
     }
 
     $pre_titles = api_print_titles($pdo, $row['titles_pre'], 'PRE', $style != 4);
-    $o .= htmlspecialchars(as_html($pre_titles));
+    $o .= as_html($pre_titles);
     $t .= as_text($pre_titles);
     
     $o .= htmlspecialchars($row['name_full']);
     $t .= $row['name_full'];
     
     $post_titles = api_print_titles($pdo, $row['titles_post'], 'POST', $style != 4);
-    $o .= htmlspecialchars(as_html($post_titles));
+    $o .= as_html($post_titles);
     $t .= as_text($post_titles);
 
     if (strlen($row['name_short']) > 0)
@@ -480,6 +480,7 @@ function api_print_titles($pdo, $title_str, $affix_pos = 'PRE', $show_abbr = tru
         // handle title modifiers
         switch ($title_m)
         {
+        default:
         case '':
         case '_':
             $title_modifier = '';
