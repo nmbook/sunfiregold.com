@@ -98,7 +98,7 @@ if ($is_signed_in) {
           $result = api_litter_update($DBCONN, $id, $params, $act_descr);
         }
 
-        show_message($result['text'], 'notice');
+        show_message(as_text($result), 'notice');
 
         $act = 0;
         header("Location: litters.php");
@@ -114,7 +114,7 @@ if ($is_signed_in) {
 
         $result = api_litter_delete($DBCONN, $row['id'], $act_descr);
         
-        show_message($result['text'], 'notice');
+        show_message(as_text($result), 'notice');
         
         $act = 0;
         header("Location: litters.php");
@@ -163,7 +163,7 @@ switch ($act) {
         $where = "`active` = 1 AND `born` = $born_no[$i]";
         $litters = api_litters_list($DBCONN, '', '', 1000, 0, $where, $order_by);
         $count += count($litters['results']);
-        echo $litters['html'];
+        echo as_html($litters);
     }
     $order_by = '`date_birth` ASC';
     if ($count == 0)
@@ -178,7 +178,7 @@ switch ($act) {
         $order_by = '`date_birth` DESC';
         $where = '`active` = 0';
         $litters = api_litters_list($DBCONN, '', '', 1000, 0, $where, $order_by);
-        echo $litters['html'];
+        echo as_html($litters);
     }
     break;
   case 1: // create

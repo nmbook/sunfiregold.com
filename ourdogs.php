@@ -113,7 +113,7 @@ if ($is_signed_in) {
           $result = api_dog_update($DBCONN, $id, $params, $act_descr);
         }
 
-        show_message($result['text'], 'notice');
+        show_message(as_text($result), 'notice');
 
         $act = 0;
         header("Location: $returnto.php");
@@ -123,7 +123,7 @@ if ($is_signed_in) {
 
         $result = api_dog_delete($DBCONN, $row['id'], $act_descr);
 
-        show_message($result['text'], 'notice');
+        show_message(as_text($result), 'notice');
 
         $act = 0;
         header("Location: $returnto.php");
@@ -149,9 +149,8 @@ switch ($act) {
     for ($i = 0; $i < ($is_signed_in ? 6 : 5); $i++)
     {
         $where_inst = "`own_cat` = '$where[$i]'";
-        $dogs = api_dogs_list($DBCONN, '', '', 1000, 0, $where_inst,
-            $order_by, $header_level[$i], $header_text[$i]);
-        echo $dogs['html'];
+        echo as_html(api_dogs_list($DBCONN, '', '', 1000, 0, $where_inst,
+            $order_by, $header_level[$i], $header_text[$i]));
     }
     break;
   case 1: // create

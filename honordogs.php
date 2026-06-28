@@ -36,8 +36,7 @@ $order_by = '`date_birth` ASC';
 $return_to = 'honordogs';
 $where = "`honor_cat` = 'LIST'";
 $header_text = "Sunfire's Honor Roll";
-$dogs = api_dogs_list($DBCONN, '', '', 1000, 0, $where, $order_by, 3, $header_text, $return_to);
-echo $dogs['html'];
+echo as_html(api_dogs_list($DBCONN, '', '', 1000, 0, $where, $order_by, 3, $header_text, $return_to));
 
 // bottom of page
 get_page_sect_bottom();

@@ -182,8 +182,7 @@ function get_page_sect_nav() {
 ?>
     <div class="nav"><?php /*      <h5>Navigation</h5> */ ?>
 <?php
-  $obj = api_pages_list($DBCONN);
-  echo $obj['html'];
+  echo as_html(api_pages_list($DBCONN));
 ?>
     </div>
 <?php

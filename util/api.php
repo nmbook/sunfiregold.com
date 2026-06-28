@@ -51,6 +51,7 @@ try
             'get_pedigree_by_id' => 'getpedbyid',
             'get_stml_template' => 'getstml',
             'get_litter_by_id' => 'getlitterbyid',
+            'get_link_by_id' => 'getlinkbyid',
             'find_k9data_page' => 'findk9datapage',
             'find_pedigree_file' => 'findpedfile',
             'search_dog' => 'searchdog',
@@ -60,6 +61,7 @@ try
             'litters_list' => 'listlitters',
             'pedigrees_list' => 'listpeds',
             'links_list' => 'listlinks',
+            'links_count' => 'countlinks',
         ];
         $act_masked = array_search($act, $acts);
         if (!empty($act_masked) && $act_masked !== false)
@@ -131,8 +133,52 @@ function db_date($date, $style = 0)
 
 function json_result($result, $text = '', $html = '', $extra = [])
 {
-    $res = ['result' => $result, 'text' => $text, 'html' => $html];
-    return array_merge($res, $extra);
+    $add_arr = [];
+    if (strlen($text) > 0)
+    {
+        $add_arr['text'] = $text;
+    }
+    if (strlen($html) > 0)
+    {
+        $add_arr['html'] = $html;
+    }
+    return ['result' => $result, ...$add_arr, ...$extra];
+}
+
+function as_text($result, $default = '')
+{
+    if ($result['result'])
+    {
+        if (array_key_exists('text', $result))
+        {
+            return $result['text'];
+        }
+    }
+    return $default;
+}
+
+function as_html($result, $default = '')
+{
+    if ($result['result'])
+    {
+        if (array_key_exists('html', $result))
+        {
+            return $result['html'];
+        }
+    }
+    return $default;
+}
+
+function as_count($result, $default = 0)
+{
+    if ($result['result'])
+    {
+        if (array_key_exists('count', $result))
+        {
+            return $result['count'];
+        }
+    }
+    return $default;
 }
 
 function handle_api_error($errno, $errstr, $errfile = '', $errline = 0, $errcontext = [])
@@ -159,119 +205,6 @@ function handle_api_error($errno, $errstr, $errfile = '', $errline = 0, $errcont
 
     /* Don't execute PHP internal error handler */
     //return true;
-}
-
-function session_action_insert($pdo, $table_name, $params, $save_action_log = false, $save_action_log_desc = '')
-{
-    $columns = '';
-    $value_params = '';
-    foreach ($params as $key => $value)
-    {
-        $columns .= "`$key`, ";
-        $value_params .= ":$key, ";
-    }
-    if (strlen($columns) >= 2) { $columns = substr($columns, 0, -2); }
-    if (strlen($value_params) >= 2) { $value_params = substr($value_params, 0, -2); }
-
-    $sql = "INSERT INTO `$table_name` ( $columns ) VALUES ( $value_params )";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
-    $stmt = null;
-
-    $id = $pdo->lastInsertId();
-    $save_action_log_desc .= " (ID=$id)";
-    if ($save_action_log)
-    {
-        session_action_insert($pdo, 'actions', [
-                'user_id' => $_SESSION['user_id'],
-                'page_id' => get_page_id(),
-                'date' => db_date(time()),
-                'edit_type' => 'ADD',
-                'data_desc' => $save_action_log_desc ], false);
-    }
-
-    return json_result(true, $save_action_log_desc, '', ['id' => $id]);
-}
-
-function session_action_update($pdo, $table_name, $matches, $params, $save_action_log = false, $save_action_log_desc = '')
-{
-    if (count($params) == 0)
-    {
-        throw new Exception('Must have something to update.');
-    }
-    $kvp_params = '';
-    foreach ($params as $key => $value)
-    {
-        $kvp_params .= "`$key` = :$key, ";
-    }
-    if (strlen($kvp_params) >= 2) { $kvp_params = substr($kvp_params, 0, -2); }
-
-    if (count($matches) > 0)
-    {
-        $kvp_matches = '';
-        foreach ($matches as $key => $value)
-        {
-            $kvp_matches .= "`$key` = :$key AND ";
-        }
-        if (strlen($kvp_matches) >= 5) { $kvp_matches = substr($kvp_matches, 0, -5); }
-    }
-    else
-    {
-        $kvp_matches = '1';
-    }
-    $sql = "UPDATE `$table_name` SET $kvp_params WHERE $kvp_matches";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array_merge($params, $matches));
-    $stmt = null;
-
-    if (array_key_exists('id', $matches))
-    {
-        $save_action_log_desc .= " (ID=$matches[id])";
-    }
-    if ($save_action_log)
-    {
-        session_action_insert($pdo, 'actions', [
-                'user_id' => $_SESSION['user_id'],
-                'page_id' => get_page_id(),
-                'date' => db_date(time()),
-                'edit_type' => 'EDIT',
-                'data_desc' => $save_action_log_desc ], false);
-    }
-
-    return json_result(true, $save_action_log_desc);
-}
-
-function session_action_delete($pdo, $table_name, $matches, $save_action_log = false, $save_action_log_desc = '')
-{
-    if (count($matches) > 0)
-    {
-        $kvp_matches = '';
-        foreach ($matches as $key => $value)
-        {
-            $kvp_matches .= "`$key` = :$key AND ";
-        }
-        if (strlen($kvp_matches) >= 5) { $kvp_matches = substr($kvp_matches, 0, -5); }
-    }
-    else
-    {
-        $kvp_matches = '1';
-    }
-    $sql = "DELETE FROM `$table_name` WHERE $kvp_matches";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($matches);
-    $stmt = null;
-
-    if ($save_action_log)
-    {
-        session_action_insert($pdo, 'actions', [
-                'user_id' => $_SESSION['user_id'],
-                'page_id' => get_page_id(),
-                'date' => db_date(time()),
-                'edit_type' => 'REMOVE',
-                'data_desc' => $save_action_log_desc ], false);
-    }
-
-    return json_result(true, $save_action_log_desc);
 }
 
 // prints a dog from the dogs database in one of a few styles.
@@ -362,15 +295,15 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
     }
 
     $pre_titles = api_print_titles($pdo, $row['titles_pre'], 'PRE', $style != 4);
-    $o .= $pre_titles['html'];
-    $t .= $pre_titles['text'];
+    $o .= htmlspecialchars(as_html($pre_titles));
+    $t .= as_text($pre_titles);
     
     $o .= htmlspecialchars($row['name_full']);
     $t .= $row['name_full'];
     
     $post_titles = api_print_titles($pdo, $row['titles_post'], 'POST', $style != 4);
-    $o .= $post_titles['html'];
-    $t .= $post_titles['text'];
+    $o .= htmlspecialchars(as_html($post_titles));
+    $t .= as_text($post_titles);
 
     if (strlen($row['name_short']) > 0)
     {
@@ -421,10 +354,7 @@ function api_print_dog($pdo, $id, $filter = '', $style = 0, $return_to = 'ourdog
             ($style == 0 || $style == 1))
     {
         $ped_link = api_print_pedigree_link($pdo, $row['pedigree_id'], '', 0, false, 'dog_link');
-        if ($ped_link['result'])
-        {
-            $o .= $ped_link['html'];
-        }
+        $o .= as_html($ped_link);
     }
 
     if ($style == 2 || $style == 4 || ($style == 1 && $is_signed_in))
@@ -1106,8 +1036,8 @@ function api_dogs_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset =
 
         $dog_obj = api_print_dog($pdo, $row['id'], '', 1, $return_to);
         $results_assoc[$row['id']] = $dog_obj;
-        $o .= '<div class="list_element">'.$dog_obj['html'].'</div>';
-        $t .= $dog_obj['text']."\n";
+        $o .= '<div class="list_element">'.as_html($dog_obj).'</div>';
+        $t .= as_text($dog_obj)."\n";
 
         $count++;
     }
@@ -1151,7 +1081,7 @@ function api_litters_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offse
             }
         }
         $litter_obj = api_get_litter_by_id($pdo, $row['id']);
-        $o .= '<div class="list_element">'.$litter_obj['html'].'</div>';
+        $o .= '<div class="list_element">'.as_html($litter_obj).'</div>';
         $results_assoc[$row['id']] = $litter_obj;
         $count++;
     }
@@ -1233,10 +1163,7 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     if ($row['pedigree_id'] !== null && strlen($row['pedigree_id']) > 0)
     {
         $ped_link = api_print_pedigree_link($pdo, $row['pedigree_id'], '', 0);
-        if ($ped_link['result'])
-        {
-            $o .= $ped_link['html'];
-        }
+        $o .= as_html($ped_link);
     }
 
     if ($is_signed_in)
@@ -1272,10 +1199,10 @@ function api_get_litter_by_id($pdo, $id, $filter = '')
     $dog_obj1 = api_print_dog($pdo, $row['sire_id'], '', 0);
     $dog_obj2 = api_print_dog($pdo, $row['dam_id'], '', 0);
     $o .= '        <span class="litter_sire"><b>Sire:</b> ';
-    $o .= $dog_obj1['html'];
+    $o .= as_html($dog_obj1);
     $o .= "</span>\r\n";
     $o .= '        <span class="litter_dam"><b>Dam:</b> ';
-    $o .= $dog_obj2['html'];
+    $o .= as_html($dog_obj2);
     $o .= "</span>\r\n";
   
     if ($row['desc_long'] !== null && strlen($row['desc_long']) > 0)
@@ -1339,7 +1266,7 @@ function api_pedigrees_list($pdo, $q = '', $filter = '', $limit = 25, $limit_off
         }
 
         $ped_obj = api_print_pedigree_link($pdo, $row['id'], '', 1, true);
-        $o .= '<div class="list_element">'.$ped_obj['html'].'</div>';
+        $o .= '<div class="list_element">'.as_html($ped_obj).'</div>';
         $results_assoc[$row['id']] = $ped_obj;
     }
     $stmt = null;
@@ -1356,19 +1283,20 @@ function api_pedigrees_list($pdo, $q = '', $filter = '', $limit = 25, $limit_off
     ]);
 }
 
-function api_links_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset = 0)
+function api_links_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset = 0, $where = '1', $order_by = '`id` ASC')
 {
     global $is_signed_in;
 
+    $visible_link_count = as_count(api_links_count($pdo, true));
+
     $sql =
-    'SELECT *
+    "SELECT *
      FROM `links`
-     WHERE `index` > 0
-     ORDER BY `index` ASC
-     LIMIT :limit_offset, :limit';
+     WHERE $where
+     ORDER BY $order_by
+     LIMIT :limit_offset, :limit";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['limit' => $limit, 'limit_offset' => $limit_offset]);
-    $link_count = $stmt->rowCount();
 
     $dl_open = false;
     $o = '';
@@ -1428,19 +1356,22 @@ function api_links_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset 
 
         if ($is_signed_in)
         {
+            $move_link_shown = false;
             if ($row['index'] > 1)
             {
                 $o .= '<a class="edit" href="links.php?act=up&id=';
                 $o .= $row['id'];
                 $o .= '">Move Up</a>';
+                $move_link_shown = true;
             }
-            if ($row['index'] < $link_count)
+            if ($row['index'] > 0 && $row['index'] < $visible_link_count)
             {
                 $o .= '<a class="edit" href="links.php?act=down&id=';
                 $o .= $row['id'];
                 $o .= '">Move Down</a>';
+                $move_link_shown = true;
             }
-            if ($link_count > 1)
+            if ($move_link_shown)
             {
                 $o .= ' | ';
             }
@@ -1463,6 +1394,153 @@ function api_links_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset 
         'limit' => $limit, 'limit_offset' => $limit_offset,
         'results' => $results_assoc
     ]);
+}
+
+function api_get_link_by_id($pdo, $id)
+{
+    $sql =
+    'SELECT `id`, `title`, `location`, `index`
+     FROM `links`
+     WHERE `id` = :id
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id' => $id]);
+    $row = $stmt->fetch();
+    $stmt = null;
+    
+    $o = '';
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+    
+    $location = $row['location'];
+    $title = $row['title'];
+
+    $o .= '<dt><a href="';
+    $o .= htmlspecialchars($location);
+    $o .= '" target="_blank" title="';
+    $o .= htmlspecialchars($title);
+    $o .= '">';
+    $o .= htmlspecialchars($title);
+    $o .='</a>';
+
+    return json_result(true, $location, $o, $row);
+}
+
+function session_action_insert($pdo, $table_name, $params, $save_action_log = false, $save_action_log_desc = '')
+{
+    $columns = '';
+    $value_params = '';
+    foreach ($params as $key => $value)
+    {
+        $columns .= "`$key`, ";
+        $value_params .= ":$key, ";
+    }
+    if (strlen($columns) >= 2) { $columns = substr($columns, 0, -2); }
+    if (strlen($value_params) >= 2) { $value_params = substr($value_params, 0, -2); }
+
+    $sql = "INSERT INTO `$table_name` ( $columns ) VALUES ( $value_params )";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    $stmt = null;
+
+    $id = $pdo->lastInsertId();
+    $save_action_log_desc .= " (ID=$id)";
+    if ($save_action_log)
+    {
+        session_action_insert($pdo, 'actions', [
+                'user_id' => $_SESSION['user_id'],
+                'page_id' => get_page_id(),
+                'date' => db_date(time()),
+                'edit_type' => 'ADD',
+                'data_desc' => $save_action_log_desc ], false);
+    }
+
+    return json_result(true, $save_action_log_desc, '', ['id' => $id]);
+}
+
+function session_action_update($pdo, $table_name, $matches, $params, $save_action_log = false, $save_action_log_desc = '')
+{
+    if (count($params) == 0)
+    {
+        throw new Exception('Must have something to update.');
+    }
+    $kvp_params = '';
+    foreach ($params as $key => $value)
+    {
+        $kvp_params .= "`$key` = :$key, ";
+    }
+    if (strlen($kvp_params) >= 2) { $kvp_params = substr($kvp_params, 0, -2); }
+
+    if (count($matches) > 0)
+    {
+        $kvp_matches = '';
+        foreach ($matches as $key => $value)
+        {
+            $kvp_matches .= "`$key` = :$key AND ";
+        }
+        if (strlen($kvp_matches) >= 5) { $kvp_matches = substr($kvp_matches, 0, -5); }
+    }
+    else
+    {
+        $kvp_matches = '1';
+    }
+    $sql = "UPDATE `$table_name` SET $kvp_params WHERE $kvp_matches";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array_merge($params, $matches));
+    $stmt = null;
+
+    if (array_key_exists('id', $matches))
+    {
+        $save_action_log_desc .= " (ID=$matches[id])";
+    }
+    if ($save_action_log)
+    {
+        session_action_insert($pdo, 'actions', [
+                'user_id' => $_SESSION['user_id'],
+                'page_id' => get_page_id(),
+                'date' => db_date(time()),
+                'edit_type' => 'EDIT',
+                'data_desc' => $save_action_log_desc ], false);
+    }
+
+    return json_result(true, $save_action_log_desc);
+}
+
+function session_action_delete($pdo, $table_name, $matches, $save_action_log = false, $save_action_log_desc = '')
+{
+    if (count($matches) > 0)
+    {
+        $kvp_matches = '';
+        foreach ($matches as $key => $value)
+        {
+            $kvp_matches .= "`$key` = :$key AND ";
+        }
+        if (strlen($kvp_matches) >= 5) { $kvp_matches = substr($kvp_matches, 0, -5); }
+    }
+    else
+    {
+        $kvp_matches = '1';
+    }
+    $sql = "DELETE FROM `$table_name` WHERE $kvp_matches";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($matches);
+    $stmt = null;
+
+    if ($save_action_log)
+    {
+        session_action_insert($pdo, 'actions', [
+                'user_id' => $_SESSION['user_id'],
+                'page_id' => get_page_id(),
+                'date' => db_date(time()),
+                'edit_type' => 'REMOVE',
+                'data_desc' => $save_action_log_desc ], false);
+    }
+
+    return json_result(true, $save_action_log_desc);
 }
 
 function api_litter_insert($pdo, $params, $act_descr = '')
@@ -1508,4 +1586,35 @@ function api_pedigree_update($pdo, $id, $params, $act_descr = '')
 function api_pedigree_delete($pdo, $id, $act_descr = '')
 {
     return session_action_delete($pdo, 'pedigrees', [ 'id' => $id ], true, $act_descr);
+}
+
+function api_link_insert($pdo, $params, $act_descr = '')
+{
+    return session_action_insert($pdo, 'links', $params, true, $act_descr);
+}
+
+function api_link_update($pdo, $id, $params, $act_descr = '')
+{
+    return session_action_update($pdo, 'links', [ 'id' => $id ], $params, true, $act_descr);
+}
+
+function api_link_delete($pdo, $id, $act_descr = '')
+{
+    return session_action_delete($pdo, 'links', [ 'id' => $id ], true, $act_descr);
+}
+
+function api_count($pdo, $table_name, $where = '1')
+{
+    $sql = "SELECT COUNT(*) FROM `$table_name` WHERE $where";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $count = $stmt->fetchColumn();
+    $stmt = null;
+
+    return json_result(true, (string)$count, '', ['count' => $count]);
+}
+
+function api_links_count($pdo, $is_visible)
+{
+    return api_count($pdo, 'links', $is_visible ? '`index` > 0' : '`index` = 0');
 }

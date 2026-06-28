@@ -139,7 +139,7 @@ if ($is_signed_in) {
             $result = api_pedigree_update($DBCONN, $id, $params, $act_descr);
           }
 
-          show_message($result['text'], 'notice');
+          show_message(as_text($result), 'notice');
         }
         $act = 0;
         header("Location: pedigrees.php");
@@ -152,7 +152,7 @@ if ($is_signed_in) {
 
         $result = api_pedigree_delete($DBCONN, $row['id'], $act_descr);
 
-        show_message($result['text'], 'notice');
+        show_message(as_text($result), 'notice');
 
         $act = 0;
         header("Location: pedigrees.php");
@@ -178,12 +178,10 @@ switch ($act) {
 <?php
     
     $order_by = '`date_birth` DESC';
-    $objs = api_pedigrees_list($DBCONN, '', '', 1000, 0, '`active` = 1', $order_by, true);
-    echo $objs['html'];
+    echo as_html(api_pedigrees_list($DBCONN, '', '', 1000, 0, '`active` = 1', $order_by, true));
     if ($is_signed_in)
     {
-      $objs = api_pedigrees_list($DBCONN, '', '', 1000, 0, '`active` = 0', $order_by, false);
-      echo $objs['html'];
+      echo as_html(api_pedigrees_list($DBCONN, '', '', 1000, 0, '`active` = 0', $order_by, false));
     }
     break;
   case 1: // upload
