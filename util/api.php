@@ -52,6 +52,9 @@ try
             'get_stml_template' => 'getstml',
             'get_litter_by_id' => 'getlitterbyid',
             'get_link_by_id' => 'getlinkbyid',
+            'get_album_by_id' => 'getalbumbyid',
+            'get_album_image_by_id' => 'getalbumimgbyid',
+            'get_story_by_id' => 'getstorybyid',
             'find_k9data_page' => 'findk9datapage',
             'find_pedigree_file' => 'findpedfile',
             'search_dog' => 'searchdog',
@@ -62,6 +65,11 @@ try
             'pedigrees_list' => 'listpeds',
             'links_list' => 'listlinks',
             'links_count' => 'countlinks',
+            'albums_list' => 'listalbums',
+            'albums_count' => 'countalbums',
+            'album_images_list' => 'listalbumsimg',
+            'album_images_count' => 'countalbumsimg',
+            'album_print_navigator' => 'printalbumnav',
         ];
         $act_masked = array_search($act, $acts);
         if (!empty($act_masked) && $act_masked !== false)
@@ -1397,6 +1405,219 @@ function api_links_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset 
     ]);
 }
 
+function api_albums_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset = 0, $where = '1', $order_by = '`id` ASC')
+{
+    global $is_signed_in;
+
+    $visible_album_count = as_count(api_albums_count($pdo, true));
+
+    $sql =
+    "SELECT `id`, `title`, `location`, `datetext`, `index`
+     FROM `albums`
+     WHERE $where
+     ORDER BY $order_by
+     LIMIT :limit_offset, :limit";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['limit' => $limit, 'limit_offset' => $limit_offset]);
+
+    $dl_open = false;
+    $o = '';
+    $t = '';
+    $results_assoc = [];
+    while (($row = $stmt->fetch()) !== false)
+    {
+        if (!$dl_open)
+        {
+            $o .= "<dl>";
+            $dl_open = true;
+        }
+
+        $visible_album_image_count = as_count(api_album_images_count($pdo, $row['id'], true));
+
+        $t .= $row['title'];
+        $o .= '<dt><a href="albums.php?id=';
+        $o .= $row['id'];
+        $o .= '" title="';
+        $o .= $row['title'];
+        $o .= '">';
+        $o .= $row['title'];
+        $o .= '</a></dt>';
+        
+        $o .= '<dd>';
+        if (strlen($row['datetext']) > 0) {
+            $o .= "Taken $row[datetext] ";
+        }
+        $o .= "($visible_album_image_count picture".plural($visible_album_image_count).')';
+        $o .= '</dd>';
+
+        if ($is_signed_in)
+        {
+            $move_link_shown = false;
+            if ($row['index'] > 1)
+            {
+                $o .= '<a class="edit" href="albums.php?act=up&id=';
+                $o .= $row['id'];
+                $o .= '">Move Up</a>';
+                $move_link_shown = true;
+            }
+            if ($row['index'] > 0 && $row['index'] < $visible_album_count)
+            {
+                $o .= '<a class="edit" href="albums.php?act=down&id=';
+                $o .= $row['id'];
+                $o .= '">Move Down</a>';
+                $move_link_shown = true;
+            }
+            if ($move_link_shown)
+            {
+                $o .= ' | ';
+            }
+            $o .= '<a class="edit" href="albums.php?act=edit&id=';
+            $o .= $row['id'];
+            $o .= '">Edit</a>';
+        }
+
+        $results_assoc[$row['id']] = $row;
+    }
+    $stmt = null;
+
+    if ($dl_open)
+    {
+        $o .= "</dl>";
+    }
+
+    return json_result(true, $t, $o, [
+        'q' => $q, 'filter' => $filter,
+        'limit' => $limit, 'limit_offset' => $limit_offset,
+        'results' => $results_assoc
+    ]);
+}
+
+function api_album_images_list($pdo, $q = '', $filter = '', $limit = 25, $limit_offset = 0, $where = '1', $order_by = '`id` ASC', $album_id = 0)
+{
+    global $is_signed_in;
+
+    $visible_image_count = as_count(api_album_images_count($pdo, $album_id, true));
+    $row_album = api_get_album_by_id($pdo, $album_id);
+
+    $sql =
+    "SELECT `id`, `location`, `desc_short`, `desc_long`, `desc_time`, `index`
+     FROM `album_images`
+     WHERE `album_id` = :album_id
+      AND $where
+     ORDER BY $order_by
+     LIMIT :limit_offset, :limit";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['limit' => $limit, 'limit_offset' => $limit_offset, 'album_id' => $album_id]);
+
+    $table_open = false;
+    $o = '';
+    $t = '';
+    $results_assoc = [];
+
+    $o .= '<h3>'.stml_parse($row_album['title']).'</h3>';
+    if ($is_signed_in)
+    {
+        $o .= '<p>';
+        $o .= '<a class="edit" href="albums.php?act=edit&id=';
+        $o .= $row_album['id'];
+        $o .= '">Edit Details</a>';
+        $o .= '<p>';
+        $o .= '<a class="edit" href="albums.php?act=imgs&id=';
+        $o .= $row_album['id'];
+        $o .= '">Edit Images</a>';
+        $o .= '</p>';
+    }
+
+    $count = 0;
+    while (($row = $stmt->fetch()) !== false)
+    {
+        if (!$table_open)
+        {
+            $o .= '<div class="album_thumbs_div">';
+            $o .= '<table class="album_thumbs">';
+            $o .= '<tbody>';
+            $o .= '<tr>';
+            $table_open = true;
+        }
+        
+        $location = "$row_album[location]/$row[location]";
+        $thumb = "util/thumb.php?src=../albums/$location&conv=thumbsq";
+        $index = $count + 1;
+        $sdesc = $row['desc_short'];
+        $ldesc = $row['desc_long'];
+        $tdesc = $row['desc_time'];
+        if (file_exists("./albums/$location"))
+        {
+            $imginfo = getimagesize("./albums/$location");
+            $fsize = "$imginfo[0] x $imginfo[1]";
+        }
+        else
+        {
+            $fsize = 'Unknown size';
+        }
+
+        if ($row['index'] == 0)
+        {
+            $append = ' (this picture is hidden)';
+        }
+        else
+        {
+            $append = '';
+        }
+
+        $o .= '<td onclick="viewImage(';
+        $o .= $index;
+        $o .= ')" title="';
+        $o .= stml_parse($sdesc);
+        $o .= '">';
+
+        $o .= '<img id="img_';
+        $o .= $index;
+        $o .= '" ';
+        $o .= 'src="';
+        $o .= stml_parse($thumb);
+        $o .= '" ';
+        $o .= 'alt="';
+        $o .= stml_parse($sdesc);
+        $o .= '" ';
+        $o .= 'title="';
+        $o .= stml_parse($sdesc.$append);
+        $o .= '" ';
+        $o .= 'data-ldesc="';
+        $o .= stml_parse($ldesc);
+        $o .= '" ';
+        $o .= 'data-tdesc="';
+        $o .= stml_parse($tdesc);
+        $o .= '" ';
+        $o .= 'data-loc="';
+        $o .= htmlentities($location, ENT_QUOTES);
+        $o .= '" ';
+        $o .= 'data-fsize="';
+        $o .= $fsize;
+        $o .= '" ';
+
+        $o .= '</td>';
+        $count++;
+
+        $results_assoc[$row['id']] = $row;
+    }
+    $stmt = null;
+
+    if ($table_open)
+    {
+        $o .= '</tr>';
+        $o .= '</tbody>';
+        $o .= '</table>';
+        $o .= '</div>';
+    }
+
+    return json_result(true, $t, $o, [
+        'q' => $q, 'filter' => $filter,
+        'limit' => $limit, 'limit_offset' => $limit_offset,
+        'results' => $results_assoc
+    ]);
+}
+
 function api_get_link_by_id($pdo, $id)
 {
     $sql =
@@ -1429,6 +1650,178 @@ function api_get_link_by_id($pdo, $id)
     $o .='</a>';
 
     return json_result(true, $location, $o, $row);
+}
+
+function api_get_album_by_id($pdo, $id)
+{
+    $sql =
+    'SELECT `id`, `title`, `location`, `datetext`, `index`
+     FROM `albums`
+     WHERE `id` = :id
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id' => $id]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    return json_result(true, '', '', $row);
+}
+
+function api_get_album_by_index($pdo, $index)
+{
+    $sql =
+    'SELECT `id`, `title`, `location`, `datetext`, `index`
+     FROM `albums`
+     WHERE `index` = :index
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['index' => $index]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    return json_result(true, '', '', $row);
+}
+
+function api_get_album_previous($pdo, $index)
+{
+    if ($index <= 0)
+    {
+        // empty result
+        return json_result(false, 'Invalid index.');
+    }
+
+    $sql =
+    'SELECT `id`, `title`, `location`, `datetext`, `index`
+     FROM `albums`
+     WHERE `index` = (
+        SELECT MAX(`index`)
+        FROM `albums`
+        WHERE `index` > 0
+         AND `index` < :index
+     )
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['index' => $index]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    return json_result(true, '', '', $row);
+}
+
+function api_get_album_next($pdo, $index)
+{
+    if ($index <= 0)
+    {
+        // empty result
+        return json_result(false, 'Invalid index.');
+    }
+
+    $sql =
+    'SELECT `id`, `title`, `location`, `datetext`, `index`
+     FROM `albums`
+     WHERE `index` = (
+        SELECT MIN(`index`)
+        FROM `albums`
+        WHERE `index` > :index
+     )
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['index' => $index]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    return json_result(true, '', '', $row);
+}
+
+function api_get_album_image_by_id($pdo, $album_id, $image_id)
+{
+    $sql =
+    'SELECT `id`, `location`, `desc_short`, `desc_long`, `desc_time`, `index`
+     FROM `album_images`
+     WHERE `album_id` = :album_id
+      AND `id` = :image_id
+     LIMIT 1';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['album_id' => $album_id, 'image_id' => $image_id]);
+    $row = $stmt->fetch();
+    $stmt = null;
+
+    if ($row === false)
+    {
+        // empty result
+        return json_result(false, 'Not found.');
+    }
+
+    return json_result(true, '', '', $row);
+}
+
+function api_album_print_navigator($pdo, $album_index, $filter = '')
+{
+    $visible_album_count = as_count(api_albums_count($pdo, true));
+    $row_prev = api_get_album_previous($pdo, $album_index);
+    $row_next = api_get_album_next($pdo, $album_index);
+    $row_first = api_get_album_by_index($pdo, 1);
+    $row_last = api_get_album_by_index($pdo, $visible_album_count);
+    
+    if ($album_index == 1)
+    {
+        $first_text = $prev_text = 'nohref="nohref" class="disabled"';
+    }
+    else
+    {
+        $first_text = 'href="albums.php?id='.$row_first['id'].'" title="'.stml_parse($row_first['title']).'"';
+        $prev_text = 'href="albums.php?id='.$row_prev['id'].'" title="'.stml_parse($row_prev['title']).'"';
+    }
+    
+    if ($album_index == $visible_album_count)
+    {
+        $last_text = $next_text = 'nohref="nohref" class="disabled"';
+    }
+    else
+    {
+        $last_text = 'href="albums.php?id='.$row_last['id'].'" title="'.stml_parse($row_last['title']).'"';
+        $next_text = 'href="albums.php?id='.$row_next['id'].'" title="'.stml_parse($row_next['title']).'"';
+    }
+
+    $o = '';
+
+    $o .= "<a $first_text>&lt;&lt;-- First</a>";
+    $o .= "<a $prev_text>&lt;-- Previous</a>";
+    $o .= '<a href="albums.php" title="Index of Albums">Index</a>';
+    $o .= "<a $next_text>Next --&gt;</a>";
+    $o .= "<a $last_text>Last --&gt;&gt;</a>";
+    
+    return json_result(true, '', $o,
+    [
+        'first' => $row_first,
+        'previous' => $row_prev,
+        'next' => $row_next,
+        'last' => $row_last,
+    ]);
 }
 
 function session_action_insert($pdo, $table_name, $params, $save_action_log = false, $save_action_log_desc = '')
@@ -1604,7 +1997,37 @@ function api_link_delete($pdo, $id, $act_descr = '')
     return session_action_delete($pdo, 'links', [ 'id' => $id ], true, $act_descr);
 }
 
-function api_count($pdo, $table_name, $where = '1')
+function api_album_insert($pdo, $params, $act_descr = '')
+{
+    return session_action_insert($pdo, 'albums', $params, true, $act_descr);
+}
+
+function api_album_update($pdo, $id, $params, $act_descr = '')
+{
+    return session_action_update($pdo, 'albums', [ 'id' => $id ], $params, true, $act_descr);
+}
+
+function api_album_delete($pdo, $id, $act_descr = '')
+{
+    return session_action_delete($pdo, 'albums', [ 'id' => $id ], true, $act_descr);
+}
+
+function api_album_image_insert($pdo, $params, $act_descr = '')
+{
+    return session_action_insert($pdo, 'album_images', $params, true, $act_descr);
+}
+
+function api_album_image_update($pdo, $id, $params, $act_descr = '')
+{
+    return session_action_update($pdo, 'album_images', [ 'id' => $id ], $params, true, $act_descr);
+}
+
+function api_album_image_delete($pdo, $id, $act_descr = '')
+{
+    return session_action_delete($pdo, 'album_images', [ 'id' => $id ], true, $act_descr);
+}
+
+function do_count($pdo, $table_name, $where = '1')
 {
     $sql = "SELECT COUNT(*) FROM `$table_name` WHERE $where";
     $stmt = $pdo->prepare($sql);
@@ -1617,5 +2040,15 @@ function api_count($pdo, $table_name, $where = '1')
 
 function api_links_count($pdo, $is_visible)
 {
-    return api_count($pdo, 'links', $is_visible ? '`index` > 0' : '`index` = 0');
+    return do_count($pdo, 'links', $is_visible ? '`index` > 0' : '`index` = 0');
+}
+
+function api_albums_count($pdo, $is_visible)
+{
+    return do_count($pdo, 'albums', $is_visible ? '`index` > 0' : '`index` = 0');
+}
+
+function api_album_images_count($pdo, $album_id, $is_visible)
+{
+    return do_count($pdo, 'album_images', "`album_id` = $album_id AND ".($is_visible ? '`index` > 0' : '`index` = 0'));
 }
