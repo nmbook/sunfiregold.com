@@ -110,18 +110,13 @@ function get_page_sect_head() {
  - Last Edited on: <?php echo(date('l, F j, Y', get_last_edit($fname))); ?> -
  - Nate Book -
 -->
-<html>
+<html lang="en">
   <head>
-    <title>Sunfire Golden Retrievers - <?php echo($page_title); if ($act != 0) echo " - $verb"; ?></title>
-<?php
-  if ($fname == 'index') {
-?>
-    <!-- Search Engine Information -->
+    <meta charset="utf-8" />
     <meta name="keywords" content="Sunfire,golden retriever,golden retrievers,dog,dogs,puppy,puppies,Sunfire Golden Retrievers,SunfireGold" />
-    <meta name="description" content="This is the Sunfire Golden Retrievers homepage" />
-<?php
-  }
-?>
+    <meta name="description" content="This is the Sunfire Golden Retrievers homepage." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sunfire Golden Retrievers - <?php echo($page_title); if ($act != 0) echo " - $verb"; ?></title>
 
     <!-- Page Links -->
     <link href="/style/style.css" rel="stylesheet" type="text/css" />

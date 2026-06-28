@@ -68,6 +68,24 @@ AuthName sunfiregold.com
 AuthUserFile /home/sunfire1/public_html/default/_vti_pvt/service.pwd
 AuthGroupFile /home/sunfire1/public_html/default/_vti_pvt/service.grp
 
+AddDefaultCharset utf-8
+
+<IfModule mod_mime.c>
+    AddCharset utf-8 .appcache \
+                     .atom \
+                     .css \
+                     .js \
+                     .json \
+                     .manifest \
+                     .map \
+                     .mjs \
+                     .rdf \
+                     .rss \
+                     .vtt \
+                     .webmanifest \
+                     .xml
+</IfModule>
+
 # php -- BEGIN cPanel-generated handler, do not edit
 # Set the “ea-php85” package as the default “PHP” programming language.
 <IfModule mime_module>
