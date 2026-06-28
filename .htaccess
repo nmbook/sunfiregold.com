@@ -23,6 +23,7 @@ RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
 RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
 RewriteRule .* https://sunfiregold.com%{REQUEST_URI} [R=301,L]
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
 Redirect 301 /index.html /index.php
 Redirect 301 /albums.html /albums.php
